@@ -14,7 +14,8 @@ setup(
     license='Proprietary',
     install_requires=[
         'setuptools',
-        'devpi-client'
+        'devpi-client',
+        'wheel'
     ],
     setup_requires=[
         'nose>=1.0'
