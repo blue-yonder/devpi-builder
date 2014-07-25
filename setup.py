@@ -31,5 +31,10 @@ setup(
         'Intended Audience :: System Administrators',
         'License :: Other/Proprietary License',
         'Topic :: System :: Archiving :: Packaging'
-    ]
+    ],
+      entry_points={
+        'console_scripts': [
+            'nbsystem = brandon.cli:main',
+        ],
+      },
 )
