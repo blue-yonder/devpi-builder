@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import tempfile
 
+from brandon import devpi
 
 @contextlib.contextmanager
 def devpi_server(port=2414):
@@ -22,3 +23,22 @@ def devpi_server(port=2414):
             subprocess.check_call(['devpi-server', '--stop', '--serverdir={}'.format(server_dir)])
     finally:
         shutil.rmtree(server_dir)
+
+
+@contextlib.contextmanager
+def devpi_index(server_url, user, index):
+    """
+    Creates the given user and index, and cleans it afterwards.
+
+    Yields of tuple of index-url and password. The index is created without an upstream.
+    """
+    password = 'foo'
+    devpi_client = devpi.Client(server_url)
+    devpi_client._execute('user', '-c', user, 'password=' + password)
+    devpi_client._execute('login', user, '--password=' + password)
+    devpi_client._execute('index', '-c', 'wheels', 'bases=')
+
+    yield '{}/{}/{}'.format(server_url, user, index), password
+
+    devpi_client._execute('index', '--delete', '/{}/{}'.format(user, index))
+    devpi_client._execute('user', user, '--delete')
