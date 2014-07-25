@@ -9,6 +9,9 @@ __author__ = 'mbach'
 
 
 class Client(object):
+    """
+    Wrapper object around the devpi client exposing features required by brandon.
+    """
 
     def _execute(self, *args):
         return subprocess.check_output(['devpi', '--clientdir={}'.format(self.client_dir)] + list(args))
@@ -18,6 +21,13 @@ class Client(object):
         self._execute('use', index_url)
 
     def package_version_exists(self, package, version):
+        """
+        Check whether the given version of the given package is in the index of this client.
+
+        :param package: Python package to check for
+        :param version: Version of the package to check for (string)
+        :return: True if the exact version of this package is in the index, else False.
+        """
         try:
             return "" != self._execute('list', '{}=={}'.format(package, version))
         except subprocess.CalledProcessError as e:
