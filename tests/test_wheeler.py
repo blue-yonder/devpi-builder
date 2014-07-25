@@ -19,7 +19,6 @@ class WheelTest(unittest.TestCase):
             wheel_file = builder('progressbar', '2.2')
         self.assertFalse(path.exists(wheel_file))
 
-    @unittest.skip('not implemented')
     def test_provides_file_thats_already_a_wheel(self):
         with wheeler.Builder() as builder:
             wheel_file = builder('wheel', '0.24')
