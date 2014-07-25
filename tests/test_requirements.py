@@ -13,12 +13,18 @@ class MyTestCase(unittest.TestCase):
         ]
         self.assertListEqual(
             expected,
-            requirements.read('tests/sample1.txt')
+            requirements.read('tests/sample_simple.txt')
         )
 
-    @unittest.skip('not implemented')
     def test_multiple_versions(self):
-        pass
+        expected = [
+            ('progressbar', '2.2'),
+            ('progressbar', '2.1')
+        ]
+        self.assertListEqual(
+            expected,
+            requirements.read('tests/sample_multiple_versions.txt')
+        )
 
     @unittest.skip('not implemented')
     def test_fail_on_inexact(self):
