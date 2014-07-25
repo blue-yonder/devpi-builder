@@ -5,7 +5,7 @@ import unittest
 from brandon import requirements
 
 
-class MyTestCase(unittest.TestCase):
+class TestRequirements(unittest.TestCase):
     def test_read_requirements(self):
         expected = [
             ('progressbar', '2.0'),

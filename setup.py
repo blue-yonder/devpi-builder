@@ -13,13 +13,15 @@ setup(
     description='Fill in index with wheels from an requirements.txt-like specification file.',
     license='Proprietary',
     install_requires=[
-        'setuptools'
+        'setuptools',
+        'devpi-client'
     ],
     setup_requires=[
         'nose>=1.0'
     ],
     tests_require=[
-        'nose>=1.0'
+        'nose>=1.0',
+        'devpi-server'
     ],
     test_suite='nose.collector',
     classifiers=[
