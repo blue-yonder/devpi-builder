@@ -26,9 +26,13 @@ class MyTestCase(unittest.TestCase):
             requirements.read('tests/sample_multiple_versions.txt')
         )
 
-    @unittest.skip('not implemented')
     def test_fail_on_inexact(self):
-        pass
+        with self.assertRaises(ValueError):
+            requirements.read('tests/sample_inexact_version.txt')
+
+    def test_fail_on_multiple_versions_on_line(self):
+        with self.assertRaises(ValueError):
+            requirements.read('tests/sample_multiple_versions_on_line.txt')
 
 
 if __name__ == '__main__':

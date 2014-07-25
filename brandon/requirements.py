@@ -6,6 +6,25 @@ import pkg_resources
 
 __author__ = 'mbach'
 
+
+def _extract_project_version(requirement):
+    """
+    Extract the information on a concrete project version from pkg_configs Requirement information.
+
+    :param requirement: A pkg_config Requirement
+    :return: Pair of project_name and version
+    """
+    specs = requirement.specs
+    if len(specs) == 1:
+        spec = specs[0]
+        if spec[0] == '==':
+            return requirement.project_name, spec[1]
+        else:
+            raise ValueError('Versions must be specified exactly. "{}" is not an exact version specification.'.format(requirement))
+    else:
+        raise ValueError('Multiple version specifications on a single line are not supported.')
+
+
 def read(filename):
     """
     Read the list of requested software.
@@ -17,5 +36,5 @@ def read(filename):
     """
     with open(filename) as input_file:
         return [
-            (requirement.project_name, requirement.specs[0][1]) for requirement in pkg_resources.parse_requirements(input_file)
+            _extract_project_version(requirement) for requirement in pkg_resources.parse_requirements(input_file)
         ]
