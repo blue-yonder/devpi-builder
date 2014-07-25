@@ -8,6 +8,7 @@ import unittest
 
 from brandon import devpi
 
+
 @contextlib.contextmanager
 def devpi_server(port=2414):
     server_dir = tempfile.mkdtemp()
