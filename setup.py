@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 setup(
     name = 'Brandon',
     version = '0.1-dev',
-    packages = find_packages(),
+    packages = find_packages(exclude=['tests']),
     author='Matthias Bach',
     author_email='matthias.bach@blue-yonder.com',
     description='Fill in index with wheels from an requirements.txt-like specification file.',
