@@ -1,0 +1,7 @@
+setuptools
+wheel
+
+devpi-client==2.0.0
+devpi-server==2.0.1
+
+nose>=1.0
