@@ -1,7 +1,8 @@
 Brandon the Devpi Builder
 =========================
 [![Build Status](https://travis-ci.org/blue-yonder/devpi-builder.svg?branch=master)](https://travis-ci.org/blue-yonder/devpi-builder)
-[![Coverage Status](https://coveralls.io/repos/blue-yonder/devpi-builder/badge.png?branch=master)](https://coveralls.io/r/blue-yonder/devpi-builder?branch=master)[![Requirements Status](https://requires.io/github/blue-yonder/devpi-builder/requirements.png?branch=master)](https://requires.io/github/blue-yonder/devpi-builder/requirements/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/blue-yonder/devpi-builder/badge.png?branch=master)](https://coveralls.io/r/blue-yonder/devpi-builder?branch=master)
+[![Requirements Status](https://requires.io/github/blue-yonder/devpi-builder/requirements.png?branch=master)](https://requires.io/github/blue-yonder/devpi-builder/requirements/?branch=master)
 
 This tools takes a list of python packages, specified as in an `requirements.txt` and incrementally fills a
 [devpi](http://doc.devpi.net/latest/) index with them.
