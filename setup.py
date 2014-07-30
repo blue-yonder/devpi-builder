@@ -35,7 +35,7 @@ setup(
     ],
       entry_points={
         'console_scripts': [
-            'nbsystem = devpi_builder.cli:main',
+            'devpi-builder = devpi_builder.cli:main',
         ],
       },
 )
