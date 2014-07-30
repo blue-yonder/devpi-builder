@@ -11,7 +11,7 @@ setup(
     author='Matthias Bach',
     author_email='matthias.bach@blue-yonder.com',
     description='Fill in index with wheels from an requirements.txt-like specification file.',
-    license='Proprietary',
+    license='new BSD',
     install_requires=[
         'setuptools',
         'devpi-client',
@@ -30,7 +30,7 @@ setup(
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
-        'License :: Other/Proprietary License',
+        'License :: OSI Approved :: BSD License',
         'Topic :: System :: Archiving :: Packaging'
     ],
       entry_points={
