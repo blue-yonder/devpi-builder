@@ -14,14 +14,18 @@ class Client(object):
     Wrapper object around the devpi client exposing features required by devpi_builder.
     """
     def _execute(self, *args):
-        return subprocess.check_output(['devpi', '--clientdir={}'.format(self._client_dir)] + list(args))
+        return subprocess.check_output(['devpi'] + list(args) + ['--clientdir={}'.format(self._client_dir)])
 
-    def __init__(self, index_url):
+    def __init__(self, index_url, user=None, password=None):
         self._index_url = index_url
+        self._user = user
+        self._password = password
 
     def __enter__(self):
         self._client_dir = tempfile.mkdtemp()
         self._execute('use', self._index_url)
+        if self._user and self._password != None:
+            self._execute('login', self._user, '--password', self._password)
         return self
 
     def __exit__(self, *args):
@@ -43,3 +47,9 @@ class Client(object):
                 return False
             else:
                 raise
+
+    def upload(self, file):
+        """
+        Upload the given file to the current index
+        """
+        self._execute('upload', file)
