@@ -8,7 +8,7 @@ from brandon import requirements
 class TestRequirements(unittest.TestCase):
     def test_read_requirements(self):
         expected = [
-            ('progressbar', '2.3'),
+            ('progressbar', '2.2'),
             ('six', '1.7.3')
         ]
         self.assertListEqual(

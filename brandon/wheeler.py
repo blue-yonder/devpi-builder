@@ -41,11 +41,11 @@ class Builder(object):
         matches = wheel.util.matches_requirement('{}=={}'.format(name, version), candidates)
         return str(matches[0])
 
-    def build(self, project, version):
+    def build(self, package, version):
         """
         Build a wheel for the given version of the given project.
 
-        :param project: The name of the project
+        :param package: The name of the project
         :param version: The version to generate the wheel for
         :return: The path of the build wheel. Valid until the context is exited.
         """
@@ -54,6 +54,6 @@ class Builder(object):
             '--wheel-dir=' + self.wheelhouse,
             '--download-cache=' + self.cachedir,
             '--build=' + self.builddir,
-            '{}=={}'.format(project, version)
+            '{}=={}'.format(package, version)
         ])
-        return self._find_wheel(project, version)
+        return self._find_wheel(package, version)
