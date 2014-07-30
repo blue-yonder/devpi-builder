@@ -1,0 +1,6 @@
+# https://github.com/coagulant/coveralls-python
+#  Limit output to necessary files
+[report]
+omit =
+    */python?.?/*
+    */site-packages/nose/*
