@@ -17,7 +17,8 @@ def main(args=None):
 
     args = parser.parse_args(args=args)
 
-    with wheeler.Builder() as builder:
+    with wheeler.Builder() as builder, devpi.Client(args.index) as devpi_client:
         for (package, version) in requirements.read(args.requirements):
-            print 'Building {} {}'.format(package, version)
-            wheel_file = builder(package, version)
+            if not devpi_client.package_version_exists(package, version):
+                print 'Building {} {}'.format(package, version)
+                wheel_file = builder(package, version)
