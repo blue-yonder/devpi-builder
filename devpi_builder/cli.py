@@ -4,8 +4,7 @@ Command line interface for brandon
 
 import argparse
 
-from devpi_builder import requirements
-from devpi_builder import wheeler
+from devpi_builder import requirements, wheeler, devpi
 
 
 __author__ = 'mbach'

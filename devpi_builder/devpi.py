@@ -4,6 +4,7 @@ Functionality for interacting with a devpi instance.
 
 import subprocess
 import tempfile
+import shutil
 
 __author__ = 'mbach'
 
@@ -12,13 +13,19 @@ class Client(object):
     """
     Wrapper object around the devpi client exposing features required by devpi_builder.
     """
-
     def _execute(self, *args):
-        return subprocess.check_output(['devpi', '--clientdir={}'.format(self.client_dir)] + list(args))
+        return subprocess.check_output(['devpi', '--clientdir={}'.format(self._client_dir)] + list(args))
 
     def __init__(self, index_url):
-        self.client_dir = tempfile.mkdtemp()
-        self._execute('use', index_url)
+        self._index_url = index_url
+
+    def __enter__(self):
+        self._client_dir = tempfile.mkdtemp()
+        self._execute('use', self._index_url)
+        return self
+
+    def __exit__(self, *args):
+        shutil.rmtree(self._client_dir)
 
     def package_version_exists(self, package, version):
         """

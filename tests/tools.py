@@ -33,12 +33,12 @@ def devpi_index(server_url, user, index):
     Yields of tuple of index-url and password. The index is created without an upstream.
     """
     password = 'foo'
-    devpi_client = devpi.Client(server_url)
-    devpi_client._execute('user', '-c', user, 'password=' + password)
-    devpi_client._execute('login', user, '--password=' + password)
-    devpi_client._execute('index', '-c', 'wheels', 'bases=')
+    with devpi.Client(server_url) as devpi_client:
+        devpi_client._execute('user', '-c', user, 'password=' + password)
+        devpi_client._execute('login', user, '--password=' + password)
+        devpi_client._execute('index', '-c', 'wheels', 'bases=')
 
-    yield '{}/{}/{}'.format(server_url, user, index), password
+        yield '{}/{}/{}'.format(server_url, user, index), password
 
-    devpi_client._execute('index', '--delete', '/{}/{}'.format(user, index))
-    devpi_client._execute('user', user, '--delete')
+        devpi_client._execute('index', '--delete', '/{}/{}'.format(user, index))
+        devpi_client._execute('user', user, '--delete')
