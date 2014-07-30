@@ -1,6 +1,7 @@
 Brandon the Devpi Builder
 =========================
 [![Requirements Status](https://requires.io/github/blue-yonder/devpi-builder/requirements.png?branch=master)](https://requires.io/github/blue-yonder/devpi-builder/requirements/?branch=master)
+[![Build Status](https://travis-ci.org/blue-yonder/devpi-builder.svg?branch=master)](https://travis-ci.org/blue-yonder/devpi-builder)
 
 This tools takes a list of python packages, specified as in an `requirements.txt` and incrementally fills a
 [devpi](http://doc.devpi.net/latest/) index with them.
