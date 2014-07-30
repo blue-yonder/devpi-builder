@@ -2,7 +2,7 @@ __author__ = 'mbach'
 
 import unittest
 
-from brandon import requirements
+from devpi_builder import requirements
 
 
 class TestRequirements(unittest.TestCase):

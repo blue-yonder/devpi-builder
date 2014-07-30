@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name = 'Brandon',
+    name = 'devpi-builder',
     version = '0.1-dev',
     packages = find_packages(exclude=['tests']),
     author='Matthias Bach',
@@ -35,7 +35,7 @@ setup(
     ],
       entry_points={
         'console_scripts': [
-            'nbsystem = brandon.cli:main',
+            'nbsystem = devpi_builder.cli:main',
         ],
       },
 )

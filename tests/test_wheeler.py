@@ -1,7 +1,7 @@
 import os.path as path
 import unittest
 
-from brandon import wheeler
+from devpi_builder import wheeler
 
 
 __author__ = 'mbach'

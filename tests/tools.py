@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import tempfile
 
-from brandon import devpi
+from devpi_builder import devpi
 
 @contextlib.contextmanager
 def devpi_server(port=2414):

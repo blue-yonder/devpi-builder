@@ -10,7 +10,7 @@ __author__ = 'mbach'
 
 class Client(object):
     """
-    Wrapper object around the devpi client exposing features required by brandon.
+    Wrapper object around the devpi client exposing features required by devpi_builder.
     """
 
     def _execute(self, *args):

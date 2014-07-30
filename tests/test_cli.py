@@ -2,8 +2,8 @@ __author__ = 'mbach'
 
 import unittest
 
-from brandon.cli import main
-from brandon import devpi
+from devpi_builder.cli import main
+from devpi_builder import devpi
 
 from tests.tools import devpi_server, devpi_index
 

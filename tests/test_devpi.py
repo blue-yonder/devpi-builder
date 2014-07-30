@@ -2,7 +2,7 @@ __author__ = 'mbach'
 
 import unittest
 
-from brandon import devpi
+from devpi_builder import devpi
 
 from tests.tools import devpi_server
 
