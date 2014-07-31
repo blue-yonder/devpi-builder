@@ -22,7 +22,7 @@ class WheelTest(unittest.TestCase):
     def test_provides_file_thats_already_a_wheel(self):
         with wheeler.Builder() as builder:
             wheel_file = builder('wheel', '0.24')
-            print wheel_file
+            print(wheel_file)
             self.assert_(path.exists(wheel_file))
 
 if __name__ == '__main__':
