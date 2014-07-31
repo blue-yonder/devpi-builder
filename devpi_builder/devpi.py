@@ -5,6 +5,7 @@ Functionality for interacting with a devpi instance.
 import subprocess
 import tempfile
 import shutil
+import locale
 
 __author__ = 'mbach'
 
@@ -42,7 +43,8 @@ class Client(object):
         try:
             return "" != self._execute('list', '{}=={}'.format(package, version))
         except subprocess.CalledProcessError as e:
-            if '404' in e.output:
+            encoding = locale.getdefaultlocale()[1]
+            if '404' in e.output.decode(encoding):
                 # package does not exist
                 return False
             else:
