@@ -22,6 +22,6 @@ def main(args=None):
     with wheeler.Builder() as builder, devpi.Client(args.index, args.user, args.password) as devpi_client:
         for (package, version) in requirements.read(args.requirements):
             if not devpi_client.package_version_exists(package, version):
-                print 'Building {} {}'.format(package, version)
+                print('Building {} {}'.format(package, version))
                 wheel_file = builder(package, version)
                 devpi_client.upload(wheel_file)
