@@ -1,5 +1,8 @@
 *.egg
 *.egg-info
+.idea
 atlassian-ide-plugin.xml
 *.pyc
 venv/
+build
+dist
