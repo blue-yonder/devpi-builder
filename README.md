@@ -48,4 +48,4 @@ Planned
 License
 -------
 
-New BSD
+[New BSD](COPYING)
