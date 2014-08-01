@@ -24,17 +24,11 @@ class TestClient(unittest.TestCase):
                     self.assert_(devpi_client.package_version_exists('progressbar', '?!'))
 
     def test_upload_package_version(self):
-        import subprocess, locale
-        try:
-            user = 'test'
-            with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
-                with devpi.Client(server_url + '/test/wheels', user, password) as devpi_client:
-                    devpi_client.upload('tests/fixture/package/dist/test_package-0.1_dev-cp27-none-linux_x86_64.whl')
-                    self.assert_(devpi_client.package_version_exists('test_package', '0.1-dev'))
-        except subprocess.CalledProcessError as e:
-            encoding = locale.getdefaultlocale()[1]
-            print(e.output.decode(encoding))
-            raise e
+        user = 'test'
+        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+            with devpi.Client(server_url + '/test/wheels', user, password) as devpi_client:
+                devpi_client.upload('tests/fixture/package/dist/test_package-0.1_dev-cp27-none-linux_x86_64.whl')
+                self.assert_(devpi_client.package_version_exists('test_package', '0.1-dev'))
 
 
 if __name__ == '__main__':
