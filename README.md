@@ -9,17 +9,24 @@ This tools takes a list of python packages, specified as in an `requirements.txt
 
 Usage:
 
-    devpi-builder --help
-    usage: devpi-builder [-h] requirements index user password
-
-    Create wheels for all given project versions and upload them to the given index.
-
+    usage: devpi-builder [-h] [--blacklist BLACKLIST]
+                         requirements index user password
+    
+    Create wheels for all given project versions and upload them to the given
+    index.
+    
     positional arguments:
-        requirements  requirements.txt style file specifying which project versions to package.
-        index         The index to upload the packaged software to.
-        user          The user to log in as.
-        password      Password of the user.
-
+      requirements          requirements.txt style file specifying which project
+                            versions to package.
+      index                 The index to upload the packaged software to.
+      user                  The user to log in as.
+      password              Password of the user.
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --blacklist BLACKLIST
+                            Packages matched by this requirements.txt style file
+                            will never be build.
 
 Example requirements textfile:
 
@@ -34,12 +41,12 @@ Features
  * Reads a `requirements.txt` stile input file.
  * Multiple versions of a package may be imported in the same file
  * Only builds packages not yet in the target index.
+ * Supports a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding
+   their interdependency with other packages).
 
 
 Planned
 -------
- * Supports a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding
-   their interdependency with other packages).
  * Support extras
  * Can use separate indices for plain python packages and those with binary contents.
     - Optionally only operates on one of the two.
