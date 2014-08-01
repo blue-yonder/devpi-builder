@@ -32,6 +32,10 @@ class TestRequirements(unittest.TestCase):
         with self.assertRaises(ValueError):
             requirements.read('tests/sample_inexact_version.txt')
 
+    def test_fail_on_no_version(self):
+        with self.assertRaises(ValueError):
+            requirements.read('tests/sample_no_version.txt')
+
     def test_fail_on_multiple_versions_on_line(self):
         with self.assertRaises(ValueError):
             requirements.read('tests/sample_multiple_versions_on_line.txt')

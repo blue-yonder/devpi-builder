@@ -23,8 +23,10 @@ def _extract_project_version(requirement):
             return requirement.project_name, spec[1]
         else:
             raise ValueError('Versions must be specified exactly. "{}" is not an exact version specification.'.format(requirement))
-    else:
+    elif len(specs) > 1:
         raise ValueError('Multiple version specifications on a single line are not supported.')
+    else:
+        raise ValueError('Version specification is missing for "{}".'.format(requirement))
 
 
 def read(filename):
