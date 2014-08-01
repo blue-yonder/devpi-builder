@@ -2,14 +2,14 @@
 
 __author__ = 'mbach'
 
-import multiprocessing # avoid crash on teardown
+import multiprocessing  # avoid crash on teardown
 from setuptools import setup, find_packages
 
 
 setup(
-    name = 'devpi-builder',
-    version = '0.1.0',
-    packages = find_packages(exclude=['tests']),
+    name='devpi-builder',
+    version='0.1.0',
+    packages=find_packages(exclude=['tests']),
     author='Matthias Bach',
     author_email='matthias.bach@blue-yonder.com',
     description='Fill in index with wheels from an requirements.txt-like specification file.',
@@ -35,9 +35,9 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Topic :: System :: Archiving :: Packaging'
     ],
-      entry_points={
+    entry_points={
         'console_scripts': [
             'devpi-builder = devpi_builder.cli:main',
         ],
-      },
+    },
 )

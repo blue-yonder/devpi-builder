@@ -14,6 +14,7 @@ import tempfile
 
 from devpi_builder import devpi
 
+
 @contextlib.contextmanager
 def devpi_server(port=2414):
     server_dir = tempfile.mkdtemp()

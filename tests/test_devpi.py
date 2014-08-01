@@ -25,6 +25,5 @@ class TestClient(unittest.TestCase):
                 self.assert_(devpi_client.package_version_exists('test_package', '0.1-dev'))
 
 
-
 if __name__ == '__main__':
     unittest.main()

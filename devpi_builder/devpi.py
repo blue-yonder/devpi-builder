@@ -27,7 +27,7 @@ class Client(object):
     def __enter__(self):
         self._client_dir = tempfile.mkdtemp()
         self._execute('use', self._index_url)
-        if self._user and self._password != None:
+        if self._user and self._password is not None:
             self._execute('login', self._user, '--password', self._password)
         return self
 
