@@ -27,9 +27,8 @@ def main(args=None):
         for package, version in requirements.read(args.requirements):
 
             if devpi_client.package_version_exists(package, version):
-                continue
-
-            if args.blacklist and requirements.matched_by_file(package, version, args.blacklist):
+                logger.debug('Skipping %s %s as is already available on the index.', package, version)
+            elif args.blacklist and requirements.matched_by_file(package, version, args.blacklist):
                 logger.info('Skipping %s %s as it is matched by the blacklist.', package, version)
             else:
                 logger.info('Building %s %s', package, version)
