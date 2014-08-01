@@ -23,7 +23,7 @@ def main(args=None):
         for (package, version) in requirements.read(args.requirements):
             if not devpi_client.package_version_exists(package, version):
                 if args.blacklist and requirements.matched_by_file(package, version, args.blacklist):
-                    print('Skipping {} {} as it is matched by the blacklist.')
+                    print('Skipping {} {} as it is matched by the blacklist.'.format(package, version))
                 else:
                     print('Building {} {}.'.format(package, version))
                     try:
