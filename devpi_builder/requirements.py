@@ -6,8 +6,6 @@ Functionality for reading specifications of required packages.
 
 import pkg_resources
 
-__author__ = 'mbach'
-
 
 def _extract_project_version(requirement):
     """

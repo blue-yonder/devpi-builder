@@ -4,9 +4,6 @@
 Test tools required by multiple suites.
 """
 
-__author__ = 'mbach'
-
-
 import contextlib
 import shutil
 import subprocess

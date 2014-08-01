@@ -1,7 +1,5 @@
 # coding=utf-8
 
-__author__ = 'mbach'
-
 import unittest
 
 from devpi_builder import devpi

@@ -9,8 +9,6 @@ import tempfile
 import shutil
 import locale
 
-__author__ = 'mbach'
-
 
 class Client(object):
     """

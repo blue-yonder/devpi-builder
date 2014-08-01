@@ -6,9 +6,6 @@ import unittest
 from devpi_builder import wheeler
 
 
-__author__ = 'mbach'
-
-
 class WheelTest(unittest.TestCase):
     def test_build(self):
         with wheeler.Builder() as builder:

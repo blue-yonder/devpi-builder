@@ -9,9 +9,6 @@ import argparse
 from devpi_builder import requirements, wheeler, devpi
 
 
-__author__ = 'mbach'
-
-
 def main(args=None):
     parser = argparse.ArgumentParser(description='Create wheels for all given project versions and upload them to the given index.')
     parser.add_argument('requirements', help='requirements.txt style file specifying which project versions to package.')
