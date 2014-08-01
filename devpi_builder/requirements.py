@@ -55,15 +55,10 @@ def matched_by_file(package, version, filename):
     """
     version = pkg_resources.safe_version('{}'.format(version))
     package = pkg_resources.safe_name(package)
-    print('Requested: {}{}'.format(package, version))
     with open(filename) as input_file:
         parsed_requirements = list(pkg_resources.parse_requirements(input_file))
-        for requirement in parsed_requirements:
-            print('{} in {}? {}'.format(version, requirement, version in requirement))
-            print('{} == {}? {}'.format(package, requirement.project_name, package == requirement.project_name))
         matches = [
             package == requirement.project_name and version in requirement
             for requirement in parsed_requirements
         ]
-        print(matches)
         return any(matches)
