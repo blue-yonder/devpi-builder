@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='devpi-builder',
-    version='0.2.0',
+    version='0.2.1.dev',
     packages=find_packages(exclude=['tests']),
     author='Matthias Bach',
     author_email='matthias.bach@blue-yonder.com',
