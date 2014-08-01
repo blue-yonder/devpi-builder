@@ -26,5 +26,8 @@ def main(args=None):
                     print('Skipping {} {} as it is matched by the blacklist.')
                 else:
                     print('Building {} {}.'.format(package, version))
-                    wheel_file = builder(package, version)
-                    devpi_client.upload(wheel_file)
+                    try:
+                        wheel_file = builder(package, version)
+                        devpi_client.upload(wheel_file)
+                    except wheeler.BuildError as e:
+                        print(e)

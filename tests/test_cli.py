@@ -38,6 +38,15 @@ class CliTest(unittest.TestCase):
                 self.assertTrue(devpi_client.package_version_exists('progressbar', '2.1'))
                 self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
 
+    def test_continue_on_failed(self):
+        user = 'test'
+        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+
+            main(['tests/sample_continue_on_failed.txt', destination_index, user, password])
+
+            with devpi.Client(destination_index) as devpi_client:
+                self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -24,5 +24,10 @@ class WheelTest(unittest.TestCase):
             print(wheel_file)
             self.assert_(path.exists(wheel_file))
 
+    def test_throws_custom_on_build_failure(self):
+        with wheeler.Builder() as builder:
+            with self.assertRaises(wheeler.BuildError):
+                builder('package_that_hopefull_does_not_exist', '99.999')
+
 if __name__ == '__main__':
     unittest.main()

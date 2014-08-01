@@ -14,6 +14,16 @@ import wheel.install
 import wheel.util
 
 
+class BuildError(Exception):
+    def __init__(self, package, version, root_exception):
+        super(BuildError, self).__init__('Failed to create wheel for {} {}:\n{}\nOutput:\n{}'.format(
+            package,
+            version,
+            root_exception,
+            root_exception.output if root_exception.output else ''
+        ))
+
+
 class Builder(object):
     """
     Provides a context in which wheels can be generated. If the context goes out of scope all created files will be
@@ -49,11 +59,14 @@ class Builder(object):
         :return: The path of the build wheel. Valid until the context is exited.
         """
         shutil.rmtree(self.builddir, ignore_errors=True)
-        subprocess.check_call([
-            'pip', 'wheel',
-            '--wheel-dir=' + self.wheelhouse,
-            '--download-cache=' + self.cachedir,
-            '--build=' + self.builddir,
-            '{}=={}'.format(package, version)
-        ])
-        return self._find_wheel(package, version)
+        try:
+            subprocess.check_output([
+                'pip', 'wheel',
+                '--wheel-dir=' + self.wheelhouse,
+                '--download-cache=' + self.cachedir,
+                '--build=' + self.builddir,
+                '{}=={}'.format(package, version)
+            ])
+            return self._find_wheel(package, version)
+        except subprocess.CalledProcessError as e:
+            raise BuildError(package, version, e)
