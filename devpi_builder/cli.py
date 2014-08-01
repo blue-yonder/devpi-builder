@@ -20,14 +20,17 @@ def main(args=None):
     args = parser.parse_args(args=args)
 
     with wheeler.Builder() as builder, devpi.Client(args.index, args.user, args.password) as devpi_client:
-        for (package, version) in requirements.read(args.requirements):
-            if not devpi_client.package_version_exists(package, version):
-                if args.blacklist and requirements.matched_by_file(package, version, args.blacklist):
-                    print('Skipping {} {} as it is matched by the blacklist.'.format(package, version))
-                else:
-                    print('Building {} {}.'.format(package, version))
-                    try:
-                        wheel_file = builder(package, version)
-                        devpi_client.upload(wheel_file)
-                    except wheeler.BuildError as e:
-                        print(e)
+        for package, version in requirements.read(args.requirements):
+
+            if devpi_client.package_version_exists(package, version):
+                continue
+
+            if args.blacklist and requirements.matched_by_file(package, version, args.blacklist):
+                print('Skipping {} {} as it is matched by the blacklist.'.format(package, version))
+            else:
+                print('Building {} {}.'.format(package, version))
+                try:
+                    wheel_file = builder(package, version)
+                    devpi_client.upload(wheel_file)
+                except wheeler.BuildError as e:
+                    print(e)
