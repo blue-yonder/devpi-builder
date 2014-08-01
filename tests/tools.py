@@ -16,11 +16,11 @@ from devpi_builder import devpi
 def devpi_server(port=2414):
     server_dir = tempfile.mkdtemp()
     try:
-        subprocess.check_call(['devpi-server', '--start', '--serverdir={}'.format(server_dir), '--port={}'.format(port)])
+        subprocess.check_output(['devpi-server', '--start', '--serverdir={}'.format(server_dir), '--port={}'.format(port)], stderr=subprocess.STDOUT)
         try:
             yield 'http://localhost:{}'.format(port)
         finally:
-            subprocess.check_call(['devpi-server', '--stop', '--serverdir={}'.format(server_dir)])
+            subprocess.check_output(['devpi-server', '--stop', '--serverdir={}'.format(server_dir)], stderr=subprocess.STDOUT)
     finally:
         shutil.rmtree(server_dir)
 
