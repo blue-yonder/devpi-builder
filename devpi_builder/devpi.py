@@ -1,3 +1,5 @@
+# coding=utf-8
+
 """
 Functionality for interacting with a devpi instance.
 """

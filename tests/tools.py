@@ -1,3 +1,5 @@
+# coding=utf-8
+
 """
 Test tools required by multiple suites.
 """

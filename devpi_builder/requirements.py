@@ -1,3 +1,5 @@
+# coding=utf-8
+
 """
 Functionality for reading specifications of required packages.
 """

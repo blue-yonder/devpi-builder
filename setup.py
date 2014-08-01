@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __author__ = 'mbach'
 
 import multiprocessing # avoid crash on teardown
