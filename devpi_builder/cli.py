@@ -5,8 +5,12 @@ Command line interface for brandon
 """
 
 import argparse
+import logging
 
 from devpi_builder import requirements, wheeler, devpi
+
+logging.basicConfig()
+logger = logging.getLogger(__name__)
 
 
 def main(args=None):
@@ -26,11 +30,11 @@ def main(args=None):
                 continue
 
             if args.blacklist and requirements.matched_by_file(package, version, args.blacklist):
-                print('Skipping {} {} as it is matched by the blacklist.'.format(package, version))
+                logger.info('Skipping %s %s as it is matched by the blacklist.', package, version)
             else:
-                print('Building {} {}.'.format(package, version))
+                logger.info('Building %s %s', package, version)
                 try:
                     wheel_file = builder(package, version)
                     devpi_client.upload(wheel_file)
                 except wheeler.BuildError as e:
-                    print(e)
+                    logger.exception(e)
