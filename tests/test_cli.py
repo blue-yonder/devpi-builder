@@ -13,7 +13,7 @@ class CliTest(unittest.TestCase):
         user = 'test'
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
 
-            main(['tests/sample_simple.txt', destination_index, user, password])
+            main(['tests/fixture/sample_simple.txt', destination_index, user, password])
 
             with devpi.Client(destination_index) as devpi_client:
                 self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
@@ -22,7 +22,7 @@ class CliTest(unittest.TestCase):
         user = 'test'
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
 
-            main(['tests/sample_simple.txt', destination_index, user, password, '--blacklist={}'.format('tests/sample_no_version.txt')])
+            main(['tests/fixture/sample_simple.txt', destination_index, user, password, '--blacklist={}'.format('tests/fixture/sample_no_version.txt')])
 
             with devpi.Client(destination_index) as devpi_client:
                 self.assertFalse(devpi_client.package_version_exists('progressbar', '2.2'))
@@ -32,7 +32,7 @@ class CliTest(unittest.TestCase):
         user = 'test'
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
 
-            main(['tests/sample_multiple_versions.txt', destination_index, user, password])
+            main(['tests/fixture/sample_multiple_versions.txt', destination_index, user, password])
 
             with devpi.Client(destination_index) as devpi_client:
                 self.assertTrue(devpi_client.package_version_exists('progressbar', '2.1'))
@@ -42,7 +42,7 @@ class CliTest(unittest.TestCase):
         user = 'test'
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
 
-            main(['tests/sample_continue_on_failed.txt', destination_index, user, password])
+            main(['tests/fixture/sample_continue_on_failed.txt', destination_index, user, password])
 
             with devpi.Client(destination_index) as devpi_client:
                 self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
