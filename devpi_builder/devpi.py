@@ -14,9 +14,6 @@ class Client(object):
     """
     Wrapper object around the devpi client exposing features required by devpi_builder.
     """
-    def _execute(self, *args):
-        return subprocess.check_output(['devpi'] + list(args) + ['--clientdir={}'.format(self._client_dir)])
-
     def __init__(self, index_url, user=None, password=None):
         self._index_url = index_url
         self._user = user
@@ -31,6 +28,9 @@ class Client(object):
 
     def __exit__(self, *args):
         shutil.rmtree(self._client_dir)
+
+    def _execute(self, *args):
+        return subprocess.check_output(['devpi'] + list(args) + ['--clientdir={}'.format(self._client_dir)])
 
     def package_version_exists(self, package, version):
         """
