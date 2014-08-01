@@ -35,10 +35,35 @@ def read(filename):
 
     Multiple versions may be specified for a project, however each project must have an exact (==) version specified.
 
-    :param filename: Filename of the requirements style file.
+    :param filename: Filename of the requirements-style file.
     :return: A list of package-version pairs.
     """
     with open(filename) as input_file:
         return [
             _extract_project_version(requirement) for requirement in pkg_resources.parse_requirements(input_file)
         ]
+
+
+def matched_by_file(package, version, filename):
+    """
+    Verify whether the given version of the package is matched by the given requirements file.
+
+    :param package: Name of the package to look for
+    :param version: Version of the package to look for
+    :param filename: Filename of the requirements-style file.
+    :return: True if the package can be used to fulfil on of the requirements in the file, False otherwise
+    """
+    version = pkg_resources.safe_version('{}'.format(version))
+    package = pkg_resources.safe_name(package)
+    print('Requested: {}{}'.format(package, version))
+    with open(filename) as input_file:
+        parsed_requirements = list(pkg_resources.parse_requirements(input_file))
+        for requirement in parsed_requirements:
+            print('{} in {}? {}'.format(version, requirement, version in requirement))
+            print('{} == {}? {}'.format(package, requirement.project_name, package == requirement.project_name))
+        matches = [
+            package == requirement.project_name and version in requirement
+            for requirement in parsed_requirements
+        ]
+        print(matches)
+        return any(matches)
