@@ -30,7 +30,7 @@ class Client(object):
         shutil.rmtree(self._client_dir)
 
     def _execute(self, *args):
-        return subprocess.check_output(['devpi'] + list(args) + ['--clientdir={}'.format(self._client_dir)])
+        return subprocess.check_output(['devpi'] + list(args) + ['--clientdir={}'.format(self._client_dir)], stderr=subprocess.STDOUT)
 
     def package_version_exists(self, package, version):
         """
@@ -45,10 +45,9 @@ class Client(object):
         except subprocess.CalledProcessError as e:
             encoding = locale.getdefaultlocale()[1]
             if '404' in e.output.decode(encoding):
-                # package does not exist
-                return False
+                return False # package does not exist
             else:
-                raise
+                raise e
 
     def upload(self, file):
         """

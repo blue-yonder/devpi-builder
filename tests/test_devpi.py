@@ -15,6 +15,14 @@ class TestClient(unittest.TestCase):
                 self.assert_(devpi_client.package_version_exists('progressbar', '2.2'))
                 self.assertFalse(devpi_client.package_version_exists('invalid_package_name', '14.234'))
 
+    def test_crashing_package_version_check(self):
+        with devpi_server() as server_url:
+            with devpi.Client(server_url + '/root/pypi') as devpi_client:
+                with self.assertRaises(Exception):
+                    self.assert_(devpi_client.package_version_exists('progressbar', ''))
+                with self.assertRaises(Exception):
+                    self.assert_(devpi_client.package_version_exists('progressbar', '?!'))
+
     def test_upload_package_version(self):
         user = 'test'
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
