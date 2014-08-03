@@ -4,10 +4,23 @@ Brandon the Devpi Builder
 [![Coverage Status](https://coveralls.io/repos/blue-yonder/devpi-builder/badge.png?branch=master)](https://coveralls.io/r/blue-yonder/devpi-builder?branch=master)
 [![Requirements Status](https://requires.io/github/blue-yonder/devpi-builder/requirements.png?branch=master)](https://requires.io/github/blue-yonder/devpi-builder/requirements/?branch=master)
 
-This tools takes a list of python packages, specified as in an `requirements.txt` and incrementally fills a
-[devpi](http://doc.devpi.net/latest/) index with them.
+Brando, the devpi-builder, takes a `requirements.txt` and incrementally fills a [devpi](http://doc.devpi.net/latest/) index with wheels of the listed python packages.
 
-Usage:
+
+Brandon by Example:
+-------------------
+
+Given a `requirements.txt`, we can upload all listed packages to the index `opensource/Debian_7` using the following command
+
+    $ devpi-builder requirements.txt opensource/Debian_7 opensource mypassword
+    
+Example of such a requirements.txt:
+
+    progressbar==0.2.2 
+    progressbar==0.2.1 
+    six==1.7.3
+
+Detailed usage:
 
     usage: devpi-builder [-h] [--blacklist BLACKLIST]
                          requirements index user password
@@ -28,28 +41,16 @@ Usage:
                             Packages matched by this requirements.txt style file
                             will never be build.
 
-Example requirements textfile:
 
-    progressbar==0.2.2
-    progressbar==0.2.1 
-    six==1.7.3
+Feaures & Backlog
+------------------
 
-
-Features
---------
-
- * Reads a `requirements.txt` stile input file.
- * Multiple versions of a package may be imported in the same file
- * Only builds packages not yet in the target index.
- * Supports a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding
-   their interdependency with other packages).
-
-
-Planned
--------
- * Support extras
- * Can use separate indices for plain python packages and those with binary contents.
-    - Optionally only operates on one of the two.
+ * [x] Read a `requirements.txt` stile input file.
+ * [x] Support multiple versions of a package in the same file 
+ * [x] Only build packages not yet in the target index.
+ * [x] Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).
+ * [ ] Support extras requirements of packages
+ * [ ] Can use separate indices for plain python packages and those with binary contents. Optionally only operates on one of the two.
 
 
 License
