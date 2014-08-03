@@ -5,6 +5,8 @@ __author__ = 'mbach'
 import multiprocessing  # avoid crash on teardown
 from setuptools import setup, find_packages
 
+with open('README.md') as f:
+    readme = f.read()
 
 setup(
     name='devpi-builder',
@@ -12,7 +14,8 @@ setup(
     packages=find_packages(exclude=['tests']),
     author='Matthias Bach',
     author_email='matthias.bach@blue-yonder.com',
-    description='Fill in index with wheels from an requirements.txt-like specification file.',
+    description='Devpi-builder takes a requirements.txt and incrementally fills a devpi index with wheels of the listed python packages.',
+    long_description=readme,
     license='new BSD',
     install_requires=[
         'setuptools',
