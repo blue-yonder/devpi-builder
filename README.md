@@ -18,7 +18,7 @@ Example of such a requirements.txt:
 
     progressbar==0.2.2 
     progressbar==0.2.1 
-    six==1.7.3
+    PyYAML==3.11
 
 Commandline Usage
 -----------------
