@@ -10,7 +10,7 @@ Brando, the devpi-builder, takes a `requirements.txt` and incrementally fills a 
 Brandon by Example:
 -------------------
 
-Given a `requirements.txt`, we can upload all listed packages to the index `opensource/Debian_7` using the following command
+Given a `requirements.txt`, we can upload all listed packages to the index `opensource/Debian_7` using the following command:
 
     $ devpi-builder requirements.txt opensource/Debian_7 opensource mypassword
     
@@ -20,7 +20,8 @@ Example of such a requirements.txt:
     progressbar==0.2.1 
     six==1.7.3
 
-Detailed usage:
+Commandline Usage
+-----------------
 
     usage: devpi-builder [-h] [--blacklist BLACKLIST]
                          requirements index user password
