@@ -59,7 +59,17 @@ class CliTest(unittest.TestCase):
             with devpi.Client(destination_index) as devpi_client:
                 self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
 
+    def test_different_styles(self):
+        user = 'test'
+        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
 
+            main(['tests/fixture/sample_different_styles.txt', destination_index, user, password])
+
+            with devpi.Client(destination_index) as devpi_client:
+                self.assertTrue(devpi_client.package_version_exists('pygments', '1.6'))
+                self.assertTrue(devpi_client.package_version_exists('Pygments', '1.6'))
+                self.assertTrue(devpi_client.package_version_exists('Django', '1.6.5'))
+                self.assertTrue(devpi_client.package_version_exists('django', '1.6.5'))
 
 
 if __name__ == '__main__':

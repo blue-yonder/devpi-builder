@@ -1,0 +1,4 @@
+Pygments==1.6
+pygments==1.6
+django==1.6.5
+Django==1.6.5
