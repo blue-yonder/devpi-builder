@@ -2,6 +2,7 @@ Brandon the Devpi Builder
 =========================
 [![Build Status](https://travis-ci.org/blue-yonder/devpi-builder.svg?branch=master)](https://travis-ci.org/blue-yonder/devpi-builder)
 [![Coverage Status](https://coveralls.io/repos/blue-yonder/devpi-builder/badge.png?branch=master)](https://coveralls.io/r/blue-yonder/devpi-builder?branch=master)
+[![Latest Version](https://pypip.in/version/devpi-builder/badge.svg)](https://pypi.python.org/pypi/<PYPI_PKG_NAME>/)
 [![Requirements Status](https://requires.io/github/blue-yonder/devpi-builder/requirements.png?branch=master)](https://requires.io/github/blue-yonder/devpi-builder/requirements/?branch=master)
 
 Brando, the devpi-builder, takes a `requirements.txt` and incrementally fills a [devpi](http://doc.devpi.net/latest/) index with wheels of the listed python packages.
