@@ -18,7 +18,8 @@ setup(
     install_requires=[
         'setuptools',
         'devpi-client',
-        'wheel'
+        'wheel',
+        'pip>=1.5.3'
     ],
     setup_requires=[
         'nose>=1.0'
