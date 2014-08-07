@@ -15,12 +15,12 @@ import wheel.util
 
 
 class BuildError(Exception):
-    def __init__(self, package, version, root_exception):
+    def __init__(self, package, version, root_exception=None):
         super(BuildError, self).__init__('Failed to create wheel for {} {}:\n{}\nOutput:\n{}'.format(
             package,
             version,
             root_exception,
-            root_exception.output if root_exception.output else ''
+            root_exception.output if hasattr(root_exception, 'output') and root_exception.output else ''
         ))
 
 
@@ -48,7 +48,10 @@ class Builder(object):
             wheel.install.WheelFile(filename) for filename in glob.glob(path.join(self.wheelhouse, '*.whl'))
         ]
         matches = wheel.util.matches_requirement('{}=={}'.format(name, version), candidates)
-        return str(matches[0])
+        if len(matches) > 0:
+            return str(matches[0])
+        else:
+            raise BuildError(name, version, 'Failed to find the build wheel for {} {}'.format(name, version))
 
     def build(self, package, version):
         """
