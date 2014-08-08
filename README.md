@@ -44,7 +44,7 @@ Commandline Usage
                             will never be build.
 
 
-Feaures & Backlog
+Features & Backlog
 ------------------
 
  * [x] Read a `requirements.txt` stile input file.
