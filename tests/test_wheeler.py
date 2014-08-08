@@ -28,5 +28,10 @@ class WheelTest(unittest.TestCase):
             with self.assertRaises(wheeler.BuildError):
                 builder('package_that_hopefully_does_not_exist', '99.999')
 
+    def test_look_for_non_existing_wheel(self):
+        with wheeler.Builder() as builder:
+            with self.assertRaises(wheeler.BuildError):
+                builder('nothing_can_be_found', '1.1')
+
 if __name__ == '__main__':
     unittest.main()
