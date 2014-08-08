@@ -36,7 +36,7 @@ def devpi_index(server_url, user, index):
     with devpi.Client(server_url) as devpi_client:
         devpi_client._execute('user', '-c', user, 'password=' + password)
         devpi_client._execute('login', user, '--password=' + password)
-        devpi_client._execute('index', '-c', 'wheels', 'bases=')
+        devpi_client._execute('index', '-c', index, 'bases=')
 
         yield '{}/{}/{}'.format(server_url, user, index), password
 
