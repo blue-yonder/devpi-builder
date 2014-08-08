@@ -26,6 +26,7 @@ setup(
     ],
     tests_require=[
         'nose>=1.0',
+        'coverage',
         'devpi-server'
     ],
     test_suite='nose.collector',
