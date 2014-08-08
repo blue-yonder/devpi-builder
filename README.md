@@ -5,7 +5,7 @@ Brandon the Devpi Builder
 [![Latest Version](https://pypip.in/version/devpi-builder/badge.svg)](https://pypi.python.org/pypi/devpi-builder/)
 [![Requirements Status](https://requires.io/github/blue-yonder/devpi-builder/requirements.png?branch=master)](https://requires.io/github/blue-yonder/devpi-builder/requirements/?branch=master)
 
-Brando, the devpi-builder, takes a `requirements.txt` and incrementally fills a [devpi](http://doc.devpi.net/latest/) index with wheels of the listed python packages.
+Brandon, the devpi-builder, takes a `requirements.txt` and incrementally fills a [devpi](http://doc.devpi.net/latest/) index with wheels of the listed python packages.
 
 
 Brandon by Example:
