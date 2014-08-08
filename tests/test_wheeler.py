@@ -6,7 +6,7 @@ import unittest
 from devpi_builder import wheeler
 
 
-class WheelTest(unittest.TestCase):
+class BuilderTest(unittest.TestCase):
     def test_build(self):
         with wheeler.Builder() as builder:
             wheel_file = builder('progressbar', '2.2')
@@ -33,6 +33,12 @@ class WheelTest(unittest.TestCase):
         with builder:
             with self.assertRaises(wheeler.BuildError):
                 builder._find_wheel('nothing_can_be_found', '1.1')
+
+
+class WheelerTest(unittest.TestCase):
+    def test_is_pure(self):
+        self.assertTrue(wheeler.is_pure('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl'))
+        self.assertFalse(wheeler.is_pure('tests/fixture/non-pure_package/dist/test_package-0.1_dev-cp27-none-linux_x86_64.whl'))
 
 if __name__ == '__main__':
     unittest.main()

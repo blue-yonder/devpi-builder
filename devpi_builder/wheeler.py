@@ -73,3 +73,16 @@ class Builder(object):
             return self._find_wheel(package, version)
         except subprocess.CalledProcessError as e:
             raise BuildError(package, version, e)
+
+
+def is_pure(path):
+    """
+    Check whether wheel given by the passed path is pure.
+
+    Pure wheels operate independent of the specific Python version and platform.
+
+    :param path: The path to the wheel to inspect
+    :return: True if the wheel is pure
+    """
+    wheel_file = wheel.install.WheelFile(path)
+    return wheel_file.parsed_wheel_info['Root-Is-Purelib'] == 'true'  # safe default
