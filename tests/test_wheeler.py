@@ -11,7 +11,7 @@ class WheelTest(unittest.TestCase):
         with wheeler.Builder() as builder:
             wheel_file = builder('progressbar', '2.2')
             self.assertRegexpMatches(wheel_file, '\.whl$')
-            self.assert_(path.exists(wheel_file))
+            self.assertTrue(path.exists(wheel_file))
 
     def test_cleans_up_created_files(self):
         with wheeler.Builder() as builder:
@@ -21,7 +21,7 @@ class WheelTest(unittest.TestCase):
     def test_provides_file_that_is_already_a_wheel(self):
         with wheeler.Builder() as builder:
             wheel_file = builder('wheel', '0.24')
-            self.assert_(path.exists(wheel_file))
+            self.assertTrue(path.exists(wheel_file))
 
     def test_throws_custom_on_build_failure(self):
         with wheeler.Builder() as builder:
