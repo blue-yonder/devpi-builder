@@ -18,7 +18,7 @@ class WheelTest(unittest.TestCase):
             wheel_file = builder('progressbar', '2.2')
         self.assertFalse(path.exists(wheel_file))
 
-    def test_provides_file_thats_already_a_wheel(self):
+    def test_provides_file_that_is_already_a_wheel(self):
         with wheeler.Builder() as builder:
             wheel_file = builder('wheel', '0.24')
             self.assert_(path.exists(wheel_file))
