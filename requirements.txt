@@ -6,4 +6,5 @@ devpi-client==2.0.1
 devpi-server==2.0.3
 
 nose>=1.0
+mock
 coverage
