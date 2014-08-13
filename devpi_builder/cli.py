@@ -9,7 +9,7 @@ import logging
 
 from devpi_builder import requirements, wheeler, devpi
 
-logging.basicConfig()
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
@@ -23,9 +23,9 @@ def main(args=None):
 
     args = parser.parse_args(args=args)
 
+    packages = requirements.read(args.requirements)
     with wheeler.Builder() as builder, devpi.Client(args.index, args.user, args.password) as devpi_client:
-        for package, version in requirements.read(args.requirements):
-
+        for package, version in packages:
             if devpi_client.package_version_exists(package, version):
                 logger.debug('Skipping %s %s as is already available on the index.', package, version)
             elif args.blacklist and requirements.matched_by_file(package, version, args.blacklist):
