@@ -45,7 +45,7 @@ class Client(object):
         except subprocess.CalledProcessError as e:
             encoding = locale.getdefaultlocale()[1]
             if '404' in e.output.decode(encoding):
-                return False # package does not exist
+                return False  # package does not exist
             else:
                 raise e
 
