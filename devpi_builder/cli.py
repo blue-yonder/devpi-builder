@@ -13,10 +13,12 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-def build_packages(packages, builder, devpi_client, blacklist):
+def build_packages(packages, builder, devpi_client, blacklist, pure_index_client=None):
     for package, version in packages:
         if devpi_client.package_version_exists(package, version):
             logger.debug('Skipping %s %s as is already available on the index.', package, version)
+        elif pure_index_client and pure_index_client.package_version_exists(package, version):
+            logger.debug('Skipping %s %s as is already available on the pure index.', package, version)
         elif blacklist and requirements.matched_by_file(package, version, blacklist):
             logger.info('Skipping %s %s as it is matched by the blacklist.', package, version)
         else:
@@ -35,9 +37,17 @@ def main(args=None):
     parser.add_argument('user', help='The user to log in as.')
     parser.add_argument('password', help='Password of the user.')
     parser.add_argument('--blacklist', help='Packages matched by this requirements.txt style file will never be build.')
+    parser.add_argument('--pure-index', help='The index to use for pure packages. Any non-pure package will be uploaded'
+                                             'to the index given as positional argument. Packages already found in the'
+                                             'pure index will not be built, either.'
+    )
 
     args = parser.parse_args(args=args)
 
     packages = requirements.read(args.requirements)
     with wheeler.Builder() as builder, devpi.Client(args.index, args.user, args.password) as devpi_client:
-        build_packages(packages, builder, devpi_client, args.blacklist)
+        if args.pure_index:
+            with devpi.Client(args.pure_index, args.user, args.password) as pure_index_client:
+                build_packages(packages, builder, devpi_client, args.blacklist, pure_index_client)
+        else:
+            build_packages(packages, builder, devpi_client, args.blacklist)
