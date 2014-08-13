@@ -13,6 +13,21 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
+def build_packages(packages, builder, devpi_client, blacklist):
+    for package, version in packages:
+        if devpi_client.package_version_exists(package, version):
+            logger.debug('Skipping %s %s as is already available on the index.', package, version)
+        elif blacklist and requirements.matched_by_file(package, version, blacklist):
+            logger.info('Skipping %s %s as it is matched by the blacklist.', package, version)
+        else:
+            logger.info('Building %s %s', package, version)
+            try:
+                wheel_file = builder(package, version)
+                devpi_client.upload(wheel_file)
+            except wheeler.BuildError as e:
+                logger.exception(e)
+
+
 def main(args=None):
     parser = argparse.ArgumentParser(description='Create wheels for all given project versions and upload them to the given index.')
     parser.add_argument('requirements', help='requirements.txt style file specifying which project versions to package.')
@@ -25,15 +40,4 @@ def main(args=None):
 
     packages = requirements.read(args.requirements)
     with wheeler.Builder() as builder, devpi.Client(args.index, args.user, args.password) as devpi_client:
-        for package, version in packages:
-            if devpi_client.package_version_exists(package, version):
-                logger.debug('Skipping %s %s as is already available on the index.', package, version)
-            elif args.blacklist and requirements.matched_by_file(package, version, args.blacklist):
-                logger.info('Skipping %s %s as it is matched by the blacklist.', package, version)
-            else:
-                logger.info('Building %s %s', package, version)
-                try:
-                    wheel_file = builder(package, version)
-                    devpi_client.upload(wheel_file)
-                except wheeler.BuildError as e:
-                    logger.exception(e)
+        build_packages(packages, builder, devpi_client, args.blacklist)
