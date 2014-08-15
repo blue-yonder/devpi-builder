@@ -25,7 +25,12 @@ def build_packages(packages, builder, devpi_client, blacklist, pure_index_client
             logger.info('Building %s %s', package, version)
             try:
                 wheel_file = builder(package, version)
-                devpi_client.upload(wheel_file)
+                if pure_index_client and wheeler.is_pure(wheel_file):
+                    logger.debug('Uploading %s %s to pure index %s', package, version, pure_index_client.index_url)
+                    pure_index_client.upload(wheel_file)
+                else:
+                    logger.debug('Uploading %s %s to %s', package, version, devpi_client.index_url)
+                    devpi_client.upload(wheel_file)
             except wheeler.BuildError as e:
                 logger.exception(e)
 

@@ -1,0 +1,2 @@
+progressbar==2.2
+PyYAML==3.10

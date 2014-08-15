@@ -83,13 +83,32 @@ class CliTest(unittest.TestCase):
                 with devpi_index(server_url, pure_user, 'pure') as (pure_index, pure_password):
                     with devpi.Client(pure_index, pure_user, pure_password) as client:
                         client.upload('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl')
-
                     with patch.object(wheeler.Builder, 'build', autospec=True, side_effect=Exception('Should not build!')) as mock_build:
                         main(['tests/fixture/sample_test_package.txt', destination_index, pure_user, pure_password,
                               '--pure-index={}'.format(pure_index)
                         ])
 
                         self.assertFalse(mock_build.called)
+
+    def test_fills_proper_index(self):
+        """
+        Verify that pure packages are uploaded to the pure index non-pure packages are uploaded to the normal index.
+        """
+        user = 'user'
+        with devpi_server() as server_url:
+            with devpi_index(server_url, user, 'binary') as (binary_index, password):
+                with devpi_index(server_url, user, 'pure', password) as (pure_index, _):
+                    main(['tests/fixture/sample_pure_and_non-pure.txt', binary_index, user, password,
+                          '--pure-index={}'.format(pure_index)
+                    ])
+
+                    with devpi.Client(pure_index) as client:
+                        self.assertTrue(client.package_version_exists('progressbar', '2.2'))
+                        self.assertFalse(client.package_version_exists('PyYAML', '3.10'))
+
+                    with devpi.Client(binary_index) as client:
+                        self.assertFalse(client.package_version_exists('progressbar', '2.2'))
+                        self.assertTrue(client.package_version_exists('PyYAML', '3.10'))
 
 if __name__ == '__main__':
     unittest.main()

@@ -41,7 +41,10 @@ class Client(object):
         :return: True if the exact version of this package is in the index, else False.
         """
         try:
-            return "" != self._execute('list', '{}=={}'.format(package, version))
+            print "%s %s" % (package, version)
+            result = self._execute('list', '{}=={}'.format(package, version))
+            print result
+            return "" != result
         except subprocess.CalledProcessError as e:
             encoding = locale.getdefaultlocale()[1]
             if '404' in e.output.decode(encoding):
@@ -54,3 +57,7 @@ class Client(object):
         Upload the given file to the current index
         """
         self._execute('upload', file)
+
+    @property
+    def index_url(self):
+        return self._index_url

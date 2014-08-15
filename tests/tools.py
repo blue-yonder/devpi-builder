@@ -24,21 +24,31 @@ def devpi_server(port=2414):
     finally:
         shutil.rmtree(server_dir)
 
-
 @contextlib.contextmanager
-def devpi_index(server_url, user, index):
+def devpi_index(server_url, user, index, password=None):
     """
     Creates the given user and index, and cleans it afterwards.
 
+    If the password is given, logs in with he given user instead of creating it.
+
     Yields of tuple of index-url and password. The index is created without an upstream.
     """
-    password = 'foo'
     with devpi.Client(server_url) as devpi_client:
-        devpi_client._execute('user', '-c', user, 'password=' + password)
+        if password is None:
+            password = 'foo'
+            devpi_client._execute('user', '-c', user, 'password=' + password)
+
         devpi_client._execute('login', user, '--password=' + password)
         devpi_client._execute('index', '-c', index, 'bases=')
 
         yield '{}/{}/{}'.format(server_url, user, index), password
 
         devpi_client._execute('index', '--delete', '/{}/{}'.format(user, index))
-        devpi_client._execute('user', user, '--delete')
+
+        # delete user if it has no more indices
+        user_indices = [
+            line.split()[0] for line in devpi_client._execute('use', '-l').splitlines()
+            if line.startswith(user)
+        ]
+        if len(user_indices) == 0:
+            devpi_client._execute('user', user, '--delete')
