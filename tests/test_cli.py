@@ -1,6 +1,9 @@
 # coding=utf-8
-
+import os.path
+import shutil
+import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 
 from mock import patch
 
@@ -109,6 +112,38 @@ class CliTest(unittest.TestCase):
                     with devpi.Client(binary_index) as client:
                         self.assertFalse(client.package_version_exists('progressbar', '2.2'))
                         self.assertTrue(client.package_version_exists('PyYAML', '3.10'))
+
+    def _assert_test_case(self, root_element, result_tag_type, expected_element_name):
+        xpath = './/testcase/{}/..'.format(result_tag_type)
+        matched_nodes = root_element.findall(xpath)
+        self.assertEqual(1, len(matched_nodes))
+        self.assertEqual(matched_nodes[0].attrib['name'], expected_element_name)
+
+    def test_reports_junit_xml(self):
+        user = 'test'
+        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+            with devpi.Client(destination_index, user, password) as client:
+                client.upload('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl')
+
+            tempdir = tempfile.mkdtemp()
+            try:
+                junit_filename = os.path.join(tempdir, 'junit.xml')
+                main(['tests/fixture/sample_junit.txt', destination_index, user, password, '--junit-xml', junit_filename])
+
+                root = ET.parse(junit_filename)
+                ET.dump(root)
+                self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999')
+                self._assert_test_case(root, 'skipped', 'test-package 0.1-dev')
+
+                pb_elems = root.findall(".//testcase[@name='progressbar 2.2']")
+                self.assertEqual(1, len(pb_elems))
+                pb_elem = pb_elems[0]
+                self.assertIsNone(pb_elem.find('failure'))
+                self.assertIsNone(pb_elem.find('error'))
+                self.assertIsNone(pb_elem.find('skipped'))
+            finally:
+                shutil.rmtree(tempdir)
+
 
 if __name__ == '__main__':
     unittest.main()

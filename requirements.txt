@@ -1,7 +1,8 @@
 setuptools
 wheel
 pip==1.5.6
-junit-xml
+six
+https://github.com/MatthiasBach/python-junit-xml/tarball/py32
 
 devpi-client==2.0.1
 devpi-server==2.0.3

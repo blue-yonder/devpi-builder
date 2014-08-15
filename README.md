@@ -24,7 +24,8 @@ Example of such a requirements.txt:
 Commandline Usage
 -----------------
 
-    usage: devpi-builder [-h] [--blacklist BLACKLIST]
+    usage: devpi-builder [-h] [--blacklist BLACKLIST] [--pure-index PURE_INDEX]
+                         [--junit-xml JUNIT_XML]
                          requirements index user password
     
     Create wheels for all given project versions and upload them to the given
@@ -42,7 +43,14 @@ Commandline Usage
       --blacklist BLACKLIST
                             Packages matched by this requirements.txt style file
                             will never be build.
-
+      --pure-index PURE_INDEX
+                            The index to use for pure packages. Any non-pure
+                            package will be uploaded to the index given as
+                            positional argument. Packages already found in the pure
+                            index will not be built, either.
+      --junit-xml JUNIT_XML
+                            Write information about the build success / failure to
+                            a JUnit-compatible XML file.
 
 Features & Backlog
 ------------------
@@ -52,7 +60,8 @@ Features & Backlog
  * [x] Only build packages not yet in the target index.
  * [x] Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).
  * [ ] Support extras requirements of packages
- * [ ] Can use separate indices for plain python packages and those with binary contents. Optionally only operates on one of the two.
+ * [x] Can use separate indices for plain python packages and those with binary contents.
+ * [x] Can log build results to a JUnit compatible XML file, thus that it can be parsed by Jenkins.
 
 
 License
