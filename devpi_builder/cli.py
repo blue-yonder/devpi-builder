@@ -28,6 +28,10 @@ class Processor(object):
     def _log_skip(self, text, package, version):
         logger.debug(text, package, version)
 
+        log_entry = TestCase('{} {}'.format(package, version))
+        log_entry.add_skipped_info(text % (package, version))
+        self._results.append(log_entry)
+
     def _log_fail(self, exception, package, version):
         logger.exception(exception)
 

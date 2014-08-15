@@ -132,6 +132,7 @@ class CliTest(unittest.TestCase):
 
                 root = ET.parse(junit_filename)
                 self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999')
+                self._assert_test_case(root, 'skipped', 'test-package 0.1-dev')
             finally:
                 shutil.rmtree(tempdir)
 
