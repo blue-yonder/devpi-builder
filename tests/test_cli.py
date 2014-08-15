@@ -113,6 +113,12 @@ class CliTest(unittest.TestCase):
                         self.assertFalse(client.package_version_exists('progressbar', '2.2'))
                         self.assertTrue(client.package_version_exists('PyYAML', '3.10'))
 
+    def _assert_test_case(self, root_element, result_tag_type, expected_element_name):
+        xpath = './/testcase/{}/..'.format(result_tag_type)
+        matched_nodes = root_element.findall(xpath)
+        self.assertEqual(1, len(matched_nodes))
+        self.assertEqual(matched_nodes[0].attrib['name'], expected_element_name)
+
     def test_reports_junit_xml(self):
         user = 'test'
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
@@ -125,10 +131,7 @@ class CliTest(unittest.TestCase):
                 main(['tests/fixture/sample_junit.txt', destination_index, user, password, '--junit-xml', junit_filename])
 
                 root = ET.parse(junit_filename)
-
-                failed_nodes = root.findall('.//testcase/failure/..')
-                self.assertEqual(1, len(failed_nodes))
-                self.assertEqual(failed_nodes[0].attrib['name'], 'package-that-hopefully-not-exists 99.999')
+                self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999')
             finally:
                 shutil.rmtree(tempdir)
 
