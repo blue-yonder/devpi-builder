@@ -52,7 +52,8 @@ Features & Backlog
  * [x] Only build packages not yet in the target index.
  * [x] Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).
  * [ ] Support extras requirements of packages
- * [ ] Can use separate indices for plain python packages and those with binary contents. Optionally only operates on one of the two.
+ * [x] Can use separate indices for plain python packages and those with binary contents.
+ * [x] Can log build results to a JUnit compatible XML file, thus that it can be parsed by Jenkins.
 
 
 License
