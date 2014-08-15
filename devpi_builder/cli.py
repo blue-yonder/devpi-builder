@@ -89,8 +89,8 @@ def main(args=None):
     parser.add_argument('user', help='The user to log in as.')
     parser.add_argument('password', help='Password of the user.')
     parser.add_argument('--blacklist', help='Packages matched by this requirements.txt style file will never be build.')
-    parser.add_argument('--pure-index', help='The index to use for pure packages. Any non-pure package will be uploaded'
-                                             'to the index given as positional argument. Packages already found in the'
+    parser.add_argument('--pure-index', help='The index to use for pure packages. Any non-pure package will be uploaded '
+                                             'to the index given as positional argument. Packages already found in the '
                                              'pure index will not be built, either.'
     )
     parser.add_argument('--junit-xml', help='Write information about the build success / failure to a JUnit-compatible XML file.')
