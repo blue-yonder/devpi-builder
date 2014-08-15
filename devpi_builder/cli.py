@@ -13,37 +13,37 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def should_package_be_build(package, version, devpi_client, blacklist, pure_index_client):
-    if devpi_client.package_version_exists(package, version):
-        logger.debug('Skipping %s %s as is already available on the index.', package, version)
-        return False
-    elif pure_index_client and pure_index_client.package_version_exists(package, version):
-        logger.debug('Skipping %s %s as is already available on the pure index.', package, version)
-        return False
-    elif blacklist and requirements.matched_by_file(package, version, blacklist):
-        logger.info('Skipping %s %s as it is matched by the blacklist.', package, version)
-        return False
-    return True
+class Processor(object):
 
+    def should_package_be_build(self, package, version, devpi_client, blacklist, pure_index_client):
+        if devpi_client.package_version_exists(package, version):
+            logger.debug('Skipping %s %s as is already available on the index.', package, version)
+            return False
+        elif pure_index_client and pure_index_client.package_version_exists(package, version):
+            logger.debug('Skipping %s %s as is already available on the pure index.', package, version)
+            return False
+        elif blacklist and requirements.matched_by_file(package, version, blacklist):
+            logger.info('Skipping %s %s as it is matched by the blacklist.', package, version)
+            return False
+        return True
 
-def upload_package(package, version, wheel_file, devpi_client, pure_index_client):
-    if pure_index_client and wheeler.is_pure(wheel_file):
-        logger.debug('Uploading %s %s to pure index %s', package, version, pure_index_client.index_url)
-        pure_index_client.upload(wheel_file)
-    else:
-        logger.debug('Uploading %s %s to %s', package, version, devpi_client.index_url)
-        devpi_client.upload(wheel_file)
+    def upload_package(self, package, version, wheel_file, devpi_client, pure_index_client):
+        if pure_index_client and wheeler.is_pure(wheel_file):
+            logger.debug('Uploading %s %s to pure index %s', package, version, pure_index_client.index_url)
+            pure_index_client.upload(wheel_file)
+        else:
+            logger.debug('Uploading %s %s to %s', package, version, devpi_client.index_url)
+            devpi_client.upload(wheel_file)
 
-
-def build_packages(packages, builder, devpi_client, blacklist, pure_index_client=None):
-    for package, version in packages:
-        if should_package_be_build(package, version, devpi_client, blacklist, pure_index_client):
-            logger.info('Building %s %s', package, version)
-            try:
-                wheel_file = builder(package, version)
-                upload_package(package, version, wheel_file, devpi_client, pure_index_client)
-            except wheeler.BuildError as e:
-                logger.exception(e)
+    def build_packages(self, packages, builder, devpi_client, blacklist, pure_index_client=None):
+        for package, version in packages:
+            if self.should_package_be_build(package, version, devpi_client, blacklist, pure_index_client):
+                logger.info('Building %s %s', package, version)
+                try:
+                    wheel_file = builder(package, version)
+                    self.upload_package(package, version, wheel_file, devpi_client, pure_index_client)
+                except wheeler.BuildError as e:
+                    logger.exception(e)
 
 
 def main(args=None):
@@ -62,8 +62,9 @@ def main(args=None):
 
     packages = requirements.read(args.requirements)
     with wheeler.Builder() as builder, devpi.Client(args.index, args.user, args.password) as devpi_client:
+        processor = Processor()
         if args.pure_index:
             with devpi.Client(args.pure_index, args.user, args.password) as pure_index_client:
-                build_packages(packages, builder, devpi_client, args.blacklist, pure_index_client)
+                processor.build_packages(packages, builder, devpi_client, args.blacklist, pure_index_client)
         else:
-            build_packages(packages, builder, devpi_client, args.blacklist)
+            processor.build_packages(packages, builder, devpi_client, args.blacklist)
