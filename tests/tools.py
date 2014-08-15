@@ -24,6 +24,7 @@ def devpi_server(port=2414):
     finally:
         shutil.rmtree(server_dir)
 
+
 @contextlib.contextmanager
 def devpi_index(server_url, user, index, password=None):
     """
