@@ -8,7 +8,7 @@ with open('README.md') as f:
 
 setup(
     name='devpi-builder',
-    version='0.3.0',
+    version='0.3.1-dev',
     packages=find_packages(exclude=['tests']),
     author='Matthias Bach',
     author_email='matthias.bach@blue-yonder.com',
