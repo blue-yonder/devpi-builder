@@ -41,10 +41,7 @@ class Client(object):
         :return: True if the exact version of this package is in the index, else False.
         """
         try:
-            print "%s %s" % (package, version)
-            result = self._execute('list', '{}=={}'.format(package, version))
-            print result
-            return "" != result
+            return "" != self._execute('list', '{}=={}'.format(package, version))
         except subprocess.CalledProcessError as e:
             encoding = locale.getdefaultlocale()[1]
             if '404' in e.output.decode(encoding):
