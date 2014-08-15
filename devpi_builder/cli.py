@@ -36,7 +36,7 @@ class Processor(object):
         logger.exception(exception)
 
         log_entry = TestCase('{} {}'.format(package, version))
-        log_entry.add_failure_info(exception.message)
+        log_entry.add_failure_info(str(exception))
         self._results.append(log_entry)
 
     def _log_success(self, package, version):
