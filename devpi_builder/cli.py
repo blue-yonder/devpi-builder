@@ -15,33 +15,39 @@ logger = logging.getLogger(__name__)
 
 class Processor(object):
 
-    def should_package_be_build(self, package, version, devpi_client, blacklist, pure_index_client):
-        if devpi_client.package_version_exists(package, version):
+    def __init__(self, builder, devpi_client, blacklist, pure_index_client=None):
+        self._builder = builder
+        self._devpi_client = devpi_client
+        self._blacklist = blacklist
+        self._pure_index_client = pure_index_client
+
+    def should_package_be_build(self, package, version):
+        if self._devpi_client.package_version_exists(package, version):
             logger.debug('Skipping %s %s as is already available on the index.', package, version)
             return False
-        elif pure_index_client and pure_index_client.package_version_exists(package, version):
+        elif self._pure_index_client and self._pure_index_client.package_version_exists(package, version):
             logger.debug('Skipping %s %s as is already available on the pure index.', package, version)
             return False
-        elif blacklist and requirements.matched_by_file(package, version, blacklist):
+        elif self._blacklist and requirements.matched_by_file(package, version, self._blacklist):
             logger.info('Skipping %s %s as it is matched by the blacklist.', package, version)
             return False
         return True
 
-    def upload_package(self, package, version, wheel_file, devpi_client, pure_index_client):
-        if pure_index_client and wheeler.is_pure(wheel_file):
-            logger.debug('Uploading %s %s to pure index %s', package, version, pure_index_client.index_url)
-            pure_index_client.upload(wheel_file)
+    def upload_package(self, package, version, wheel_file):
+        if self._pure_index_client and wheeler.is_pure(wheel_file):
+            logger.debug('Uploading %s %s to pure index %s', package, version, self._pure_index_client.index_url)
+            self._pure_index_client.upload(wheel_file)
         else:
-            logger.debug('Uploading %s %s to %s', package, version, devpi_client.index_url)
-            devpi_client.upload(wheel_file)
+            logger.debug('Uploading %s %s to %s', package, version, self._devpi_client.index_url)
+            self._devpi_client.upload(wheel_file)
 
-    def build_packages(self, packages, builder, devpi_client, blacklist, pure_index_client=None):
+    def build_packages(self, packages):
         for package, version in packages:
-            if self.should_package_be_build(package, version, devpi_client, blacklist, pure_index_client):
+            if self.should_package_be_build(package, version):
                 logger.info('Building %s %s', package, version)
                 try:
-                    wheel_file = builder(package, version)
-                    self.upload_package(package, version, wheel_file, devpi_client, pure_index_client)
+                    wheel_file = self._builder(package, version)
+                    self.upload_package(package, version, wheel_file)
                 except wheeler.BuildError as e:
                     logger.exception(e)
 
@@ -62,9 +68,10 @@ def main(args=None):
 
     packages = requirements.read(args.requirements)
     with wheeler.Builder() as builder, devpi.Client(args.index, args.user, args.password) as devpi_client:
-        processor = Processor()
         if args.pure_index:
             with devpi.Client(args.pure_index, args.user, args.password) as pure_index_client:
-                processor.build_packages(packages, builder, devpi_client, args.blacklist, pure_index_client)
+                processor = Processor(builder, devpi_client, args.blacklist, pure_index_client)
+                processor.build_packages(packages)
         else:
-            processor.build_packages(packages, builder, devpi_client, args.blacklist)
+            processor = Processor(builder, devpi_client, args.blacklist)
+            processor.build_packages(packages)
