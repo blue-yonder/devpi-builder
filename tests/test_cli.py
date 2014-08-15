@@ -1,6 +1,9 @@
 # coding=utf-8
-
+import os.path
+import shutil
+import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 
 from mock import patch
 
@@ -109,6 +112,25 @@ class CliTest(unittest.TestCase):
                     with devpi.Client(binary_index) as client:
                         self.assertFalse(client.package_version_exists('progressbar', '2.2'))
                         self.assertTrue(client.package_version_exists('PyYAML', '3.10'))
+
+    def test_reports_junit_xml(self):
+        user = 'test'
+        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+            with devpi.Client(destination_index, user, password) as client:
+                client.upload('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl')
+
+            tempdir = tempfile.mkdtemp()
+            try:
+                junit_filename = os.path.join(tempdir, 'junit.xml')
+                main(['tests/fixture/sample_junit.txt', destination_index, user, password, '--junit-xml', junit_filename])
+
+                root = ET.parse(junit_filename)
+
+                failed_nodes = root.findall('.//testcase/failure/..')
+                self.assertEqual(1, len(failed_nodes))
+                self.assertEqual(failed_nodes[0].attrib['name'], 'package-that-hopefully-not-exists 99.999')
+            finally:
+                shutil.rmtree(tempdir)
 
 if __name__ == '__main__':
     unittest.main()
