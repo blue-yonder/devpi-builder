@@ -40,7 +40,8 @@ class Processor(object):
         self._results.append(log_entry)
 
     def _log_success(self, package, version):
-        pass
+        log_entry = TestCase('{} {}'.format(package, version))
+        self._results.append(log_entry)
 
     def _should_package_be_build(self, package, version):
         if self._devpi_client.package_version_exists(package, version):

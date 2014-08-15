@@ -131,10 +131,19 @@ class CliTest(unittest.TestCase):
                 main(['tests/fixture/sample_junit.txt', destination_index, user, password, '--junit-xml', junit_filename])
 
                 root = ET.parse(junit_filename)
+                ET.dump(root)
                 self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999')
                 self._assert_test_case(root, 'skipped', 'test-package 0.1-dev')
+
+                pb_elems = root.findall(".//testcase[@name='progressbar 2.2']")
+                self.assertEqual(1, len(pb_elems))
+                pb_elem = pb_elems[0]
+                self.assertIsNone(pb_elem.find('failure'))
+                self.assertIsNone(pb_elem.find('error'))
+                self.assertIsNone(pb_elem.find('skipped'))
             finally:
                 shutil.rmtree(tempdir)
+
 
 if __name__ == '__main__':
     unittest.main()
