@@ -23,6 +23,7 @@ class Processor(object):
         self._blacklist = blacklist
         self._pure_index_client = pure_index_client
         self._junit_xml = junit_xml
+        self._results = []
 
     def _log_skip(self, text, package, version):
         logger.debug(text, package, version)
@@ -74,7 +75,6 @@ class Processor(object):
             with open(self._junit_xml, 'w') as output:
                 test_suite = TestSuite('devpi-builder results', self._results)
                 TestSuite.to_file(output, [test_suite])
-
 
 
 def main(args=None):
