@@ -19,7 +19,8 @@ setup(
         'setuptools',
         'devpi-client',
         'wheel',
-        'pip>=1.5.3'
+        'pip>=1.5.3',
+        'junit-xml'
     ],
     setup_requires=[
         'nose>=1.0'
