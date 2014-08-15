@@ -9,7 +9,7 @@ import logging
 
 from devpi_builder import requirements, wheeler, devpi
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
