@@ -4,8 +4,8 @@ pip==1.5.6
 six
 https://github.com/MatthiasBach/python-junit-xml/tarball/py32
 
-devpi-client==2.0.1
-devpi-server==2.0.4
+devpi-client==2.0.2
+devpi-server==2.0.6
 requests<2.4.0  # work around issue of devpi-server not starting with requests 2.4.0
 
 nose>=1.0
