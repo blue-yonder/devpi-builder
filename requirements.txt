@@ -6,7 +6,6 @@ https://github.com/MatthiasBach/python-junit-xml/tarball/py32
 
 devpi-client==2.0.2
 devpi-server==2.0.6
-requests<2.4.0  # work around issue of devpi-server not starting with requests 2.4.0
 
 nose>=1.0
 mock
