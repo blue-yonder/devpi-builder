@@ -45,7 +45,12 @@ class Client(object):
         :return: True if the exact version of this package is in the index, else False.
         """
         try:
-            return "" != self._execute('list', '{}=={}'.format(package, version))
+            # NOTE(mikal): only wheels count here
+            found = self._execute('list', '{}=={}'.format(package, version)).strip().split('\n')
+            for item in found:
+                if item.endswith('.whl') and item.find(self._index_url) != -1:
+                    return True
+            return False
         except subprocess.CalledProcessError as e:
             if '404' in e.output:
                 return False  # package does not exist
