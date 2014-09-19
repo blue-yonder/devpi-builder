@@ -5,7 +5,7 @@ six
 https://github.com/MatthiasBach/python-junit-xml/tarball/py32
 
 devpi-client==2.0.2
-devpi-server==2.0.6
+devpi-server==2.0.7
 
 nose>=1.0
 mock
