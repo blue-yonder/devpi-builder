@@ -7,7 +7,9 @@ Functionality for interacting with a devpi instance.
 import subprocess
 import tempfile
 import shutil
-import locale
+
+
+from wheel.install import WheelFile, BadWheelFile
 
 
 class Client(object):
@@ -45,12 +47,22 @@ class Client(object):
         :return: True if the exact version of this package is in the index, else False.
         """
         try:
-            return "" != self._execute('list', '{}=={}'.format(package, version))
+            found = self._execute('list', '{}=={}'.format(package, version)).splitlines()
         except subprocess.CalledProcessError as e:
             if '404' in e.output:
                 return False  # package does not exist
             else:
                 raise e
+
+        for item in found:
+            try:
+                wheel_file = WheelFile(item)
+            except BadWheelFile:
+                continue
+
+            if wheel_file.compatible:
+                return True
+        return False
 
     def upload(self, file):
         """
