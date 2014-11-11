@@ -70,6 +70,12 @@ class Client(object):
         """
         self._execute('upload', file)
 
+    def upload_dir(self, dir):
+        """
+        Upload the given directory to the current index
+        """
+        self._execute('upload', '--from-dir', dir)
+
     @property
     def index_url(self):
         return self._index_url

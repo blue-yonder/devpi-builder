@@ -46,19 +46,13 @@ class TestClient(unittest.TestCase):
                     self.assertTrue(devpi_client.package_version_exists('progressbar', '?!'))
 
     def test_upload_package_version(self):
+        # note that this test requires a bundled wheel for each supported
+        # python version
         user = 'test'
-        wheels = {
-            (2, 7): 'test_package-0.1_dev-cp27-none-linux_x86_64.whl',
-            (3, 2): 'test_package-0.1_dev-cp32-cp32m-linux_x86_64.whl',
-            (3, 3): 'test_package-0.1_dev-cp33-cp33m-linux_x86_64.whl',
-            (3, 4): 'test_package-0.1_dev-cp34-cp34m-linux_x86_64.whl',
-        }
-
         version_tuple = sys.version_info[:2]
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
             with devpi.Client(server_url + '/test/wheels', user, password) as devpi_client:
-                filename = wheels[version_tuple]
-                devpi_client.upload('tests/fixture/non-pure_package/dist/%s' % filename)
+                devpi_client.upload_dir('tests/fixture/non-pure_package/dist/')
                 self.assertTrue(devpi_client.package_version_exists('test_package', '0.1-dev'))
 
 
