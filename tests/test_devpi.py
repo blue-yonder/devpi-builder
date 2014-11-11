@@ -1,5 +1,6 @@
 # coding=utf-8
 
+import sys
 import unittest
 
 from devpi_builder import devpi
@@ -46,9 +47,18 @@ class TestClient(unittest.TestCase):
 
     def test_upload_package_version(self):
         user = 'test'
+        wheels = {
+            (2, 7): 'test_package-0.1_dev-cp27-none-linux_x86_64.whl',
+            (3, 2): 'test_package-0.1_dev-cp32-cp32m-linux_x86_64.whl',
+            (3, 3): 'test_package-0.1_dev-cp33-cp33m-linux_x86_64.whl',
+            (3, 4): 'test_package-0.1_dev-cp34-cp34m-linux_x86_64.whl',
+        }
+
+        version_tuple = sys.version_info[:2]
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
             with devpi.Client(server_url + '/test/wheels', user, password) as devpi_client:
-                devpi_client.upload('tests/fixture/non-pure_package/dist/test_package-0.1_dev-cp27-none-linux_x86_64.whl')
+                filename = wheels[version_tuple]
+                devpi_client.upload('tests/fixture/non-pure_package/dist/%s' % filename)
                 self.assertTrue(devpi_client.package_version_exists('test_package', '0.1-dev'))
 
 
