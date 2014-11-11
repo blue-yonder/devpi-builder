@@ -1,6 +1,5 @@
 # coding=utf-8
 
-import sys
 import unittest
 
 from devpi_builder import devpi
@@ -49,7 +48,6 @@ class TestClient(unittest.TestCase):
         # note that this test requires a bundled wheel for each supported
         # python version
         user = 'test'
-        version_tuple = sys.version_info[:2]
         with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
             with devpi.Client(server_url + '/test/wheels', user, password) as devpi_client:
                 devpi_client.upload_dir('tests/fixture/non-pure_package/dist/')
