@@ -1,15 +1,21 @@
 language: python
 python:
-  - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
-# command to install dependencies
-install: 
-  - "pip install -r requirements.txt"
-  - "pip install coveralls"
-  - "pip freeze"
-# command to run tests
+- '2.7'
+- '3.2'
+- '3.3'
+- '3.4'
+install:
+- pip install -r requirements.txt
+- pip install coveralls
+- pip freeze
 script: nosetests
-
 after_success: coveralls
+deploy:
+  provider: pypi
+  user: BYPyPi
+  password:
+    secure: MHNvzUDHGS7SQdPxvZL+gayv6RVTNADZspXltt4eyiC3/xo8qTRuABfU2mNVJHtaxxEd7mSGoNHxsJUEPrU2CeDnD6JW760FdqCvGr5uARYkxoJhAAF8hfpUL7Y7XU1bdNVj/naxjLmPD5WayeWWPGObtiP1xnkxwydpCSFYGlM=
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+  
