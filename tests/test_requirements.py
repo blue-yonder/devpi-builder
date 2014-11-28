@@ -53,5 +53,14 @@ class TestRequirements(unittest.TestCase):
         self.assertTrue(requirements.matched_by_file('below_2_0', 1.0, filename))
         self.assertFalse(requirements.matched_by_file('below_2_0', 2.0, filename))
 
+    def test_comments(self):
+        expected = [
+            ('progressbar', '2.2')
+        ]
+        self.assertListEqual(
+            expected,
+            requirements.read('tests/fixture/sample_comments.txt')
+        )
+
 if __name__ == '__main__':
     unittest.main()
