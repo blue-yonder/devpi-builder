@@ -6,112 +6,113 @@ import unittest
 import xml.etree.ElementTree as ET
 
 from mock import patch
+from devpi_plumber.server import TestServer
+from devpi_plumber.client import DevpiClient
 
 from devpi_builder.cli import main
-from devpi_builder import devpi, wheeler
+from devpi_builder import wheeler
 
-from tests.tools import devpi_server, devpi_index
+
+USER = 'user'
+INDEX = 'user/wheels'
+PURE_INDEX = 'user/packages'
+PASSWORD = 'secret'
+
+USERS = {
+    USER : {'password': PASSWORD },
+}
+INDICES = {
+    INDEX : { 'bases':'' },
+    PURE_INDEX : { 'bases':'' }
+}
+
+
+def package_version_exists(client, index, package, version):
+    client.use(index)
+    spec = "{}=={}".format(package, version)
+    packages = client.list(spec)
+    return wheeler.has_compatible_wheel(packages)
 
 
 class CliTest(unittest.TestCase):
     def test_basic(self):
-        user = 'test'
-        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+        with TestServer(USERS, INDICES) as devpi:
+            main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
 
-            main(['tests/fixture/sample_simple.txt', destination_index, user, password])
-
-            with devpi.Client(destination_index) as devpi_client:
-                self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
 
     def test_with_blacklist(self):
-        user = 'test'
-        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+        with TestServer(USERS, INDICES) as devpi:
 
-            main(['tests/fixture/sample_simple.txt', destination_index, user, password, '--blacklist={}'.format('tests/fixture/sample_no_version.txt')])
+            main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX, USER, PASSWORD, '--blacklist={}'.format('tests/fixture/sample_no_version.txt')])
 
-            with devpi.Client(destination_index) as devpi_client:
-                self.assertFalse(devpi_client.package_version_exists('progressbar', '2.2'))
-                self.assertTrue(devpi_client.package_version_exists('six', '1.7.3'))
+            self.assertFalse(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'six', '1.7.3'))
 
     def test_multiple_versions(self):
-        user = 'test'
-        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+        with TestServer(USERS, INDICES) as devpi:
 
-            main(['tests/fixture/sample_multiple_versions.txt', destination_index, user, password])
+            main(['tests/fixture/sample_multiple_versions.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
 
-            with devpi.Client(destination_index) as devpi_client:
-                self.assertTrue(devpi_client.package_version_exists('progressbar', '2.1'))
-                self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'progressbar', '2.1'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
 
     def test_reupload_is_safe(self):
-        user = 'test'
-        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+        with TestServer(USERS, INDICES) as devpi:
 
-            main(['tests/fixture/sample_simple.txt', destination_index, user, password])
-            main(['tests/fixture/sample_multiple_versions.txt', destination_index, user, password])
+            main(['tests/fixture/sample_simple.txt',  devpi.url + '/' + INDEX, USER, PASSWORD])
+            main(['tests/fixture/sample_multiple_versions.txt',  devpi.url + '/' + INDEX, USER, PASSWORD])
 
-            with devpi.Client(destination_index) as devpi_client:
-                self.assertTrue(devpi_client.package_version_exists('progressbar', '2.1'))
-                self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
-                self.assertTrue(devpi_client.package_version_exists('six', '1.7.3'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'progressbar', '2.1'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'six', '1.7.3'))
 
     def test_continue_on_failed(self):
-        user = 'test'
-        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+        with TestServer(USERS, INDICES) as devpi:
 
-            main(['tests/fixture/sample_continue_on_failed.txt', destination_index, user, password])
+            main(['tests/fixture/sample_continue_on_failed.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
 
-            with devpi.Client(destination_index) as devpi_client:
-                self.assertTrue(devpi_client.package_version_exists('progressbar', '2.2'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
 
     def test_different_styles(self):
-        user = 'test'
-        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
+        with TestServer(USERS, INDICES) as devpi:
 
-            main(['tests/fixture/sample_different_styles.txt', destination_index, user, password])
+            main(['tests/fixture/sample_different_styles.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
 
-            with devpi.Client(destination_index) as devpi_client:
-                self.assertTrue(devpi_client.package_version_exists('pygments', '1.6'))
-                self.assertTrue(devpi_client.package_version_exists('Pygments', '1.6'))
-                self.assertTrue(devpi_client.package_version_exists('Django', '1.6.5'))
-                self.assertTrue(devpi_client.package_version_exists('django', '1.6.5'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'pygments', '1.6'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'Pygments', '1.6'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'Django', '1.6.5'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'django', '1.6.5'))
 
     def test_not_built_if_on_pure(self):
         """
         Verify that packages are not built and re-uploaded if they are already on the pure index.
         """
-        pure_user = 'pure'
-        with devpi_server() as server_url:
-            with devpi_index(server_url, 'destination', 'wheels') as (destination_index, _):
-                with devpi_index(server_url, pure_user, 'pure') as (pure_index, pure_password):
-                    with devpi.Client(pure_index, pure_user, pure_password) as client:
-                        client.upload('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl')
-                    with patch.object(wheeler.Builder, 'build', autospec=True, side_effect=Exception('Should not build!')) as mock_build:
-                        main(['tests/fixture/sample_test_package.txt', destination_index, pure_user, pure_password,
-                              '--pure-index={}'.format(pure_index)
-                        ])
+        with TestServer(USERS, INDICES) as devpi:
+            with DevpiClient(devpi.server_url + '/' + PURE_INDEX, USER, PASSWORD) as pure_client:
+                pure_client.upload('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl')
 
-                        self.assertFalse(mock_build.called)
+            with patch.object(wheeler.Builder, 'build', autospec=True, side_effect=Exception('Should not build!')) as mock_build:
+
+                main(['tests/fixture/sample_test_package.txt', devpi.url + '/' + INDEX, USER, PASSWORD, '--pure-index={}'.format(pure_client.url)])
+
+                self.assertFalse(mock_build.called)
 
     def test_fills_proper_index(self):
         """
         Verify that pure packages are uploaded to the pure index non-pure packages are uploaded to the normal index.
         """
-        user = 'user'
-        with devpi_server() as server_url:
-            with devpi_index(server_url, user, 'binary') as (binary_index, password):
-                with devpi_index(server_url, user, 'pure', password) as (pure_index, _):
-                    main(['tests/fixture/sample_pure_and_non-pure.txt', binary_index, user, password,
-                          '--pure-index={}'.format(pure_index)
-                    ])
+        with TestServer(USERS, INDICES) as devpi:
 
-                    with devpi.Client(pure_index) as client:
-                        self.assertTrue(client.package_version_exists('progressbar', '2.2'))
-                        self.assertFalse(client.package_version_exists('PyYAML', '3.10'))
+            main(['tests/fixture/sample_pure_and_non-pure.txt', devpi.url + '/' + INDEX, USER, PASSWORD,
+                          '--pure-index={}'.format(devpi.url + '/' + PURE_INDEX)
+            ])
 
-                    with devpi.Client(binary_index) as client:
-                        self.assertFalse(client.package_version_exists('progressbar', '2.2'))
-                        self.assertTrue(client.package_version_exists('PyYAML', '3.10'))
+            self.assertTrue(package_version_exists(devpi, PURE_INDEX, 'progressbar', '2.2'))
+            self.assertFalse(package_version_exists(devpi, PURE_INDEX, 'PyYAML', '3.10'))
+
+            self.assertFalse(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
+            self.assertTrue(package_version_exists(devpi, INDEX, 'PyYAML', '3.10'))
 
     def _assert_test_case(self, root_element, result_tag_type, expected_element_name):
         xpath = './/testcase/{}/..'.format(result_tag_type)
@@ -120,15 +121,15 @@ class CliTest(unittest.TestCase):
         self.assertEqual(matched_nodes[0].attrib['name'], expected_element_name)
 
     def test_reports_junit_xml(self):
-        user = 'test'
-        with devpi_server() as server_url, devpi_index(server_url, user, 'wheels') as (destination_index, password):
-            with devpi.Client(destination_index, user, password) as client:
+        with TestServer(USERS, INDICES) as devpi:
+
+            with DevpiClient(devpi.server_url + '/' + INDEX, USER, PASSWORD) as client:
                 client.upload('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl')
 
             tempdir = tempfile.mkdtemp()
             try:
                 junit_filename = os.path.join(tempdir, 'junit.xml')
-                main(['tests/fixture/sample_junit.txt', destination_index, user, password, '--junit-xml', junit_filename])
+                main(['tests/fixture/sample_junit.txt', devpi.url + '/' + INDEX, USER, PASSWORD, '--junit-xml', junit_filename])
 
                 root = ET.parse(junit_filename)
                 ET.dump(root)

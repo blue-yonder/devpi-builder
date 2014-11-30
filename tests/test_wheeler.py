@@ -40,5 +40,21 @@ class WheelerTest(unittest.TestCase):
         self.assertTrue(wheeler.is_pure('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl'))
         self.assertFalse(wheeler.is_pure('tests/fixture/non-pure_package/dist/test_package-0.1_dev-cp27-none-linux_x86_64.whl'))
 
+    def test_is_compatible(self):
+        self.assertTrue(wheeler.is_compatible('http://localhost:1234/good-1.0-py2.py3-none-any.whl'))
+
+    def test_is_incompatible(self):
+        self.assertFalse(wheeler.is_compatible('http://localhost:1234/bad-1.0-py99-none-any.whl'))
+        self.assertFalse(wheeler.is_compatible('http://localhost:1234/bad-1.0.tar.gz'))
+
+    def test_has_compatible(self):
+        packages = ['http://localhost:1234/good-1.0-py2.py3-none-any.whl', 'http://localhost:1234/bad-1.0-py99-none-any.whl']
+        self.assertTrue(wheeler.has_compatible_wheel(packages))
+
+    def test_has_no_compatible(self):
+        packages = ['http://localhost:1234/sdist-1.0.tar.gz', 'http://localhost:1234/bad-1.0-py99-none-any.whl']
+        self.assertFalse(wheeler.has_compatible_wheel(packages))
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -8,8 +8,9 @@ import argparse
 import logging
 
 from junit_xml import TestSuite, TestCase
+from devpi_plumber.client import DevpiClient
 
-from devpi_builder import requirements, wheeler, devpi
+from devpi_builder import requirements, wheeler
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -44,10 +45,12 @@ class Processor(object):
         self._results.append(log_entry)
 
     def _should_package_be_build(self, package, version):
-        if self._devpi_client.package_version_exists(package, version):
+        spec = "{}=={}".format(package, version)
+
+        if wheeler.has_compatible_wheel(self._devpi_client.list(spec)):
             self._log_skip('Skipping %s %s as is already available on the index.', package, version)
             return False
-        elif self._pure_index_client and self._pure_index_client.package_version_exists(package, version):
+        elif self._pure_index_client and wheeler.has_compatible_wheel(self._pure_index_client.list(spec)):
             self._log_skip('Skipping %s %s as is already available on the pure index.', package, version)
             return False
         elif self._blacklist and requirements.matched_by_file(package, version, self._blacklist):
@@ -57,10 +60,10 @@ class Processor(object):
 
     def _upload_package(self, package, version, wheel_file):
         if self._pure_index_client and wheeler.is_pure(wheel_file):
-            logger.debug('Uploading %s %s to pure index %s', package, version, self._pure_index_client.index_url)
+            logger.debug('Uploading %s %s to pure index %s', package, version, self._pure_index_client.url)
             self._pure_index_client.upload(wheel_file)
         else:
-            logger.debug('Uploading %s %s to %s', package, version, self._devpi_client.index_url)
+            logger.debug('Uploading %s %s to %s', package, version, self._devpi_client.url)
             self._devpi_client.upload(wheel_file)
 
     def build_packages(self, packages):
@@ -98,9 +101,9 @@ def main(args=None):
     args = parser.parse_args(args=args)
 
     packages = requirements.read(args.requirements)
-    with wheeler.Builder() as builder, devpi.Client(args.index, args.user, args.password) as devpi_client:
+    with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password) as devpi_client:
         if args.pure_index:
-            with devpi.Client(args.pure_index, args.user, args.password) as pure_index_client:
+            with DevpiClient(args.pure_index, args.user, args.password) as pure_index_client:
                 processor = Processor(builder, devpi_client, args.blacklist, pure_index_client, junit_xml=args.junit_xml)
                 processor.build_packages(packages)
         else:

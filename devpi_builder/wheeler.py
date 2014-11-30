@@ -10,8 +10,8 @@ import shutil
 import subprocess
 import tempfile
 
-import wheel.install
-import wheel.util
+from wheel.install import WheelFile, BadWheelFile
+from wheel.util import matches_requirement
 
 
 class BuildError(Exception):
@@ -26,10 +26,9 @@ class BuildError(Exception):
 
 class Builder(object):
     """
-    Provides a context in which wheels can be generated. If the context goes out of scope all created files will be
-    removed.
+    Provides a context in which wheels can be generated. If the context goes out of scope
+    all created files will be removed.
     """
-
     def __enter__(self):
         self.scratch_dir = tempfile.mkdtemp()
         self.wheelhouse = path.join(self.scratch_dir, 'wheels')
@@ -44,10 +43,8 @@ class Builder(object):
         """
         Find a wheel with the given name and version
         """
-        candidates = [
-            wheel.install.WheelFile(filename) for filename in glob.glob(path.join(self.wheelhouse, '*.whl'))
-        ]
-        matches = wheel.util.matches_requirement('{}=={}'.format(name, version), candidates)
+        candidates = [ WheelFile(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl')) ]
+        matches = matches_requirement('{}=={}'.format(name, version), candidates)
         if len(matches) > 0:
             return str(matches[0])
         else:
@@ -75,7 +72,7 @@ class Builder(object):
             raise BuildError(package, version, e)
 
 
-def is_pure(path):
+def is_pure(wheel):
     """
     Check whether wheel given by the passed path is pure.
 
@@ -84,5 +81,22 @@ def is_pure(path):
     :param path: The path to the wheel to inspect
     :return: True if the wheel is pure
     """
-    wheel_file = wheel.install.WheelFile(path)
-    return wheel_file.parsed_wheel_info['Root-Is-Purelib'] == 'true'  # safe default
+    return WheelFile(wheel).parsed_wheel_info['Root-Is-Purelib'] == 'true'  # safe default
+
+
+def is_compatible(package):
+    """
+    Check whether the given python package is a wheel compatible with the
+    current platform and python interpreter.
+    """
+    try:
+        return WheelFile(package).compatible
+    except BadWheelFile:
+        return False
+
+
+def has_compatible_wheel(packages):
+    """
+    Check for a compatible wheel in the given list of python packages
+    """
+    return any(is_compatible(pkg) for pkg in packages)

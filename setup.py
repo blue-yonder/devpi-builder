@@ -1,6 +1,3 @@
-# coding=utf-8
-
-import multiprocessing  # avoid crash on teardown
 from setuptools import setup, find_packages
 
 with open('README.md') as f:
@@ -19,20 +16,20 @@ setup(
     long_description='%s \n\n %s' % (readme, changelog),
     license='new BSD',
     install_requires=[
+        'devpi-plumber',
         'setuptools',
-        'devpi-client',
         'wheel',
         'pip>=1.5.3',
         'junit-xml'
     ],
     setup_requires=[
-        'nose>=1.0'
+        'nose',
+        'nose-progressive',
     ],
     tests_require=[
-        'nose>=1.0',
+        'nose',
         'mock',
         'coverage',
-        'devpi-server'
     ],
     test_suite='nose.collector',
     classifiers=[
