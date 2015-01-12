@@ -67,4 +67,4 @@ Features & Backlog
 License
 -------
 
-[New BSD](COPYING)
+[New BSD](https://github.com/blue-yonder/devpi-builder/blob/master/COPYING)
