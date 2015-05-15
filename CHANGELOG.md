@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v0.5.0
+------
+
+- Use [devpi-plumber](https://github.com/blue-yonder/devpi-plumber) instead of
+  a custom devpi wrapper.
+
 v0.4.0 (Nov 13 2014)
 --------------------
 
