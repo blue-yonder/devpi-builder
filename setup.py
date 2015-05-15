@@ -7,7 +7,7 @@ with open('CHANGELOG.md') as f:
 
 setup(
     name='devpi-builder',
-    version='0.4.1dev',
+    use_scm_version=True,
     packages=find_packages(exclude=['tests']),
     author='Matthias Bach',
     author_email='matthias.bach@blue-yonder.com',
@@ -23,6 +23,7 @@ setup(
         'junit-xml'
     ],
     setup_requires=[
+        'setuptools_scm',
         'nose',
         'nose-progressive',
     ],
