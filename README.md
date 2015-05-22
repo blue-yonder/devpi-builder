@@ -11,9 +11,9 @@ Brandon, the devpi-builder, takes a `requirements.txt` and incrementally fills a
 Brandon by Example:
 -------------------
 
-Given a `requirements.txt`, we can upload all listed packages to the index `opensource/Debian_7` using the following command:
+Given a `requirements.txt`, we can upload all listed packages to the index `opensource/Debian_7` on a local devpi using the following command:
 
-    $ devpi-builder requirements.txt opensource/Debian_7 opensource mypassword
+    $ devpi-builder requirements.txt http://localhost:3141/opensource/Debian_7 opensource mypassword
     
 Example of such a requirements.txt:
 
