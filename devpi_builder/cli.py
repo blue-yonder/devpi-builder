@@ -47,14 +47,14 @@ class Processor(object):
     def _should_package_be_build(self, package, version):
         spec = "{}=={}".format(package, version)
 
-        if wheeler.has_compatible_wheel(self._devpi_client.list(spec)):
+        if self._blacklist and requirements.matched_by_file(package, version, self._blacklist):
+            self._log_skip('Skipping %s %s as it is matched by the blacklist.', package, version)
+            return False
+        elif wheeler.has_compatible_wheel(self._devpi_client.list(spec)):
             self._log_skip('Skipping %s %s as is already available on the index.', package, version)
             return False
         elif self._pure_index_client and wheeler.has_compatible_wheel(self._pure_index_client.list(spec)):
             self._log_skip('Skipping %s %s as is already available on the pure index.', package, version)
-            return False
-        elif self._blacklist and requirements.matched_by_file(package, version, self._blacklist):
-            self._log_skip('Skipping %s %s as it is matched by the blacklist.', package, version)
             return False
         return True
 
