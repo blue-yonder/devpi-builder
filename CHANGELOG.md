@@ -1,6 +1,13 @@
 Changelog
 =========
 
+v1.0.1
+------
+
+- Rely on pip's default download cache mechanism instead of explicitly requiring
+  a download cache. This effectively disables caching for people still using
+  pip < 6.0 but ensures compatibility with future versions of pip.
+
 v1.0.0
 ------
 
