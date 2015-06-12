@@ -33,7 +33,6 @@ class Builder(object):
         self.scratch_dir = tempfile.mkdtemp()
         self.wheelhouse = path.join(self.scratch_dir, 'wheels')
         self.builddir = path.join(self.scratch_dir, 'build')
-        self.cachedir = path.join(self.scratch_dir, 'cache')
         return lambda *args: self.build(*args)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -63,7 +62,6 @@ class Builder(object):
             subprocess.check_output([
                 'pip', 'wheel',
                 '--wheel-dir=' + self.wheelhouse,
-                '--download-cache=' + self.cachedir,
                 '--build=' + self.builddir,
                 '{}=={}'.format(package, version)
             ])
