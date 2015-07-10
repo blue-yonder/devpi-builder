@@ -42,7 +42,7 @@ class Builder(object):
         """
         Find a wheel with the given name and version
         """
-        candidates = [ WheelFile(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl')) ]
+        candidates = [WheelFile(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl'))]
         matches = matches_requirement('{}=={}'.format(name, version), candidates)
         if len(matches) > 0:
             return str(matches[0])
@@ -76,7 +76,7 @@ def is_pure(wheel):
 
     Pure wheels operate independent of the specific Python version and platform.
 
-    :param path: The path to the wheel to inspect
+    :param wheel: The path to the wheel to inspect
     :return: True if the wheel is pure
     """
     return WheelFile(wheel).parsed_wheel_info['Root-Is-Purelib'] == 'true'  # safe default

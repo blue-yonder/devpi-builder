@@ -1,4 +1,5 @@
 # coding=utf-8
+
 import os.path
 import shutil
 import tempfile
@@ -19,11 +20,11 @@ PURE_INDEX = 'user/packages'
 PASSWORD = 'secret'
 
 USERS = {
-    USER : {'password': PASSWORD },
+    USER: {'password': PASSWORD},
 }
 INDICES = {
-    INDEX : { 'bases':'' },
-    PURE_INDEX : { 'bases':'' }
+    INDEX: {'bases': ''},
+    PURE_INDEX: {'bases': ''},
 }
 
 
@@ -60,8 +61,8 @@ class CliTest(unittest.TestCase):
     def test_reupload_is_safe(self):
         with TestServer(USERS, INDICES) as devpi:
 
-            main(['tests/fixture/sample_simple.txt',  devpi.url + '/' + INDEX, USER, PASSWORD])
-            main(['tests/fixture/sample_multiple_versions.txt',  devpi.url + '/' + INDEX, USER, PASSWORD])
+            main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
+            main(['tests/fixture/sample_multiple_versions.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
 
             self.assertTrue(package_version_exists(devpi, INDEX, 'progressbar', '2.1'))
             self.assertTrue(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
@@ -104,8 +105,12 @@ class CliTest(unittest.TestCase):
         """
         with TestServer(USERS, INDICES) as devpi:
 
-            main(['tests/fixture/sample_pure_and_non-pure.txt', devpi.url + '/' + INDEX, USER, PASSWORD,
-                          '--pure-index={}'.format(devpi.url + '/' + PURE_INDEX)
+            main([
+                'tests/fixture/sample_pure_and_non-pure.txt',
+                devpi.url + '/' + INDEX,
+                USER,
+                PASSWORD,
+                '--pure-index={}'.format(devpi.url + '/' + PURE_INDEX)
             ])
 
             self.assertTrue(package_version_exists(devpi, PURE_INDEX, 'progressbar', '2.2'))
