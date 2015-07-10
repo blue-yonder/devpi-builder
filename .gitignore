@@ -7,3 +7,5 @@ atlassian-ide-plugin.xml
 venv/
 build
 dist
+
+README.html
