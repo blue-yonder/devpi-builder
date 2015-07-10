@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 with open('README.rst') as f:
     readme = f.read()
-with open('CHANGELOG.md') as f:
+with open('CHANGELOG.rst') as f:
     changelog = f.read()
 
 setup(
