@@ -125,6 +125,20 @@ class CliTest(unittest.TestCase):
         self.assertEqual(1, len(matched_nodes))
         self.assertEqual(matched_nodes[0].attrib['name'], expected_element_name)
 
+    def _assert_junit_xml_content(self, junit_filename):
+        root = ET.parse(junit_filename)
+        ET.dump(root)
+
+        self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999')
+        self._assert_test_case(root, 'skipped', 'test-package 0.1.dev1')
+
+        pb_elems = root.findall(".//testcase[@name='progressbar 2.2']")
+        self.assertEqual(1, len(pb_elems))
+        pb_elem = pb_elems[0]
+        self.assertIsNone(pb_elem.find('failure'))
+        self.assertIsNone(pb_elem.find('error'))
+        self.assertIsNone(pb_elem.find('skipped'))
+
     def test_reports_junit_xml(self):
         with TestServer(USERS, INDICES) as devpi:
 
@@ -136,19 +150,36 @@ class CliTest(unittest.TestCase):
                 junit_filename = os.path.join(tempdir, 'junit.xml')
                 main(['tests/fixture/sample_junit.txt', devpi.url + '/' + INDEX, USER, PASSWORD, '--junit-xml', junit_filename])
 
-                root = ET.parse(junit_filename)
-                ET.dump(root)
-                self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999')
-                self._assert_test_case(root, 'skipped', 'test-package 0.1.dev1')
-
-                pb_elems = root.findall(".//testcase[@name='progressbar 2.2']")
-                self.assertEqual(1, len(pb_elems))
-                pb_elem = pb_elems[0]
-                self.assertIsNone(pb_elem.find('failure'))
-                self.assertIsNone(pb_elem.find('error'))
-                self.assertIsNone(pb_elem.find('skipped'))
+                self._assert_junit_xml_content(junit_filename)
             finally:
                 shutil.rmtree(tempdir)
+
+    def test_dry_run(self):
+        """
+        Test that a dry run produces the same ``junit.xml`` as a run without dry-run but does not modify the server
+        state.
+        """
+        with TestServer(USERS, INDICES) as devpi:
+            with DevpiClient(devpi.server_url + '/' + INDEX, USER, PASSWORD) as client:
+                client.upload('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl')
+
+            tempdir = tempfile.mkdtemp()
+            try:
+                junit_filename = os.path.join(tempdir, 'junit.xml')
+                main([
+                    'tests/fixture/sample_junit.txt',
+                    devpi.url + '/' + INDEX,
+                    USER,
+                    PASSWORD,
+                    '--junit-xml', junit_filename,
+                    '--dry-run',
+                ])
+
+                self._assert_junit_xml_content(junit_filename)
+            finally:
+                shutil.rmtree(tempdir)
+
+            self.assertFalse(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
 
 
 if __name__ == '__main__':

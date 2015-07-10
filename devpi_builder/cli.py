@@ -18,12 +18,13 @@ logger = logging.getLogger(__name__)
 
 class Processor(object):
 
-    def __init__(self, builder, devpi_client, blacklist, pure_index_client=None, junit_xml=None):
+    def __init__(self, builder, devpi_client, blacklist, pure_index_client=None, junit_xml=None, dry_run=False):
         self._builder = builder
         self._devpi_client = devpi_client
         self._blacklist = blacklist
         self._pure_index_client = pure_index_client
         self._junit_xml = junit_xml
+        self._dry_run = dry_run
         self._results = []
 
     def _log_skip(self, text, package, version):
@@ -61,10 +62,10 @@ class Processor(object):
     def _upload_package(self, package, version, wheel_file):
         if self._pure_index_client and wheeler.is_pure(wheel_file):
             logger.debug('Uploading %s %s to pure index %s', package, version, self._pure_index_client.url)
-            self._pure_index_client.upload(wheel_file)
+            self._pure_index_client.upload(wheel_file, dry_run=self._dry_run)
         else:
             logger.debug('Uploading %s %s to %s', package, version, self._devpi_client.url)
-            self._devpi_client.upload(wheel_file)
+            self._devpi_client.upload(wheel_file, dry_run=self._dry_run)
 
     def build_packages(self, packages):
         self._results = []
@@ -97,6 +98,7 @@ def main(args=None):
                                              'pure index will not be built, either.'
     )
     parser.add_argument('--junit-xml', help='Write information about the build success / failure to a JUnit-compatible XML file.')
+    parser.add_argument('--dry-run', help='Build missing wheels, but do not modify the state of the devpi server.', action='store_true')
 
     args = parser.parse_args(args=args)
 
@@ -104,8 +106,8 @@ def main(args=None):
     with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password) as devpi_client:
         if args.pure_index:
             with DevpiClient(args.pure_index, args.user, args.password) as pure_index_client:
-                processor = Processor(builder, devpi_client, args.blacklist, pure_index_client, junit_xml=args.junit_xml)
+                processor = Processor(builder, devpi_client, args.blacklist, pure_index_client, junit_xml=args.junit_xml, dry_run=args.dry_run)
                 processor.build_packages(packages)
         else:
-            processor = Processor(builder, devpi_client, args.blacklist, junit_xml=args.junit_xml)
+            processor = Processor(builder, devpi_client, args.blacklist, junit_xml=args.junit_xml, dry_run=args.dry_run)
             processor.build_packages(packages)

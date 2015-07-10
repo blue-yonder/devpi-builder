@@ -4,13 +4,14 @@ Changelog
 
 This lists the most important changes for each release.
 
-v1.0.1 (in development)
+v1.1.0 (in development)
 =======================
 
 - Rely on pip's default download cache mechanism instead of explicitly requiring
   a download cache. This effectively disables caching for people still using
   pip < 6.0 but ensures compatibility with future versions of pip.
-  Thanks Christian Stefanescu.
+  Thanks Christian Stefanescu
+- Support for dry-running the wheel build without changing the devpi server state.
 
 v1.0.0 (May 22 2015)
 ====================

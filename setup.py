@@ -16,7 +16,7 @@ setup(
     long_description='%s\n\n%s' % (readme, changelog),
     license='new BSD',
     install_requires=[
-        'devpi-plumber',
+        'devpi-plumber>=0.2.3',
         'setuptools',
         'wheel',
         'pip>=1.5.3',

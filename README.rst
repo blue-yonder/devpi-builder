@@ -36,7 +36,7 @@ Commandline Usage
 ::
 
     usage: devpi-builder [-h] [--blacklist BLACKLIST] [--pure-index PURE_INDEX]
-                         [--junit-xml JUNIT_XML]
+                         [--junit-xml JUNIT_XML] [--dry-run]
                          requirements index user password
     
     Create wheels for all given project versions and upload them to the given
@@ -57,11 +57,13 @@ Commandline Usage
       --pure-index PURE_INDEX
                             The index to use for pure packages. Any non-pure
                             package will be uploaded to the index given as
-                            positional argument. Packages already found in the pure
-                            index will not be built, either.
+                            positional argument. Packages already found in the
+                            pure index will not be built, either.
       --junit-xml JUNIT_XML
                             Write information about the build success / failure to
                             a JUnit-compatible XML file.
+      --dry-run             Build missing wheels, but do not modify the state of
+                            the devpi server.
 
 Features
 ========
