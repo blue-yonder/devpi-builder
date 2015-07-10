@@ -66,12 +66,12 @@ Commandline Usage
 Features
 ========
 
- * Read a ``requirements.txt`` stile input file.
- * Support multiple versions of a package in the same file 
- * Only build packages not yet in the target index.
- * Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).
- * Can use separate indices for plain python packages and those with binary contents.
- * Can log build results to a JUnit compatible XML file, thus that it can be parsed by Jenkins.
+* Read a ``requirements.txt`` stile input file.
+* Support multiple versions of a package in the same file 
+* Only build packages not yet in the target index.
+* Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).
+* Can use separate indices for plain python packages and those with binary contents.
+* Can log build results to a JUnit compatible XML file, thus that it can be parsed by Jenkins.
 
 
 License
