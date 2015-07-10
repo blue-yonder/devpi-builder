@@ -16,8 +16,7 @@ v1.1.0 (in development)
 v1.0.0 (May 22 2015)
 ====================
 
-- Use [devpi-plumber](https://github.com/blue-yonder/devpi-plumber) instead of
-  a custom devpi wrapper.
+- Use devpi-plumber_ instead of a custom devpi wrapper.
 - Check the blacklist first when deciding whether to build a package.
 
 
@@ -56,3 +55,6 @@ v0.1.0 (Aug 01 2014)
 ====================
 
 - Initial release
+
+
+.. _devpi-plumber: https://github.com/blue-yonder/devpi-plumber
