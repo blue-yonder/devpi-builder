@@ -1,1 +1,1 @@
-test_package==0.1-dev
+test_package==0.1.dev1

@@ -1,3 +1,3 @@
 package_that_hopefully_not_exists==99.999
 progressbar==2.2
-test-package==0.1-dev
+test-package==0.1.dev1

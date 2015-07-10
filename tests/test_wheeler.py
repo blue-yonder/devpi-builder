@@ -37,8 +37,8 @@ class BuilderTest(unittest.TestCase):
 
 class WheelerTest(unittest.TestCase):
     def test_is_pure(self):
-        self.assertTrue(wheeler.is_pure('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl'))
-        self.assertFalse(wheeler.is_pure('tests/fixture/non-pure_package/dist/test_package-0.1_dev-cp27-none-linux_x86_64.whl'))
+        self.assertTrue(wheeler.is_pure('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl'))
+        self.assertFalse(wheeler.is_pure('tests/fixture/non-pure_package/dist/test_package-0.1.dev1-cp27-none-linux_x86_64.whl'))
 
     def test_is_compatible(self):
         self.assertTrue(wheeler.is_compatible('http://localhost:1234/good-1.0-py2.py3-none-any.whl'))

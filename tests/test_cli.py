@@ -90,7 +90,7 @@ class CliTest(unittest.TestCase):
         """
         with TestServer(USERS, INDICES) as devpi:
             with DevpiClient(devpi.server_url + '/' + PURE_INDEX, USER, PASSWORD) as pure_client:
-                pure_client.upload('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl')
+                pure_client.upload('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl')
 
             with patch.object(wheeler.Builder, 'build', autospec=True, side_effect=Exception('Should not build!')) as mock_build:
 
@@ -124,7 +124,7 @@ class CliTest(unittest.TestCase):
         with TestServer(USERS, INDICES) as devpi:
 
             with DevpiClient(devpi.server_url + '/' + INDEX, USER, PASSWORD) as client:
-                client.upload('tests/fixture/pure_package/dist/test_package-0.1_dev-py2.py3-none-any.whl')
+                client.upload('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl')
 
             tempdir = tempfile.mkdtemp()
             try:
@@ -134,7 +134,7 @@ class CliTest(unittest.TestCase):
                 root = ET.parse(junit_filename)
                 ET.dump(root)
                 self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999')
-                self._assert_test_case(root, 'skipped', 'test-package 0.1-dev')
+                self._assert_test_case(root, 'skipped', 'test-package 0.1.dev1')
 
                 pb_elems = root.findall(".//testcase[@name='progressbar 2.2']")
                 self.assertEqual(1, len(pb_elems))
