@@ -13,7 +13,7 @@ setup(
     author_email='matthias.bach@blue-yonder.com',
     url='https://github.com/blue-yonder/devpi-builder',
     description='Devpi-builder takes a requirements.txt and incrementally fills a devpi index with wheels of the listed python packages.',
-    long_description='%s \n\n %s' % (readme, changelog),
+    long_description='%s\n\n%s' % (readme, changelog),
     license='new BSD',
     install_requires=[
         'devpi-plumber',
