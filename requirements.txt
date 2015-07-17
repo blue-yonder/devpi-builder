@@ -1,4 +1,4 @@
-devpi-plumber==0.2.4
+devpi-plumber==0.2.5
 setuptools==18.0.1
 wheel==0.24.0
 pip==7.1.0
