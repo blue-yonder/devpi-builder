@@ -1,5 +1,5 @@
 devpi-plumber==0.2.5
-setuptools==18.3.1
+setuptools==18.3.2
 wheel==0.26.0
 pip==7.1.2
 six==1.9.0
