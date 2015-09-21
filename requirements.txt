@@ -9,4 +9,4 @@ setuptools_scm
 nose
 nose-progressive
 mock
-coverage
+coverage<4
