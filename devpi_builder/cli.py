@@ -99,13 +99,14 @@ def main(args=None):
     )
     parser.add_argument('--junit-xml', help='Write information about the build success / failure to a JUnit-compatible XML file.')
     parser.add_argument('--dry-run', help='Build missing wheels, but do not modify the state of the devpi server.', action='store_true')
+    parser.add_argument('--client-cert', help='Client key to use to authenticate with the devpi server.', default=None)
 
     args = parser.parse_args(args=args)
 
     packages = requirements.read(args.requirements)
-    with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password) as devpi_client:
+    with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password, client_cert=args.client_cert) as devpi_client:
         if args.pure_index:
-            with DevpiClient(args.pure_index, args.user, args.password) as pure_index_client:
+            with DevpiClient(args.pure_index, args.user, args.password, client_cert=args.client_cert) as pure_index_client:
                 processor = Processor(builder, devpi_client, args.blacklist, pure_index_client, junit_xml=args.junit_xml, dry_run=args.dry_run)
                 processor.build_packages(packages)
         else:
