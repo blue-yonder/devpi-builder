@@ -4,7 +4,7 @@ Changelog
 
 This lists the most important changes for each release.
 
-v1.1.0 (Jan 20 2016)
+v2.0.0 (Jan 20 2016)
 ====================
 
 - Enable compatibility with pip >= 8.0 by relying on pip's default download cache
@@ -12,6 +12,7 @@ v1.1.0 (Jan 20 2016)
   disables caching for people still using pip < 6.0.
   Thanks Christian Stefanescu.
 - Support for dry-running the wheel build without changing the devpi server state.
+- Python 3.2 is no longer supported.
 
 v1.0.0 (May 22 2015)
 ====================
