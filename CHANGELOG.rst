@@ -4,13 +4,13 @@ Changelog
 
 This lists the most important changes for each release.
 
-v1.1.0 (in development)
-=======================
+v1.1.0 (Jan 20 2016)
+====================
 
-- Rely on pip's default download cache mechanism instead of explicitly requiring
-  a download cache. This effectively disables caching for people still using
-  pip < 6.0 but ensures compatibility with future versions of pip.
-  Thanks Christian Stefanescu
+- Enable compatibility with pip >= 8.0 by relying on pip's default download cache
+  mechanism instead of explicitly requiring a download cache. This effectively
+  disables caching for people still using pip < 6.0.
+  Thanks Christian Stefanescu.
 - Support for dry-running the wheel build without changing the devpi server state.
 
 v1.0.0 (May 22 2015)
@@ -26,7 +26,7 @@ v0.4.0 (Nov 13 2014)
 - Only consider a package to exist if it is a wheel and it is compatible with
   the current system. Thanks Michael Still and David Szotten
 - Fix source distribution by adding missing README.md.
-  Thanks Mikhail Lukyanchenko
+  Thanks Mikhail Lukyanchenko.
 
 
 v0.3.0 (Aug 15 2014)
