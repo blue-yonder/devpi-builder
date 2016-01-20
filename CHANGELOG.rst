@@ -12,6 +12,7 @@ v2.0.0 (Jan 20 2016)
   disables caching for people still using pip < 6.0.
   Thanks Christian Stefanescu.
 - Support for dry-running the wheel build without changing the devpi server state.
+- Python 3.5 is now officially supported.
 - Python 3.2 is no longer supported.
 
 v1.0.0 (May 22 2015)
