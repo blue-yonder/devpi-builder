@@ -1,6 +1,6 @@
 devpi-plumber==0.2.5
 setuptools==19.7
-wheel==0.28.0
+wheel==0.29.0
 pip==8.0.2
 six==1.10.0
 junit-xml==1.6
