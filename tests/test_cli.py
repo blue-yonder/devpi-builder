@@ -181,6 +181,18 @@ class CliTest(unittest.TestCase):
 
             self.assertFalse(package_version_exists(devpi, INDEX, 'progressbar', '2.2'))
 
+    def test_passes_client_cert(self):
+        """
+        Verify that packages are not built and re-uploaded if they are already on the pure index.
+        """
+        PURE_INDEX='pure_index'
+        with patch('devpi_builder.cli.DevpiClient') as client:
+            main(['tests/fixture/sample_test_package.txt', INDEX, USER, PASSWORD, '--pure-index={}'.format(PURE_INDEX),
+                  '--client-cert=some.crt'])
+
+            client.assert_any_call(INDEX, USER, PASSWORD, client_cert='some.crt')
+            client.assert_any_call(PURE_INDEX, USER, PASSWORD, client_cert='some.crt')
+            self.assertEqual(2, len(client.call_args_list))  # Check that no further instances have been created
 
 if __name__ == '__main__':
     unittest.main()

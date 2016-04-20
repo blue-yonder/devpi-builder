@@ -4,6 +4,12 @@ Changelog
 
 This lists the most important changes for each release.
 
+UNRELEASED
+==========
+
+- Add support for client certificates.
+
+
 v2.0.0 (Jan 20 2016)
 ====================
 
@@ -14,6 +20,7 @@ v2.0.0 (Jan 20 2016)
 - Support for dry-running the wheel build without changing the devpi server state.
 - Python 3.5 is now officially supported.
 - Python 3.2 is no longer supported.
+
 
 v1.0.0 (May 22 2015)
 ====================
