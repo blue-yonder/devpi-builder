@@ -7,7 +7,7 @@ This lists the most important changes for each release.
 v2.1.0 (Apr 22 2016)
 ====================
 
-- Add support for client certificates.
+- Add support for client certificates. Thanks Hans Lawrenz.
 
 
 v2.0.0 (Jan 20 2016)
