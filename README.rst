@@ -37,18 +37,19 @@ Commandline Usage
 
     usage: devpi-builder [-h] [--blacklist BLACKLIST] [--pure-index PURE_INDEX]
                          [--junit-xml JUNIT_XML] [--dry-run]
+                         [--client-cert CLIENT_CERT]
                          requirements index user password
-    
+
     Create wheels for all given project versions and upload them to the given
     index.
-    
+
     positional arguments:
       requirements          requirements.txt style file specifying which project
                             versions to package.
       index                 The index to upload the packaged software to.
       user                  The user to log in as.
       password              Password of the user.
-    
+
     optional arguments:
       -h, --help            show this help message and exit
       --blacklist BLACKLIST
@@ -64,11 +65,14 @@ Commandline Usage
                             a JUnit-compatible XML file.
       --dry-run             Build missing wheels, but do not modify the state of
                             the devpi server.
+      --client-cert CLIENT_CERT
+                            Client key to use to authenticate with the devpi
+                            server.
 
 Features
 ========
 
-* Read a ``requirements.txt`` stile input file.
+* Read a ``requirements.txt`` style input file.
 * Support multiple versions of a package in the same file 
 * Only build packages not yet in the target index.
 * Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).

@@ -4,8 +4,8 @@ Changelog
 
 This lists the most important changes for each release.
 
-UNRELEASED
-==========
+v2.1.0 (Apr 22 2016)
+====================
 
 - Add support for client certificates.
 
