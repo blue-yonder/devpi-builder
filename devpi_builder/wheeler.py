@@ -64,7 +64,7 @@ class Builder(object):
                 '--wheel-dir=' + self.wheelhouse,
                 '--build=' + self.builddir,
                 '{}=={}'.format(package, version)
-            ])
+            ], stderr=subprocess.STDOUT)
             return self._find_wheel(package, version)
         except subprocess.CalledProcessError as e:
             raise BuildError(package, version, e)
