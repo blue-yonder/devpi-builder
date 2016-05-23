@@ -4,6 +4,13 @@ Changelog
 
 This lists the most important changes for each release.
 
+
+v2.2.0 (May 05 2016)
+====================
+
+- Capture build errors for better output in case of build failures. Thanks Travis Mehlinger.
+
+
 v2.1.0 (Apr 22 2016)
 ====================
 
