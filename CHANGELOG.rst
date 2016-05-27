@@ -8,6 +8,11 @@ This lists the most important changes for each release.
 Unreleased
 ==========
 
+Added
+-----
+
+* PyPy is now officially supported.
+
 Changed
 -------
 
