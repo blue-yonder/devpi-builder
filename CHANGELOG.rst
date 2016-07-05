@@ -11,7 +11,7 @@ Unreleased
 Changed
 -------
 
-* Changelog is not in the format suggested by Keep-a-CHANGELOG_.
+* Changelog is now in the format suggested by Keep-a-CHANGELOG_.
 
 
 Version 2.2.0 — 2016-05-23
