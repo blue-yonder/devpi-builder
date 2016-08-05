@@ -25,7 +25,7 @@ class BuilderTest(unittest.TestCase):
 
     def test_throws_custom_on_build_failure(self):
         with wheeler.Builder() as builder:
-            with self.assertRaisesRegexp(wheeler.BuildError, r'Could not find a version that satisfies the requirement package-that-hopefully-does-not-exist==99.999 \(from versions: \)'):
+            with self.assertRaisesRegexp(wheeler.BuildError, r'(Could not find a version that satisfies the requirement package-that-hopefully-does-not-exist==99.999 \(from versions: \))|(Could not find any downloads that satisfy the requirement package-that-hopefully-does-not-exist==99.999)'):
                 builder('package_that_hopefully_does_not_exist', '99.999')
 
     def test_look_for_non_existing_wheel(self):
