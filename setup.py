@@ -31,6 +31,7 @@ setup(
         'nose',
         'mock',
         'coverage',
+        'devpi-plumber[test]',
     ],
     test_suite='nose.collector',
     classifiers=[

@@ -1,0 +1,8 @@
+-e .
+
+setuptools_scm
+nose
+nose-progressive
+mock
+coverage
+devpi-plumber[test]
