@@ -11,3 +11,6 @@ dist
 
 README.html
 CHANGELOG.html
+.cache
+coverage_html_report
+.coverage*

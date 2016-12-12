@@ -1,8 +1,9 @@
 -e .
 
 setuptools_scm
-nose
-nose-progressive
+pytest-runner
+pytest
+pytest-cov
+pytest-mock
 mock
-coverage
 devpi-plumber[test]

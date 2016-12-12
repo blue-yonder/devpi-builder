@@ -4,30 +4,31 @@
 #
 #    pip-compile --no-index --output-file requirements.txt requirements.in
 #
-
 apipkg==1.4               # via execnet
-blessings==1.6            # via nose-progressive
 check-manifest==0.31      # via devpi-client
-coverage==4.2
+coverage==4.2             # via pytest-cov
 devpi-client==2.6.4       # via devpi-plumber
 devpi-common==3.0.1       # via devpi-client, devpi-server
 devpi-plumber[test]==0.3.0
 devpi-server==4.1.0       # via devpi-plumber
 execnet==1.4.1            # via devpi-server
+funcsigs==1.0.2           # via mock
 itsdangerous==0.24        # via devpi-server
 junit-xml==1.7
 mock==2.0.0
-nose-progressive==1.5.1
-nose==1.3.7
 PasteDeploy==1.5.2        # via pyramid
 pbr==1.10.0               # via mock
 pkginfo==1.3.2            # via devpi-client
 pluggy==0.3.1             # via devpi-server, tox
-py==1.4.31                # via devpi-client, devpi-common, devpi-server, tox
+py==1.4.31                # via devpi-client, devpi-common, devpi-server, pytest, tox
 pyramid==1.7              # via devpi-server
+pytest-cov==2.4.0
+pytest-mock==1.5.0
+pytest-runner==2.9
+pytest==3.0.5
 repoze.lru==0.6           # via devpi-server, pyramid
 requests==2.10.0          # via devpi-common
-setuptools-scm==1.11.1
+setuptools-scm==1.15.0
 six==1.10.0               # via devpi-plumber, junit-xml, mock
 tox==2.3.1                # via devpi-client
 translationstring==1.3    # via pyramid

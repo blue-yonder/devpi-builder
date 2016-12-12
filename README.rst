@@ -24,11 +24,11 @@ Brandon by Example
 Given a ``requirements.txt``, we can upload all listed packages to the index ``opensource/Debian_7`` on a local devpi using the following command::
 
     $ devpi-builder requirements.txt http://localhost:3141/opensource/Debian_7 opensource mypassword
-    
+
 Example of such a ``requirements.txt``::
 
-    progressbar==0.2.2 
-    progressbar==0.2.1 
+    progressbar==0.2.2
+    progressbar==0.2.1
     PyYAML==3.11
 
 Commandline Usage
@@ -73,7 +73,7 @@ Features
 ========
 
 * Read a ``requirements.txt`` style input file.
-* Support multiple versions of a package in the same file 
+* Support multiple versions of a package in the same file
 * Only build packages not yet in the target index.
 * Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).
 * Can use separate indices for plain python packages and those with binary contents.
