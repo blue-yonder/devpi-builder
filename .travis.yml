@@ -9,7 +9,7 @@ install:
 - pip install -r requirements.txt
 - pip install coveralls
 - pip freeze
-script: nosetests
+script: py.test
 after_success: coveralls
 deploy:
   provider: pypi
@@ -20,4 +20,4 @@ deploy:
   on:
     tags: true
     all_branches: true
-  
+

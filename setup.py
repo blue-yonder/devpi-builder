@@ -24,16 +24,17 @@ setup(
     ],
     setup_requires=[
         'setuptools_scm',
-        'nose',
-        'nose-progressive',
+        'pytest',
+        'pytest-cov',
     ],
     tests_require=[
-        'nose',
+        'pytest',
+        'pytest-cov',
+        'pytest-runner',
         'mock',
-        'coverage',
         'devpi-plumber[test]',
     ],
-    test_suite='nose.collector',
+    test_suite='pytest-runner',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
