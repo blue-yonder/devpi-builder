@@ -8,6 +8,12 @@ This lists the most important changes for each release.
 Unreleased
 ==========
 
+Added
+-----
+
+* The command line parameter ``--run-id`` allows to specify a run identifier that will be added to each entry in the
+  generated JUnit XML.
+
 Changed
 -------
 

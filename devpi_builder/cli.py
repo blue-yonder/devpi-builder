@@ -18,31 +18,38 @@ logger = logging.getLogger(__name__)
 
 class Processor(object):
 
-    def __init__(self, builder, devpi_client, blacklist, pure_index_client=None, junit_xml=None, dry_run=False):
+    def __init__(self, builder, devpi_client, blacklist, pure_index_client=None, junit_xml=None, dry_run=False, run_id=None):
         self._builder = builder
         self._devpi_client = devpi_client
         self._blacklist = blacklist
         self._pure_index_client = pure_index_client
         self._junit_xml = junit_xml
+        self._run_id = run_id
         self._dry_run = dry_run
         self._results = []
+
+    def _new_log_entry(self, package, version):
+        if self._run_id:
+            return TestCase('{} {} ({})'.format(package, version, self._run_id))
+        else:
+            return TestCase('{} {}'.format(package, version))
 
     def _log_skip(self, text, package, version):
         logger.debug(text, package, version)
 
-        log_entry = TestCase('{} {}'.format(package, version))
+        log_entry = self._new_log_entry(package, version)
         log_entry.add_skipped_info(text % (package, version))
         self._results.append(log_entry)
 
     def _log_fail(self, exception, package, version):
         logger.exception(exception)
 
-        log_entry = TestCase('{} {}'.format(package, version))
+        log_entry = self._new_log_entry(package, version)
         log_entry.add_failure_info(str(exception))
         self._results.append(log_entry)
 
     def _log_success(self, package, version):
-        log_entry = TestCase('{} {}'.format(package, version))
+        log_entry = self._new_log_entry(package, version)
         self._results.append(log_entry)
 
     def _should_package_be_build(self, package, version):
@@ -98,6 +105,7 @@ def main(args=None):
                                              'pure index will not be built, either.'
     )
     parser.add_argument('--junit-xml', help='Write information about the build success / failure to a JUnit-compatible XML file.')
+    parser.add_argument('--run-id', help='Add the given run identifier entries in the XML output.')
     parser.add_argument('--dry-run', help='Build missing wheels, but do not modify the state of the devpi server.', action='store_true')
     parser.add_argument('--client-cert', help='Client key to use to authenticate with the devpi server.', default=None)
 
@@ -107,8 +115,8 @@ def main(args=None):
     with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password, client_cert=args.client_cert) as devpi_client:
         if args.pure_index:
             with DevpiClient(args.pure_index, args.user, args.password, client_cert=args.client_cert) as pure_index_client:
-                processor = Processor(builder, devpi_client, args.blacklist, pure_index_client, junit_xml=args.junit_xml, dry_run=args.dry_run)
+                processor = Processor(builder, devpi_client, args.blacklist, pure_index_client, junit_xml=args.junit_xml, dry_run=args.dry_run, run_id=args.run_id)
                 processor.build_packages(packages)
         else:
-            processor = Processor(builder, devpi_client, args.blacklist, junit_xml=args.junit_xml, dry_run=args.dry_run)
+            processor = Processor(builder, devpi_client, args.blacklist, junit_xml=args.junit_xml, dry_run=args.dry_run, run_id=args.run_id)
             processor.build_packages(packages)

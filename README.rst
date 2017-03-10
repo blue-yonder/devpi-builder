@@ -36,7 +36,7 @@ Commandline Usage
 ::
 
     usage: devpi-builder [-h] [--blacklist BLACKLIST] [--pure-index PURE_INDEX]
-                         [--junit-xml JUNIT_XML] [--dry-run]
+                         [--junit-xml JUNIT_XML] [--run-id RUN_ID] [--dry-run]
                          [--client-cert CLIENT_CERT]
                          requirements index user password
 
@@ -63,6 +63,8 @@ Commandline Usage
       --junit-xml JUNIT_XML
                             Write information about the build success / failure to
                             a JUnit-compatible XML file.
+      --run-id RUN_ID       Add the given run identifier entries in the XML
+                            output.
       --dry-run             Build missing wheels, but do not modify the state of
                             the devpi server.
       --client-cert CLIENT_CERT

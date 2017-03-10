@@ -125,14 +125,16 @@ class CliTest(unittest.TestCase):
         self.assertEqual(1, len(matched_nodes))
         self.assertEqual(matched_nodes[0].attrib['name'], expected_element_name)
 
-    def _assert_junit_xml_content(self, junit_filename):
+    def _assert_junit_xml_content(self, junit_filename, run_id=None):
+        run_id_str = ' ({})'.format(run_id) if run_id else ''
+
         root = ET.parse(junit_filename)
         ET.dump(root)
 
-        self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999')
-        self._assert_test_case(root, 'skipped', 'test-package 0.1.dev1')
+        self._assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999' + run_id_str)
+        self._assert_test_case(root, 'skipped', 'test-package 0.1.dev1' + run_id_str)
 
-        pb_elems = root.findall(".//testcase[@name='progressbar 2.2']")
+        pb_elems = root.findall(".//testcase[@name='progressbar 2.2{}']".format(run_id_str))
         self.assertEqual(1, len(pb_elems))
         pb_elem = pb_elems[0]
         self.assertIsNone(pb_elem.find('failure'))
@@ -153,6 +155,31 @@ class CliTest(unittest.TestCase):
                 self._assert_junit_xml_content(junit_filename)
             finally:
                 shutil.rmtree(tempdir)
+
+    def test_run_id(self):
+        RUN_ID = 'my_run_id'
+
+        with TestServer(USERS, INDICES) as devpi:
+
+            with DevpiClient(devpi.server_url + '/' + INDEX, USER, PASSWORD) as client:
+                client.upload('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl')
+
+            tempdir = tempfile.mkdtemp()
+            try:
+                junit_filename = os.path.join(tempdir, 'junit.xml')
+                main([
+                    'tests/fixture/sample_junit.txt',
+                    devpi.url + '/' + INDEX,
+                    USER,
+                    PASSWORD,
+                    '--junit-xml', junit_filename,
+                    '--run-id', RUN_ID
+                ])
+
+                self._assert_junit_xml_content(junit_filename, RUN_ID)
+            finally:
+                shutil.rmtree(tempdir)
+
 
     def test_dry_run(self):
         """
