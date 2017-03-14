@@ -63,8 +63,9 @@ Commandline Usage
       --junit-xml JUNIT_XML
                             Write information about the build success / failure to
                             a JUnit-compatible XML file.
-      --run-id RUN_ID       Add the given run identifier entries in the XML
-                            output.
+      --run-id RUN_ID       Add the given string to all entries in the XML output,
+                            allowing to distinguish output from multiple runs in a
+                            merged XML.
       --dry-run             Build missing wheels, but do not modify the state of
                             the devpi server.
       --client-cert CLIENT_CERT

@@ -105,7 +105,7 @@ def main(args=None):
                                              'pure index will not be built, either.'
     )
     parser.add_argument('--junit-xml', help='Write information about the build success / failure to a JUnit-compatible XML file.')
-    parser.add_argument('--run-id', help='Add the given run identifier entries in the XML output.')
+    parser.add_argument('--run-id', help='Add the given string to all entries in the XML output, allowing to distinguish output from multiple runs in a merged XML.')
     parser.add_argument('--dry-run', help='Build missing wheels, but do not modify the state of the devpi server.', action='store_true')
     parser.add_argument('--client-cert', help='Client key to use to authenticate with the devpi server.', default=None)
 
