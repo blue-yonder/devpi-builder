@@ -9,8 +9,8 @@ sudo: false
 install:
 - pip install -r requirements.txt
 - pip install coveralls
+- pip install --no-deps -e .
 - pip freeze
-- pip install . --no-deps
 script: py.test
 after_success: coveralls
 deploy:
