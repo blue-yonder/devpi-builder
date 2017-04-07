@@ -11,9 +11,6 @@ Brandon the Devpi Builder
 .. image:: https://badge.fury.io/py/devpi-builder.svg
     :alt: Latest Version
     :target: https://pypi.python.org/pypi/devpi-builder
-.. image:: https://requires.io/github/blue-yonder/devpi-builder/requirements.svg?branch=master
-    :alt: Requirements Status
-    :target: https://requires.io/github/blue-yonder/devpi-builder/requirements/?branch=master
 
 Brandon, the devpi builder, takes a ``requirements.txt`` and incrementally fills a devpi_ index with wheels of the listed python packages.
 
