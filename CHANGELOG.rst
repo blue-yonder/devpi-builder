@@ -5,8 +5,8 @@ Changelog
 This lists the most important changes for each release.
 
 
-Unreleased
-==========
+Version 2.3.0 — 2017-04-07
+==========================
 
 Added
 -----
