@@ -55,7 +55,7 @@ class Processor(object):
     def _should_package_be_build(self, package, version):
         spec = "{}=={}".format(package, version)
 
-        if self._blacklist and requirements.matched_by_list(package, version, self._blacklist):
+        if requirements.matched_by_list(package, version, self._blacklist):
             self._log_skip('Skipping %s %s as it is matched by the blacklist.', package, version)
             return False
         elif wheeler.has_compatible_wheel(self._devpi_client.list(spec)):
