@@ -5,8 +5,8 @@ Changelog
 This lists the most important changes for each release.
 
 
-UNRELEASED
-==========
+Version 2.3.1 - 2017-05-19
+==========================
 
 Changed
 -------
