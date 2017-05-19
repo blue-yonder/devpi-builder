@@ -27,7 +27,15 @@ def _extract_project_version(requirement):
         raise ValueError('Version specification is missing for "{}".'.format(requirement))
 
 
-def read(filename):
+def read_raw(filename):
+    if filename:
+        with open(filename) as requirements_file:
+            return list(pkg_resources.parse_requirements(requirements_file))
+    else:
+        return []
+
+
+def read_exact_versions(filename):
     """
     Read the list of requested software.
 
@@ -36,27 +44,24 @@ def read(filename):
     :param filename: Filename of the requirements-style file.
     :return: A list of package-version pairs.
     """
-    with open(filename) as input_file:
-        return [
-            _extract_project_version(requirement) for requirement in pkg_resources.parse_requirements(input_file)
-        ]
+    return [
+        _extract_project_version(requirement) for requirement in read_raw(filename)
+    ]
 
 
-def matched_by_file(package, version, filename):
+def matched_by_list(package, version, requirements):
     """
     Verify whether the given version of the package is matched by the given requirements file.
 
     :param package: Name of the package to look for
     :param version: Version of the package to look for
-    :param filename: Filename of the requirements-style file.
+    :param requirements: A list of requirements as read by read_raw()
     :return: True if the package can be used to fulfil on of the requirements in the file, False otherwise
     """
     version = pkg_resources.safe_version('{}'.format(version))
     package = pkg_resources.safe_name(package)
-    with open(filename) as input_file:
-        parsed_requirements = list(pkg_resources.parse_requirements(input_file))
-        matches = [
-            package == requirement.project_name and version in requirement
-            for requirement in parsed_requirements
-        ]
-        return any(matches)
+    matches = (
+        package == requirement.project_name and version in requirement
+        for requirement in requirements
+    )
+    return any(matches)

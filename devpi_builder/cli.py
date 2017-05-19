@@ -21,7 +21,7 @@ class Processor(object):
     def __init__(self, builder, devpi_client, blacklist, pure_index_client=None, junit_xml=None, dry_run=False, run_id=None):
         self._builder = builder
         self._devpi_client = devpi_client
-        self._blacklist = blacklist
+        self._blacklist = requirements.read_raw(blacklist)
         self._pure_index_client = pure_index_client
         self._junit_xml = junit_xml
         self._run_id = run_id
@@ -55,7 +55,7 @@ class Processor(object):
     def _should_package_be_build(self, package, version):
         spec = "{}=={}".format(package, version)
 
-        if self._blacklist and requirements.matched_by_file(package, version, self._blacklist):
+        if self._blacklist and requirements.matched_by_list(package, version, self._blacklist):
             self._log_skip('Skipping %s %s as it is matched by the blacklist.', package, version)
             return False
         elif wheeler.has_compatible_wheel(self._devpi_client.list(spec)):
@@ -111,7 +111,7 @@ def main(args=None):
 
     args = parser.parse_args(args=args)
 
-    packages = requirements.read(args.requirements)
+    packages = requirements.read_exact_versions(args.requirements)
     with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password, client_cert=args.client_cert) as devpi_client:
         if args.pure_index:
             with DevpiClient(args.pure_index, args.user, args.password, client_cert=args.client_cert) as pure_index_client:

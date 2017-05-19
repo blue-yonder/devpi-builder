@@ -5,6 +5,15 @@ Changelog
 This lists the most important changes for each release.
 
 
+UNRELEASED
+==========
+
+Changed
+-------
+
+* Improved performance if a blacklist is used.
+
+
 Version 2.3.0 — 2017-04-07
 ==========================
 
