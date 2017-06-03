@@ -6,6 +6,7 @@ Command line interface for brandon
 
 import argparse
 import logging
+import os
 
 from junit_xml import TestSuite, TestCase
 from devpi_plumber.client import DevpiClient
@@ -97,8 +98,12 @@ def main(args=None):
     parser = argparse.ArgumentParser(description='Create wheels for all given project versions and upload them to the given index.')
     parser.add_argument('requirements', help='requirements.txt style file specifying which project versions to package.')
     parser.add_argument('index', help='The index to upload the packaged software to.')
-    parser.add_argument('user', help='The user to log in as.')
-    parser.add_argument('password', help='Password of the user.')
+    parser.add_argument('--user',
+                        default=os.environ.get('DEVPI_USER'),
+                        help='The user to log in as.')
+    parser.add_argument('--password',
+                        default=os.environ.get('DEVPI_PASS'),
+                        help='Password of the user.')
     parser.add_argument('--blacklist', help='Packages matched by this requirements.txt style file will never be build.')
     parser.add_argument('--pure-index', help='The index to use for pure packages. Any non-pure package will be uploaded '
                                              'to the index given as positional argument. Packages already found in the '
