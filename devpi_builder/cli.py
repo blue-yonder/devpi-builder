@@ -5,6 +5,7 @@ Command line interface for brandon
 """
 
 import argparse
+import getpass
 import logging
 import os
 
@@ -115,6 +116,11 @@ def main(args=None):
     parser.add_argument('--client-cert', help='Client key to use to authenticate with the devpi server.', default=None)
 
     args = parser.parse_args(args=args)
+    if args.user is None:
+        args.user = input('Username: ')
+
+    if args.password is None:
+        args.password = getpass.getpass('Password: ')
 
     packages = requirements.read_exact_versions(args.requirements)
     with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password, client_cert=args.client_cert) as devpi_client:
