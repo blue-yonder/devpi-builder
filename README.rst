@@ -44,11 +44,11 @@ Commandline Usage
       requirements          requirements.txt style file specifying which project
                             versions to package.
       index                 The index to upload the packaged software to.
-      user                  The user to log in as.
-      password              Password of the user.
 
     optional arguments:
       -h, --help            show this help message and exit
+      --user                The user to log in as.
+      --password            Password of the user.
       --blacklist BLACKLIST
                             Packages matched by this requirements.txt style file
                             will never be build.
@@ -73,6 +73,7 @@ Features
 ========
 
 * Read a ``requirements.txt`` style input file.
+* Read user/pass from environment (using DEVPI_USER/DEVPI_PASS)
 * Support multiple versions of a package in the same file
 * Only build packages not yet in the target index.
 * Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).

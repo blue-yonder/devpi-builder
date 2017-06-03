@@ -8,6 +8,7 @@ from mock import patch
 from devpi_plumber.server import TestServer
 from devpi_plumber.client import DevpiClient
 
+import devpi_builder
 from devpi_builder.cli import main
 from devpi_builder import wheeler
 
@@ -40,27 +41,49 @@ def _package_version_exists(client, index, package, version):
 
 
 def test_basic(devpi):
-    main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
+    main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER), '--password={}'.format(PASSWORD)])
+    assert _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
+
+
+def test_read_environment(devpi, monkeypatch):
+    monkeypatch.setenv('DEVPI_USER', USER)
+    monkeypatch.setenv('DEVPI_PASS', PASSWORD)
+    main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX])
+    assert _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
+
+
+def test_prompt_user_pass(devpi, monkeypatch):
+    monkeypatch.setattr('devpi_builder.cli.input', lambda x: USER, raising=False)
+    monkeypatch.setattr('getpass.getpass', lambda x: PASSWORD)
+
+    main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX])
     assert _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
 
 
 def test_with_blacklist(devpi):
-    main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX, USER, PASSWORD, '--blacklist={}'.format('tests/fixture/sample_no_version.txt')])
+    main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER),
+          '--password={}'.format(PASSWORD),
+          '--blacklist={}'.format('tests/fixture/sample_no_version.txt')])
 
     assert not _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
     assert _package_version_exists(devpi, INDEX, 'six', '1.7.3')
 
 
 def test_multiple_versions(devpi):
-    main(['tests/fixture/sample_multiple_versions.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
+    main(['tests/fixture/sample_multiple_versions.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER), '--password={}'.format(PASSWORD)])
 
     assert _package_version_exists(devpi, INDEX, 'progressbar', '2.1')
     assert _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
 
 
 def test_reupload_is_safe(devpi):
-    main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
-    main(['tests/fixture/sample_multiple_versions.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
+    main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER), '--password={}'.format(PASSWORD)])
+    main(['tests/fixture/sample_multiple_versions.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER), '--password={}'.format(PASSWORD)])
 
     assert _package_version_exists(devpi, INDEX, 'progressbar', '2.1')
     assert _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
@@ -68,12 +91,14 @@ def test_reupload_is_safe(devpi):
 
 
 def test_continue_on_failed(devpi):
-    main(['tests/fixture/sample_continue_on_failed.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
+    main(['tests/fixture/sample_continue_on_failed.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER), '--password={}'.format(PASSWORD)])
     assert _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
 
 
 def test_different_styles(devpi):
-    main(['tests/fixture/sample_different_styles.txt', devpi.url + '/' + INDEX, USER, PASSWORD])
+    main(['tests/fixture/sample_different_styles.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER), '--password={}'.format(PASSWORD)])
 
     assert _package_version_exists(devpi, INDEX, 'pygments', '1.6')
     assert _package_version_exists(devpi, INDEX, 'Pygments', '1.6')
@@ -85,13 +110,17 @@ def test_not_built_if_on_pure(devpi):
     """
     Verify that packages are not built and re-uploaded if they are already on the pure index.
     """
-    with DevpiClient(devpi.server_url + '/' + PURE_INDEX, USER, PASSWORD) as pure_client:
+    with DevpiClient(devpi.server_url + '/' + PURE_INDEX,
+                     USER,
+                     PASSWORD) as pure_client:
         pure_client.upload('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl')
 
         with patch.object(
                 wheeler.Builder, 'build', autospec=True, side_effect=Exception('Should not build!')
         ) as mock_build:
-            main(['tests/fixture/sample_test_package.txt', devpi.url + '/' + INDEX, USER, PASSWORD, '--pure-index={}'.format(pure_client.url)])
+            main(['tests/fixture/sample_test_package.txt', devpi.url + '/' + INDEX,
+                  '--user={}'.format(USER),
+                  '--password={}'.format(PASSWORD), '--pure-index={}'.format(pure_client.url)])
             assert not mock_build.called
 
 
@@ -102,8 +131,8 @@ def test_fills_proper_index(devpi):
     main([
         'tests/fixture/sample_pure_and_non-pure.txt',
         devpi.url + '/' + INDEX,
-        USER,
-        PASSWORD,
+        '--user={}'.format(USER),
+        '--password={}'.format(PASSWORD),
         '--pure-index={}'.format(devpi.url + '/' + PURE_INDEX)
     ])
 
@@ -139,11 +168,15 @@ def _assert_junit_xml_content(junit_filename, run_id=None):
 
 
 def test_reports_junit_xml(devpi, tmpdir):
-    with DevpiClient(devpi.server_url + '/' + INDEX, USER, PASSWORD) as client:
+    with DevpiClient(devpi.server_url + '/' + INDEX,
+                     USER,
+                     PASSWORD) as client:
         client.upload('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl')
 
     junit_filename = str(tmpdir.join('junit.xml'))
-    main(['tests/fixture/sample_junit.txt', devpi.url + '/' + INDEX, USER, PASSWORD, '--junit-xml', junit_filename])
+    main(['tests/fixture/sample_junit.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER),
+          '--password={}'.format(PASSWORD), '--junit-xml', junit_filename])
 
     _assert_junit_xml_content(junit_filename)
 
@@ -151,15 +184,16 @@ def test_reports_junit_xml(devpi, tmpdir):
 def test_run_id(devpi, tmpdir):
     RUN_ID = 'my_run_id'
 
-    with DevpiClient(devpi.server_url + '/' + INDEX, USER, PASSWORD) as client:
+    with DevpiClient(devpi.server_url + '/' + INDEX,
+                     USER, PASSWORD) as client:
         client.upload('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl')
 
     junit_filename = str(tmpdir.join('junit.xml'))
     main([
         'tests/fixture/sample_junit.txt',
         devpi.url + '/' + INDEX,
-        USER,
-        PASSWORD,
+        '--user={}'.format(USER),
+        '--password={}'.format(PASSWORD),
         '--junit-xml', junit_filename,
         '--run-id', RUN_ID
     ])
@@ -172,15 +206,16 @@ def test_dry_run(devpi, tmpdir):
     Test that a dry run produces the same ``junit.xml`` as a run without dry-run but does not modify the server
     state.
     """
-    with DevpiClient(devpi.server_url + '/' + INDEX, USER, PASSWORD) as client:
+    with DevpiClient(devpi.server_url + '/' + INDEX,
+                     USER, PASSWORD) as client:
         client.upload('tests/fixture/pure_package/dist/test_package-0.1.dev1-py2.py3-none-any.whl')
 
     junit_filename = str(tmpdir.join('junit.xml'))
     main([
         'tests/fixture/sample_junit.txt',
         devpi.url + '/' + INDEX,
-        USER,
-        PASSWORD,
+        '--user={}'.format(USER),
+        '--password={}'.format(PASSWORD),
         '--junit-xml', junit_filename,
         '--dry-run',
     ])
@@ -196,7 +231,10 @@ def test_passes_client_cert():
     """
     PURE_INDEX='pure_index'
     with patch('devpi_builder.cli.DevpiClient') as client:
-        main(['tests/fixture/sample_test_package.txt', INDEX, USER, PASSWORD, '--pure-index={}'.format(PURE_INDEX),
+        main(['tests/fixture/sample_test_package.txt', INDEX,
+              '--user={}'.format(USER),
+              '--password={}'.format(PASSWORD),
+              '--pure-index={}'.format(PURE_INDEX),
               '--client-cert=some.crt'])
 
         client.assert_any_call(INDEX, USER, PASSWORD, client_cert='some.crt')
