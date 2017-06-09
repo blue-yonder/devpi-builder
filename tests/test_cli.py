@@ -48,7 +48,7 @@ def test_basic(devpi):
 
 def test_read_environment(devpi, monkeypatch):
     monkeypatch.setenv('DEVPI_USER', USER)
-    monkeypatch.setenv('DEVPI_PASS', PASSWORD)
+    monkeypatch.setenv('DEVPI_PASSWORD', PASSWORD)
     main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX])
     assert _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
 
