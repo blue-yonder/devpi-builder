@@ -103,7 +103,7 @@ def main(args=None):
                         default=os.environ.get('DEVPI_USER'),
                         help='The user to log in as.')
     parser.add_argument('--password',
-                        default=os.environ.get('DEVPI_PASS'),
+                        default=os.environ.get('DEVPI_PASSWORD'),
                         help='Password of the user.')
     parser.add_argument('--blacklist', help='Packages matched by this requirements.txt style file will never be build.')
     parser.add_argument('--pure-index', help='The index to use for pure packages. Any non-pure package will be uploaded '
