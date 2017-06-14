@@ -49,6 +49,7 @@ Commandline Usage
       -h, --help            show this help message and exit
       --user                The user to log in as.
       --password            Password of the user.
+      --batch               Batch mode. Do not prompt for credentials
       --blacklist BLACKLIST
                             Packages matched by this requirements.txt style file
                             will never be build.

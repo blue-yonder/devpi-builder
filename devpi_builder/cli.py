@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class Processor(object):
-
-    def __init__(self, builder, devpi_client, blacklist, pure_index_client=None, junit_xml=None, dry_run=False, run_id=None):
+    def __init__(self, builder, devpi_client, blacklist, pure_index_client=None, junit_xml=None, dry_run=False,
+                 run_id=None):
         self._builder = builder
         self._devpi_client = devpi_client
         self._blacklist = requirements.read_raw(blacklist)
@@ -96,9 +96,15 @@ class Processor(object):
 
 
 def main(args=None):
-    parser = argparse.ArgumentParser(description='Create wheels for all given project versions and upload them to the given index.')
-    parser.add_argument('requirements', help='requirements.txt style file specifying which project versions to package.')
+    parser = argparse.ArgumentParser(
+        description='Create wheels for all given project versions and upload them to the given index.')
+    parser.add_argument('requirements',
+                        help='requirements.txt style file specifying which project versions to package.')
     parser.add_argument('index', help='The index to upload the packaged software to.')
+    parser.add_argument('--batch',
+                        default=False,
+                        action='store_true',
+                        help='Batch mode. Do not prompt for credentials')
     parser.add_argument('--user',
                         default=os.environ.get('DEVPI_USER'),
                         help='The user to log in as.')
@@ -106,28 +112,36 @@ def main(args=None):
                         default=os.environ.get('DEVPI_PASSWORD'),
                         help='Password of the user.')
     parser.add_argument('--blacklist', help='Packages matched by this requirements.txt style file will never be build.')
-    parser.add_argument('--pure-index', help='The index to use for pure packages. Any non-pure package will be uploaded '
-                                             'to the index given as positional argument. Packages already found in the '
-                                             'pure index will not be built, either.'
-    )
-    parser.add_argument('--junit-xml', help='Write information about the build success / failure to a JUnit-compatible XML file.')
-    parser.add_argument('--run-id', help='Add the given string to all entries in the XML output, allowing to distinguish output from multiple runs in a merged XML.')
-    parser.add_argument('--dry-run', help='Build missing wheels, but do not modify the state of the devpi server.', action='store_true')
+    parser.add_argument('--pure-index',
+                        help='The index to use for pure packages. Any non-pure package will be uploaded '
+                             'to the index given as positional argument. Packages already found in the '
+                             'pure index will not be built, either.'
+                        )
+    parser.add_argument('--junit-xml',
+                        help='Write information about the build success / failure to a JUnit-compatible XML file.')
+    parser.add_argument('--run-id',
+                        help='Add the given string to all entries in the XML output, allowing to distinguish output from multiple runs in a merged XML.')
+    parser.add_argument('--dry-run', help='Build missing wheels, but do not modify the state of the devpi server.',
+                        action='store_true')
     parser.add_argument('--client-cert', help='Client key to use to authenticate with the devpi server.', default=None)
-
     args = parser.parse_args(args=args)
-    if args.user is None:
-        args.user = input('Username: ')
+    if not args.batch:
+        if args.user is None:
+            args.user = input('Username: ')
 
-    if args.password is None:
-        args.password = getpass.getpass('Password: ')
+        if args.password is None:
+            args.password = getpass.getpass('Password: ')
 
     packages = requirements.read_exact_versions(args.requirements)
-    with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password, client_cert=args.client_cert) as devpi_client:
+    with wheeler.Builder() as builder, DevpiClient(args.index, args.user, args.password,
+                                                   client_cert=args.client_cert) as devpi_client:
         if args.pure_index:
-            with DevpiClient(args.pure_index, args.user, args.password, client_cert=args.client_cert) as pure_index_client:
-                processor = Processor(builder, devpi_client, args.blacklist, pure_index_client, junit_xml=args.junit_xml, dry_run=args.dry_run, run_id=args.run_id)
+            with DevpiClient(args.pure_index, args.user, args.password,
+                             client_cert=args.client_cert) as pure_index_client:
+                processor = Processor(builder, devpi_client, args.blacklist, pure_index_client,
+                                      junit_xml=args.junit_xml, dry_run=args.dry_run, run_id=args.run_id)
                 processor.build_packages(packages)
         else:
-            processor = Processor(builder, devpi_client, args.blacklist, junit_xml=args.junit_xml, dry_run=args.dry_run, run_id=args.run_id)
+            processor = Processor(builder, devpi_client, args.blacklist, junit_xml=args.junit_xml, dry_run=args.dry_run,
+                                  run_id=args.run_id)
             processor.build_packages(packages)
