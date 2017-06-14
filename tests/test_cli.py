@@ -6,7 +6,7 @@ import pytest
 
 from mock import patch
 from devpi_plumber.server import TestServer
-from devpi_plumber.client import DevpiClient
+from devpi_plumber.client import DevpiClient, DevpiClientError
 
 import devpi_builder
 from devpi_builder.cli import main
@@ -59,6 +59,13 @@ def test_prompt_user_pass(devpi, monkeypatch):
 
     main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX])
     assert _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
+
+
+def test_batch_mode(devpi, monkeypatch):
+    with patch('devpi_builder.cli.input') as mock_build:
+        with pytest.raises(DevpiClientError):
+            main(['tests/fixture/sample_simple.txt', devpi.url + '/' + INDEX, '--batch'])
+        assert not mock_build.called
 
 
 def test_with_blacklist(devpi):
