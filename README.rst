@@ -20,7 +20,7 @@ Brandon by Example
 
 Given a ``requirements.txt``, we can upload all listed packages to the index ``opensource/Debian_7`` on a local devpi using the following command::
 
-    $ devpi-builder requirements.txt http://localhost:3141/opensource/Debian_7 opensource mypassword
+    $ devpi-builder requirements.txt http://localhost:3141/opensource/Debian_7
 
 Example of such a ``requirements.txt``::
 
@@ -32,43 +32,52 @@ Commandline Usage
 =================
 ::
 
-    usage: devpi-builder [-h] [--blacklist BLACKLIST] [--pure-index PURE_INDEX]
-                         [--junit-xml JUNIT_XML] [--run-id RUN_ID] [--dry-run]
-                         [--client-cert CLIENT_CERT]
-                         requirements index user password
+    usage: devpi-builder [-h] [--batch] [--user USER] [--password PASSWORD]
+                        [--blacklist BLACKLIST] [--pure-index PURE_INDEX]
+                        [--junit-xml JUNIT_XML] [--run-id RUN_ID] [--dry-run]
+                        [--client-cert CLIENT_CERT]
+                        requirements index
 
     Create wheels for all given project versions and upload them to the given
     index.
 
     positional arguments:
-      requirements          requirements.txt style file specifying which project
+    requirements          requirements.txt style file specifying which project
                             versions to package.
-      index                 The index to upload the packaged software to.
+    index                 The index to upload the packaged software to.
 
     optional arguments:
-      -h, --help            show this help message and exit
-      --user                The user to log in as.
-      --password            Password of the user.
-      --batch               Batch mode. Do not prompt for credentials
-      --blacklist BLACKLIST
+    -h, --help            show this help message and exit
+    --batch               Batch mode. Do not prompt for credentials
+    --user USER           The user to log in as.
+    --password PASSWORD   Password of the user.
+    --blacklist BLACKLIST
                             Packages matched by this requirements.txt style file
                             will never be build.
-      --pure-index PURE_INDEX
+    --pure-index PURE_INDEX
                             The index to use for pure packages. Any non-pure
                             package will be uploaded to the index given as
                             positional argument. Packages already found in the
                             pure index will not be built, either.
-      --junit-xml JUNIT_XML
+    --junit-xml JUNIT_XML
                             Write information about the build success / failure to
                             a JUnit-compatible XML file.
-      --run-id RUN_ID       Add the given string to all entries in the XML output,
+    --run-id RUN_ID       Add the given string to all entries in the XML output,
                             allowing to distinguish output from multiple runs in a
                             merged XML.
-      --dry-run             Build missing wheels, but do not modify the state of
+    --dry-run             Build missing wheels, but do not modify the state of
                             the devpi server.
-      --client-cert CLIENT_CERT
+    --client-cert CLIENT_CERT
                             Client key to use to authenticate with the devpi
                             server.
+
+The following environment variables can be used instead of command line arguments:
+
+``DEPVI_USER``
+    The value of this environment variable will be used if ``--user`` is not given.
+
+``DEVPI_PASSWORD``
+    The value of this environment variable will be used if ``--password`` is not given.
 
 Features
 ========

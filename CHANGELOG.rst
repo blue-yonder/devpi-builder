@@ -5,6 +5,26 @@ Changelog
 This lists the most important changes for each release.
 
 
+Version 3.0.0 - 2017-06-16
+==========================
+
+Added
+-----
+
+* The command line parameter ``--batch`` can be used to disable any prompts.
+
+Changed
+-------
+
+* The way credentials are passed has been changed in an incompatible way.
+  The positional arguments for user and password no longer exist.
+  Instead, use one of the following:
+
+  - Pass the credentials via ``--user`` and ``--password`` command line arguments.
+  - Pass the credentials via the environment variables ``DEVPI_USER`` and ``DEVPI_PASSWORD``.
+  - Answer the interactive prompt for user and password. This is only possible if ``--batch`` is not used.
+
+
 Version 2.3.1 - 2017-05-19
 ==========================
 
