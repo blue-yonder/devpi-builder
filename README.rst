@@ -73,7 +73,7 @@ Commandline Usage
 
 The following environment variables can be used instead of command line arguments:
 
-``DEPVI_USER``
+``DEVPI_USER``
     The value of this environment variable will be used if ``--user`` is not given.
 
 ``DEVPI_PASSWORD``
