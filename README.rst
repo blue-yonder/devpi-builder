@@ -83,8 +83,8 @@ Features
 ========
 
 * Read a ``requirements.txt`` style input file.
-* Read user/pass from environment (using DEVPI_USER/DEVPI_PASS)
-* Support multiple versions of a package in the same file
+* Read user/pass from the environment (using ``DEVPI_USER`` and ``DEVPI_PASSWORD``).
+* Support multiple versions of a package in the same file.
 * Only build packages not yet in the target index.
 * Support a black-list for packages to never be built and uploaded (certain packages like numpy are fragile regarding their interdependency with other packages).
 * Can use separate indices for plain python packages and those with binary contents.
