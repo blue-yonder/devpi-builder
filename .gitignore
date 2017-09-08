@@ -2,15 +2,14 @@
 .eggs
 *.egg-info
 .idea
-.coverage
-atlassian-ide-plugin.xml
 *.pyc
 venv/
 build
-dist
+/dist
 
 README.html
 CHANGELOG.html
 .cache
 coverage_html_report
 .coverage*
+!.coveragerc
