@@ -8,7 +8,6 @@ from mock import patch
 from devpi_plumber.server import TestServer
 from devpi_plumber.client import DevpiClient, DevpiClientError
 
-import devpi_builder
 from devpi_builder.cli import main
 from devpi_builder import wheeler
 
