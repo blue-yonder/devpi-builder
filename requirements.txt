@@ -14,7 +14,7 @@ coverage==4.4.1           # via pytest-cov
 devpi-client==3.0.0       # via devpi-plumber
 devpi-common==3.1.0       # via devpi-client, devpi-server
 devpi-plumber[test]==0.4.2
-devpi-server==4.3.0       # via devpi-plumber
+devpi-server==4.2.1
 execnet==1.4.1            # via devpi-server
 hupper==1.0               # via pyramid
 idna==2.6                 # via requests

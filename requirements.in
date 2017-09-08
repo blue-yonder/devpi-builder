@@ -7,3 +7,4 @@ pytest-cov
 pytest-mock
 mock
 devpi-plumber[test]
+devpi-server<4.3.0  # TODO remove once devpi-plumber supports higher versions
