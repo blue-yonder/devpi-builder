@@ -32,8 +32,7 @@ setup(
         'pytest-cov',
         'pytest-runner',
         'mock',
-        'devpi-plumber[test]',
-        'devpi-server<4.3.0',  # TODO remove once devpi-plumber supports higher versions
+        'devpi-plumber[test]>=0.4.3',
     ],
     test_suite='pytest-runner',
     classifiers=[

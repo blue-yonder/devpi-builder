@@ -5,6 +5,8 @@ python:
 - '3.4'
 - '3.5'
 - '3.6'
+env:
+- DEVPI_PLUMBER_SERVER_HOST=127.0.0.1
 sudo: false
 install:
 - pip install -r requirements.txt
