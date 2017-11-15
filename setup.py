@@ -32,7 +32,7 @@ setup(
         'pytest-cov',
         'pytest-runner',
         'mock',
-        'devpi-plumber[test]',
+        'devpi-plumber[test]>=0.4.3',
     ],
     test_suite='pytest-runner',
     classifiers=[
