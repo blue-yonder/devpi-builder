@@ -187,6 +187,25 @@ def test_reports_junit_xml(devpi, tmpdir):
     _assert_junit_xml_content(junit_filename)
 
 
+def test_handles_non_ascii_build_output(devpi, tmpdir, monkeypatch):
+    monkeypatch.setenv('PIP_INDEX_URL', devpi.url + '/' + PURE_INDEX)
+
+    with DevpiClient(devpi.server_url + '/' + PURE_INDEX,
+                     USER,
+                     PASSWORD) as client:
+        client.upload('tests/fixture/non-ascii_package/dist/non-ascii-package-0.1.dev1.tar.gz')
+
+    junit_filename = str(tmpdir.join('junit.xml'))
+
+    # our main assertion is that the main does not fail
+    main(['tests/fixture/sample_non-ascii.txt', devpi.url + '/' + INDEX,
+          '--user={}'.format(USER),
+          '--password={}'.format(PASSWORD), '--junit-xml', junit_filename])
+
+    # check that the build failure shows up in the build output
+    assert 'No non-ascii 4 you!' in open(junit_filename).read()
+
+
 def test_run_id(devpi, tmpdir):
     RUN_ID = 'my_run_id'
 
