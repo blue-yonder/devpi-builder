@@ -5,7 +5,16 @@ Changelog
 This lists the most important changes for each release.
 
 
-Version 3.0.0 - 2017-06-16
+Version 3.0.1 — 2017-11-21
+==========================
+
+Fixed
+-----
+
+* Properly handle non-ASCII characters in the output of failed package builds. Previous versions used to crash in this
+  case if a JUnit XML output file was requested.
+
+Version 3.0.0 — 2017-06-16
 ==========================
 
 Added
@@ -25,7 +34,7 @@ Changed
   - Answer the interactive prompt for user and password. This is only possible if ``--batch`` is not used.
 
 
-Version 2.3.1 - 2017-05-19
+Version 2.3.1 — 2017-05-19
 ==========================
 
 Changed
