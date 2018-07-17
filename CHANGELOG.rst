@@ -5,6 +5,15 @@ Changelog
 This lists the most important changes for each release.
 
 
+UNRELEASED
+==========
+
+Removed
+-------
+
+* Python 3.3 and Python 3.4 are no longer supported.
+
+
 Version 3.0.1 — 2017-11-21
 ==========================
 
