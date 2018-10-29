@@ -18,7 +18,7 @@ setup(
     install_requires=[
         'devpi-plumber>=0.2.14',
         'setuptools',
-        'wheel',
+        'wheel<0.32',
         'pip>=1.5.3',
         'junit-xml'
     ],
