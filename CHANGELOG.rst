@@ -8,6 +8,11 @@ This lists the most important changes for each release.
 UNRELEASED
 ==========
 
+Fixed
+-----
+
+* Correctly specify the dependency to Wheel to avoid the latest, incompatible versions.
+
 Removed
 -------
 
