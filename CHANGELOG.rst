@@ -5,8 +5,8 @@ Changelog
 This lists the most important changes for each release.
 
 
-UNRELEASED
-==========
+Version 4.0.0 – 2018-11-02
+==========================
 
 Fixed
 -----
