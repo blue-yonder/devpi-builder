@@ -4,6 +4,7 @@
 #
 #    pip-compile --no-index --output-file requirements.txt requirements.in
 #
+-e file:///home/dependabot/dependabot-updater/tmp/dependabot_20191226-72-sbqfdn
 apipkg==1.5               # via execnet
 appdirs==1.4.3            # via devpi-server
 argon2-cffi==18.3.0       # via passlib
@@ -18,8 +19,10 @@ devpi-client==4.1.0       # via devpi-plumber
 devpi-common==3.3.1       # via devpi-client, devpi-server
 devpi-plumber[test]==0.5.0
 devpi-server==4.7.1       # via devpi-plumber
+enum34==1.1.6             # via argon2-cffi
 execnet==1.5.0            # via devpi-server
 filelock==3.0.9           # via tox
+funcsigs==1.0.2           # via mock, pytest
 hupper==1.4               # via pyramid
 idna==2.7                 # via requests
 itsdangerous==1.1.0       # via devpi-server
@@ -44,7 +47,9 @@ pytest==3.9.3
 python-dateutil==2.7.5    # via strictyaml
 repoze.lru==0.7           # via devpi-server, pyramid
 requests==2.20.0          # via devpi-common
+ruamel.ordereddict==0.4.14  # via ruamel.yaml
 ruamel.yaml==0.15.75      # via strictyaml
+scandir==1.10.0           # via pathlib2
 setuptools-scm==3.1.0
 six==1.11.0               # via argon2-cffi, devpi-plumber, junit-xml, mock, more-itertools, pathlib2, pytest, python-dateutil, tox
 strictyaml==0.14.1        # via devpi-server
@@ -57,7 +62,7 @@ twitter.common.lang==0.3.9  # via twitter.common.dirutil
 urllib3==1.24             # via requests
 venusian==1.1.0           # via pyramid
 virtualenv==16.0.0        # via tox
-waitress==1.1.0           # via devpi-server
+waitress==1.4.1           # via devpi-server
 webob==1.8.3              # via pyramid
 wheel==0.31.1
 zope.deprecation==4.3.0   # via pyramid
@@ -65,4 +70,4 @@ zope.interface==4.6.0     # via pyramid
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
-# setuptools                # via plaster, pyramid, pytest, tox, zope.deprecation, zope.interface
+# setuptools
