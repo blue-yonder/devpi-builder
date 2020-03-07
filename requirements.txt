@@ -57,7 +57,7 @@ twitter.common.lang==0.3.9  # via twitter.common.dirutil
 urllib3==1.24             # via requests
 venusian==1.1.0           # via pyramid
 virtualenv==16.0.0        # via tox
-waitress==1.1.0           # via devpi-server
+waitress==1.4.3           # via devpi-server
 webob==1.8.3              # via pyramid
 wheel==0.31.1
 zope.deprecation==4.3.0   # via pyramid
