@@ -143,10 +143,10 @@ def test_fills_proper_index(devpi):
     ])
 
     assert _package_version_exists(devpi, PURE_INDEX, 'progressbar', '2.2')
-    assert not _package_version_exists(devpi, PURE_INDEX, 'PyYAML', '3.10')
+    assert not _package_version_exists(devpi, PURE_INDEX, 'PyYAML', '5.3.1')
 
     assert not _package_version_exists(devpi, INDEX, 'progressbar', '2.2')
-    assert _package_version_exists(devpi, INDEX, 'PyYAML', '3.10')
+    assert _package_version_exists(devpi, INDEX, 'PyYAML', '5.3.1')
 
 
 def _assert_test_case(root_element, result_tag_type, expected_element_name):

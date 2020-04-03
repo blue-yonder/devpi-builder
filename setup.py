@@ -18,10 +18,13 @@ setup(
     install_requires=[
         'devpi-plumber>=0.2.14',
         'setuptools',
-        'wheel<0.32',
+        'wheel',
+        'wheel-filename',
+        'wheel-inspect',
         'pip>=1.5.3',
         'junit-xml'
     ],
+    python_requires='>=3.6',
     setup_requires=[
         'setuptools_scm',
         'pytest',
@@ -42,11 +45,10 @@ setup(
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: BSD License',
         'Topic :: System :: Archiving :: Packaging',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     entry_points={
         'console_scripts': [

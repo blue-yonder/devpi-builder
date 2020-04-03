@@ -5,6 +5,22 @@ Changelog
 This lists the most important changes for each release.
 
 
+Version 5.0.0 – UNRELEASED
+==========================
+
+Fixed
+-----
+
+* Remove dependency on the internal ``wheel`` API.
+  This blocked the use of ``wheel`` versions >= 0.32.
+
+Removed
+-------
+
+* Python 2 is no longer supported.
+* Python 3.5 is no longer supported.
+
+
 Version 4.0.0 – 2018-11-02
 ==========================
 

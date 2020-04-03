@@ -10,9 +10,11 @@ import shutil
 import subprocess
 import tempfile
 
-from wheel.install import WheelFile, BadWheelFile
-from wheel.util import matches_requirement
+from packaging import tags
+from pkg_resources import Distribution, Requirement
 
+from wheel_filename import InvalidFilenameError, parse_wheel_filename
+from wheel_inspect import Wheel, inspect_wheel
 
 class BuildError(Exception):
     def __init__(self, package, version, root_exception=None):
@@ -38,12 +40,30 @@ class Builder(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         shutil.rmtree(self.scratch_dir)
 
+    def _matches_requirement(self, requirement, wheels):
+        """
+        List wheels matching a requirement.
+
+        :param requirement:str : The requirement to satisfy
+        :param wheels: List of wheels to search.
+        """
+        req = Requirement.parse(requirement)
+
+        matching = []
+        for wheel in wheels:
+            w = wheel.parsed_filename
+            dist = Distribution(project_name=w.project, version=w.version)
+            if dist in req:
+                matching.append(wheel.path)
+        return matching
+
+
     def _find_wheel(self, name, version):
         """
         Find a wheel with the given name and version
         """
-        candidates = [WheelFile(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl'))]
-        matches = matches_requirement('{}=={}'.format(name, version), candidates)
+        candidates = [Wheel(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl'))]
+        matches = self._matches_requirement('{}=={}'.format(name, version), candidates)
         if len(matches) > 0:
             return str(matches[0])
         else:
@@ -79,17 +99,28 @@ def is_pure(wheel):
     :param wheel: The path to the wheel to inspect
     :return: True if the wheel is pure
     """
-    return WheelFile(wheel).parsed_wheel_info['Root-Is-Purelib'] == 'true'  # safe default
+    return (
+        inspect_wheel(wheel)
+            .get("dist_info", {})
+            .get("wheel", {})
+            .get("root_is_purelib")
+    )
 
 
 def is_compatible(package):
     """
     Check whether the given python package is a wheel compatible with the
     current platform and python interpreter.
+
+    Compatibility is based on https://www.python.org/dev/peps/pep-0425/
     """
     try:
-        return WheelFile(package).compatible
-    except BadWheelFile:
+        w = parse_wheel_filename(package)
+        for systag in tags.sys_tags():
+            for tag in w.tag_triples():
+                if systag in tags.parse_tag(tag):
+                    return True
+    except InvalidFilenameError:
         return False
 
 
