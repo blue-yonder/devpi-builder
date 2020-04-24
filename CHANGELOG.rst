@@ -5,7 +5,7 @@ Changelog
 This lists the most important changes for each release.
 
 
-Version 5.0.0 – UNRELEASED
+Version 5.0.0 – 2020-04-24
 ==========================
 
 Fixed
