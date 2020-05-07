@@ -27,13 +27,11 @@ setup(
     python_requires='>=3.6',
     setup_requires=[
         'setuptools_scm',
-        'pytest',
-        'pytest-cov',
+        'pytest-runner',
     ],
     tests_require=[
         'pytest',
         'pytest-cov',
-        'pytest-runner',
         'mock',
         'devpi-plumber[test]>=0.4.3',
     ],
