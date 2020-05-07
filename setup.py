@@ -20,7 +20,7 @@ setup(
         'setuptools',
         'wheel',
         'wheel-filename',
-        'wheel-inspect',
+        'wheel-inspect>=1.6.0',
         'pip>=1.5.3',
         'junit-xml'
     ],

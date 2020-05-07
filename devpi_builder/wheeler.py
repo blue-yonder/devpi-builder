@@ -14,7 +14,8 @@ from packaging import tags
 from pkg_resources import Distribution, Requirement
 
 from wheel_filename import InvalidFilenameError, parse_wheel_filename
-from wheel_inspect import Wheel, inspect_wheel
+from wheel_inspect import inspect_wheel
+from wheel_inspect.classes import WheelFile
 
 class BuildError(Exception):
     def __init__(self, package, version, root_exception=None):
@@ -62,7 +63,7 @@ class Builder(object):
         """
         Find a wheel with the given name and version
         """
-        candidates = [Wheel(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl'))]
+        candidates = [WheelFile(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl'))]
         matches = self._matches_requirement('{}=={}'.format(name, version), candidates)
         if len(matches) > 0:
             return str(matches[0])
