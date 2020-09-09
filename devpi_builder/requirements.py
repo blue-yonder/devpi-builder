@@ -61,7 +61,7 @@ def matched_by_list(package, version, requirements):
     version = pkg_resources.safe_version('{}'.format(version))
     package = pkg_resources.safe_name(package)
     matches = (
-        package == requirement.project_name and version in requirement
+        package.lower() == requirement.key and version in requirement
         for requirement in requirements
     )
     return any(matches)
