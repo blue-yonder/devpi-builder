@@ -49,6 +49,7 @@ def test_matched_by_list():
     assert not requirements.matched_by_list('at_least_0_5', 0.4, parsed)
 
     assert requirements.matched_by_list('below_2_0', 1.0, parsed)
+    assert requirements.matched_by_list('Below_2_0', 1.0, parsed)
     assert not requirements.matched_by_list('below_2_0', 2.0, parsed)
 
 
