@@ -4,6 +4,15 @@ Changelog
 
 This lists the most important changes for each release.
 
+Version 5.0.1 – 2020-09-09
+==========================
+
+Fixed
+-----
+
+* Adhere to case-insensivity when comparing package names.
+  This will lead to blacklisting 'cython' vs. 'Cython' being the same thing.
+
 
 Version 5.0.0 – 2020-04-24
 ==========================
