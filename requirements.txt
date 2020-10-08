@@ -82,3 +82,5 @@ zope.interface==5.1.0     # via pyramid
 # The following packages are considered to be unsafe in a requirements file:
 # pip
 # setuptools
+
+passlib>=1.7.3 # not directly required, pinned by Snyk to avoid a vulnerability
