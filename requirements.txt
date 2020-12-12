@@ -40,7 +40,7 @@ plaster-pastedeploy==0.7  # via pyramid
 plaster==1.0              # via plaster-pastedeploy, pyramid
 pluggy==0.13.1            # via devpi-client, devpi-server, pytest, tox
 property-manager==3.0     # via wheel-inspect
-py==1.8.1                 # via devpi-client, devpi-common, devpi-server, pytest, tox
+py==1.9.0                 # via devpi-client, devpi-common, devpi-server, pytest, tox
 pycparser==2.20           # via cffi
 pygments==2.6.1           # via readme-renderer
 pyparsing==2.4.7          # via packaging
