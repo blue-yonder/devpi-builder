@@ -20,20 +20,18 @@ setup(
         'setuptools',
         'wheel',
         'wheel-filename',
-        'wheel-inspect',
+        'wheel-inspect>=1.6.0',
         'pip>=1.5.3',
         'junit-xml'
     ],
     python_requires='>=3.6',
     setup_requires=[
         'setuptools_scm',
-        'pytest',
-        'pytest-cov',
+        'pytest-runner',
     ],
     tests_require=[
         'pytest',
         'pytest-cov',
-        'pytest-runner',
         'mock',
         'devpi-plumber[test]>=0.4.3',
     ],
