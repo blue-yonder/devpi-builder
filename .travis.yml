@@ -3,6 +3,7 @@ python:
 - '3.6'
 - '3.7'
 - '3.8'
+- '3.9'
 env:
 - DEVPI_PLUMBER_SERVER_HOST=127.0.0.1
 sudo: false
