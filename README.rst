@@ -2,9 +2,6 @@
 Brandon the Devpi Builder
 =========================
 
-.. image:: https://travis-ci.org/blue-yonder/devpi-builder.svg?branch=master
-    :alt: Build Status
-    :target: https://travis-ci.org/blue-yonder/devpi-builder
 .. image:: https://coveralls.io/repos/blue-yonder/devpi-builder/badge.svg?branch=master
     :alt: Coverage Status
     :target: https://coveralls.io/r/blue-yonder/devpi-builder?branch=master
