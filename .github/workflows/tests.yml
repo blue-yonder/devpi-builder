@@ -25,6 +25,8 @@ jobs:
         python -m pip install --no-deps -e .
         python -m pip install coveralls
         python -m pip freeze
+        python -m pip --version
+        python -c 'import setuptools; print(f"setuptools=={setuptools.__version__}")'
     - name: Test with pytest
       run: |
         pytest
