@@ -4,6 +4,17 @@ Changelog
 
 This lists the most important changes for each release.
 
+
+Version 5.1.0 — Unreleased
+==========================
+
+Added
+-----
+
+* Provide compatibility with pip 21.3 and above which drops the `--build-directory` option.
+  Pip has been using a temporary directory for builds since version 1.2 so manual handling of this directory should not be necessary anymore.
+
+
 Version 5.0.1 – 2020-09-09
 ==========================
 
