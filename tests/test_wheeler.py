@@ -8,7 +8,7 @@ import pytest
 from devpi_builder import wheeler
 
 
-class BuilderTest(object):
+class TestBuilder:
     def test_build(self):
         with wheeler.Builder() as builder:
             wheel_file = builder('progressbar', '2.2')
@@ -29,7 +29,7 @@ class BuilderTest(object):
         with wheeler.Builder() as builder:
             with pytest.raises(wheeler.BuildError) as info:
                 builder('package_that_hopefully_does_not_exist', '99.999')
-            info.match(r'(Could not find a version that satisfies the requirement package[-_]that[-_]hopefully[-_]does[-_]not[-_]exist==99.999 \(from versions: \))|(Could not find any downloads that satisfy the requirement package-that-hopefully-does-not-exist==99.999)')
+            info.match(r'Failed to create wheel for package[-_]that[-_]hopefully[-_]does[-_]not[-_]exist')
 
     def test_look_for_non_existing_wheel(self):
         builder = wheeler.Builder()
