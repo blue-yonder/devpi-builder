@@ -5,7 +5,7 @@ Changelog
 This lists the most important changes for each release.
 
 
-Version 5.1.0 — Unreleased
+Version 5.1.0 — 2021-11-05
 ==========================
 
 Added
