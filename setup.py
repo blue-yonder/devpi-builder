@@ -27,15 +27,7 @@ setup(
     python_requires='>=3.6',
     setup_requires=[
         'setuptools_scm',
-        'pytest-runner',
     ],
-    tests_require=[
-        'pytest',
-        'pytest-cov',
-        'mock',
-        'devpi-plumber[test]>=0.4.3',
-    ],
-    test_suite='pytest-runner',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',

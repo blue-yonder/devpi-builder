@@ -1,7 +1,6 @@
 -e .
 
 setuptools_scm
-pytest-runner
 pytest
 pytest-cov
 pytest-mock

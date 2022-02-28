@@ -5,6 +5,16 @@ Changelog
 This lists the most important changes for each release.
 
 
+UNRELEASED
+==========
+
+Removed
+-------
+
+* Dropped support for running tests via `setup.py test`.
+  The mechanism is considered deprecated by upstream and removing it allows us to drop a dependency.
+
+
 Version 5.1.0 — 2021-11-05
 ==========================
 
