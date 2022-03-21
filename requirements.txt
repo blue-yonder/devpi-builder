@@ -172,7 +172,7 @@ venusian==3.0.0
     # via pyramid
 virtualenv==20.4.3
     # via tox
-waitress==2.0.0
+waitress==2.1.1
     # via devpi-server
 webencodings==0.5.1
     # via bleach
