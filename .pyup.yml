@@ -1,4 +1,3 @@
 ---
 
-update: insecure
-schedule: "every day"
+update: False
