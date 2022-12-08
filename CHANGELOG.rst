@@ -8,6 +8,11 @@ This lists the most important changes for each release.
 UNRELEASED
 ==========
 
+Added
+-----
+
+* Python 3.10 and 3.11 are now supported.
+
 Removed
 -------
 
