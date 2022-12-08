@@ -21,7 +21,7 @@ bleach==4.1.0
     # via readme-renderer
 build==0.3.1.post1
     # via check-manifest
-certifi==2020.12.5
+certifi==2022.12.7
     # via requests
 cffi==1.14.5
     # via argon2-cffi
@@ -132,8 +132,6 @@ requests==2.25.1
     # via devpi-common
 ruamel-yaml==0.17.0
     # via strictyaml
-ruamel-yaml-clib==0.2.2
-    # via ruamel-yaml
 setuptools-scm==6.0.1
     # via -r requirements.in
 six==1.15.0
