@@ -132,8 +132,6 @@ requests==2.25.1
     # via devpi-common
 ruamel-yaml==0.17.0
     # via strictyaml
-ruamel-yaml-clib==0.2.2
-    # via ruamel-yaml
 setuptools-scm==6.0.1
     # via -r requirements.in
 six==1.15.0
@@ -172,7 +170,7 @@ venusian==3.0.0
     # via pyramid
 virtualenv==20.4.3
     # via tox
-waitress==2.0.0
+waitress==2.1.2
     # via devpi-server
 webencodings==0.5.1
     # via bleach
