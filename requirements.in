@@ -1,4 +1,4 @@
--e .
+-r core-requirements.txt
 
 setuptools_scm
 pytest

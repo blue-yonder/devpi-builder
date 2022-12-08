@@ -4,6 +4,8 @@ with open('README.rst') as f:
     readme = f.read()
 with open('CHANGELOG.rst') as f:
     changelog = f.read()
+with open('core-requirements.txt') as f:
+    requirements = [line.strip() for line in f.readlines()]
 
 setup(
     name='devpi-builder',
@@ -15,15 +17,7 @@ setup(
     description='Devpi-builder takes a requirements.txt and incrementally fills a devpi index with wheels of the listed python packages.',
     long_description='%s\n\n%s' % (readme, changelog),
     license='new BSD',
-    install_requires=[
-        'devpi-plumber>=0.2.14',
-        'setuptools',
-        'wheel',
-        'wheel-filename',
-        'wheel-inspect>=1.6.0',
-        'pip>=1.5.3',
-        'junit-xml'
-    ],
+    install_requires=requirements,
     python_requires='>=3.6',
     setup_requires=[
         'setuptools_scm',
