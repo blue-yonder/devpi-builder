@@ -16,8 +16,6 @@ argon2-cffi-bindings==21.2.0
     # via argon2-cffi
 async-timeout==4.0.2
     # via aiohttp
-asynctest==0.13.0
-    # via aiohttp
 attrs==21.4.0
     # via
     #   aiohttp
@@ -28,7 +26,7 @@ bleach==5.0.1
     # via readme-renderer
 build==0.8.0
     # via check-manifest
-certifi==2022.5.18.1
+certifi==2022.12.7
     # via requests
 cffi==1.15.0
     # via argon2-cffi-bindings
@@ -76,14 +74,6 @@ idna==3.3
     # via
     #   requests
     #   yarl
-importlib-metadata==4.11.4
-    # via
-    #   build
-    #   pep517
-    #   pluggy
-    #   pytest
-    #   tox
-    #   virtualenv
 iniconfig==1.1.1
     # via pytest
 itsdangerous==2.1.2
@@ -167,8 +157,6 @@ requests==2.27.1
     #   devpi-plumber
 ruamel-yaml==0.17.21
     # via devpi-server
-ruamel-yaml-clib==0.2.7
-    # via ruamel-yaml
 setuptools-scm==6.4.2
     # via -r requirements.in
 six==1.16.0
@@ -185,9 +173,7 @@ toml==0.10.2
     # via tox
 tomli==2.0.1
     # via
-    #   build
     #   check-manifest
-    #   coverage
     #   pep517
     #   pytest
     #   setuptools-scm
@@ -201,13 +187,6 @@ twitter-common-dirutil==0.3.11
     # via twitter-common-contextutil
 twitter-common-lang==0.3.11
     # via twitter-common-dirutil
-typing-extensions==4.2.0
-    # via
-    #   aiohttp
-    #   argon2-cffi
-    #   async-timeout
-    #   importlib-metadata
-    #   yarl
 urllib3==1.26.9
     # via requests
 venusian==3.0.0
@@ -230,10 +209,6 @@ wheel-inspect==1.7.1
     # via -r core-requirements.txt
 yarl==1.8.2
     # via aiohttp
-zipp==3.8.0
-    # via
-    #   importlib-metadata
-    #   pep517
 zope-deprecation==4.4.0
     # via pyramid
 zope-interface==5.4.0
