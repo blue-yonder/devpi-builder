@@ -12,7 +12,7 @@ import logging
 import os
 
 from junit_xml import TestSuite, TestCase
-from devpi_plumber.client import DevpiClient
+from devpi_plumber.client import DevpiClient, DevpiClientError
 
 from devpi_builder import requirements, wheeler
 
@@ -56,16 +56,47 @@ class Processor(object):
         log_entry = self._new_log_entry(package, version)
         self._results.append(log_entry)
 
+    def _list_distribution_links(self, client, package, version):
+        """
+        For looking up an exact version, `devpi getjson <package>/<version>` is much faster
+        than calling `devpi list <package>==<version>`. This is because `list` needs
+        to pull the entire list from the api (very slow when there are many version) before
+        filtering by spec on the client-side, whereas `getjson` quickly pulls the
+        specific version.
+        """
+        package_url = "{}/{}".format(package, version)
+
+        try:
+            data = client.get_json(package_url)
+        except DevpiClientError as error:
+            if '404 Not Found' in str(error):
+                return []
+            raise error
+
+        result = data['result']
+        links = result.get('+links') or []
+
+        if '+shadowing' in result:
+            # Add any upstream links that are being shadowed
+            for shadow_result in result['+shadowing']:
+                shadowing_links = shadow_result.get('+links') or []
+                links.extend(shadowing_links)
+
+        return [link['href'] for link in links]
+
     def _should_package_be_build(self, package, version):
-        spec = "{}=={}".format(package, version)
 
         if self._blacklist and requirements.matched_by_list(package, version, self._blacklist):
             self._log_skip('Skipping %s %s as it is matched by the blacklist.', package, version)
             return False
-        elif wheeler.has_compatible_wheel(self._devpi_client.list(spec)):
+        elif wheeler.has_compatible_wheel(
+                self._list_distribution_links(self._devpi_client, package, version)
+        ):
             self._log_skip('Skipping %s %s as is already available on the index.', package, version)
             return False
-        elif self._pure_index_client and wheeler.has_compatible_wheel(self._pure_index_client.list(spec)):
+        elif self._pure_index_client and wheeler.has_compatible_wheel(
+                self._list_distribution_links(self._pure_index_client, package, version)
+        ):
             self._log_skip('Skipping %s %s as is already available on the pure index.', package, version)
             return False
         return True
