@@ -13,6 +13,11 @@ Added
 
 * Python 3.10 and 3.11 are now supported.
 
+Changed
+-------
+
+* Improved performance of checking for already built packages.
+
 Removed
 -------
 
