@@ -5,8 +5,8 @@ Changelog
 This lists the most important changes for each release.
 
 
-UNRELEASED
-==========
+Version 6.0.0 — 2023-06-09
+==========================
 
 Added
 -----
