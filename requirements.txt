@@ -4,7 +4,7 @@
 #
 #    pip-compile --no-emit-index-url
 #
-aiohttp==3.8.3
+aiohttp==3.8.5
     # via devpi-server
 aiosignal==1.2.0
     # via aiohttp
