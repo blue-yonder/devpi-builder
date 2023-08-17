@@ -8,9 +8,18 @@ from devpi_builder import requirements
 def test_read_requirements():
     expected = [
         ('progressbar', '2.2'),
-        ('six', '1.7.3')
+        ('six', '1.7.3'),
     ]
     assert expected == requirements.read_exact_versions('tests/fixture/sample_simple.txt')
+
+def test_read_vcs_requirements():
+    expected = [
+        ('requests @ git+https://github.com/kennethreitz/requests@master', None),
+        ('requests @ git+ssh://github.com/kennethreitz/requests@master', None),
+        ('requests @ git+https://github.com/kennethreitz/requests@2.16.0', None),
+    ]
+    assert expected == requirements.read_exact_versions('tests/fixture/sample_vcs.txt')
+
 
 
 def test_multiple_versions():
