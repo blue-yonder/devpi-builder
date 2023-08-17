@@ -19,6 +19,7 @@ from wheel_inspect.classes import WheelFile
 
 class BuildError(Exception):
     def __init__(self, package, version, root_exception=None):
+        version = version or ""
         super(BuildError, self).__init__('Failed to create wheel for {} {}:\n{}\nOutput:\n{}'.format(
             package,
             version,
@@ -63,7 +64,8 @@ class Builder(object):
         Find a wheel with the given name and version
         """
         candidates = [WheelFile(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl'))]
-        matches = self._matches_requirement('{}=={}'.format(name, version), candidates)
+        requirement = '{}=={}'.format(name, version) if version else name
+        matches = self._matches_requirement(requirement, candidates)
         if len(matches) > 0:
             return str(matches[0])
         else:
@@ -81,7 +83,7 @@ class Builder(object):
             subprocess.check_output([
                 'pip', 'wheel',
                 '--wheel-dir=' + self.wheelhouse,
-                '{}=={}'.format(package, version)
+                '{}=={}'.format(package, version) if version else package,
             ], stderr=subprocess.STDOUT)
             return self._find_wheel(package, version)
         except subprocess.CalledProcessError as e:

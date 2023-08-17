@@ -4,6 +4,7 @@
 Functionality for reading specifications of required packages.
 """
 
+import pip_requirements_parser
 import pkg_resources
 
 
@@ -14,23 +15,25 @@ def _extract_project_version(requirement):
     :param requirement: A pkg_config Requirement
     :return: Pair of project_name and version
     """
-    specs = requirement.specs
-    if len(specs) == 1:
-        spec = specs[0]
-        if spec[0] == '==':
-            return requirement.project_name, spec[1]
-        else:
-            raise ValueError('Versions must be specified exactly. "{}" is not an exact version specification.'.format(requirement))
-    elif len(specs) > 1:
-        raise ValueError('Multiple version specifications on a single line are not supported.')
+    if requirement.is_vcs_url:
+        return requirement.line, None
+    if not requirement.specifier:
+        raise ValueError('Version specification is missing for "{}".'.format(requirement.line))
     else:
-        raise ValueError('Version specification is missing for "{}".'.format(requirement))
+        if len(requirement.specifier) == 1 and requirement.is_pinned:
+            return requirement.name, requirement.get_pinned_version
+        elif len(requirement.specifier) == 1 and not requirement.is_pinned:
+            raise ValueError('Versions must be specified exactly. "{}" is not an exact version specification.'.format(requirement.line))
+        elif len(requirement.specifier) > 1:
+            raise ValueError('Multiple version specifications on a single line are not supported.')
 
 
 def read_raw(filename):
     if filename:
-        with open(filename) as requirements_file:
-            return list(pkg_resources.parse_requirements(requirements_file))
+        rf = pip_requirements_parser.RequirementsFile.from_file(filename)
+        if rf.invalid_lines:
+            raise ValueError("There are invalid lines in requirements file: \n", "\n".join(line.dumps() for line in rf.invalid_lines))
+        return rf.requirements
     else:
         return []
 
@@ -61,7 +64,7 @@ def matched_by_list(package, version, requirements):
     version = pkg_resources.safe_version('{}'.format(version))
     package = pkg_resources.safe_name(package)
     matches = (
-        package.lower() == requirement.key and version in requirement
+        package.lower() == pkg_resources.safe_name(requirement.name) and (requirement.specifier.contains(version) if requirement.specifier else 1)
         for requirement in requirements
     )
     return any(matches)

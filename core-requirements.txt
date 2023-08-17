@@ -5,3 +5,4 @@ wheel-filename
 wheel-inspect>=1.6.0
 pip>=1.5.3
 junit-xml
+pip-requirements-parser>=32.0.1
