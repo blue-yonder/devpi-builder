@@ -15,6 +15,7 @@ class TestBuilder:
             ('progressbar', None),
             ('requests @ git+https://github.com/kennethreitz/requests@2.16.0', None),
             ('requests @ git+https://github.com/kennethreitz/requests@master', None),
+            ('zope-event', '5.0'),
         )
     )
     def test_build(self, args):
