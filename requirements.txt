@@ -134,7 +134,7 @@ pygments==2.15.0
     # via readme-renderer
 pyparsing==3.0.9
     # via packaging
-pyramid==2.0
+pyramid==2.0.2
     # via devpi-server
 pytest==7.1.2
     # via
