@@ -16,6 +16,7 @@ class TestBuilder:
             ('requests @ git+https://github.com/kennethreitz/requests@2.16.0', None),
             ('requests @ git+https://github.com/kennethreitz/requests@master', None),
             ('zope-event', '5.0'),
+            ('devpi-common', '3.6.0'),
         )
     )
     def test_build(self, args):
