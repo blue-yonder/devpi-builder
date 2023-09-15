@@ -162,7 +162,7 @@ def _assert_junit_xml_content(junit_filename, run_id=None):
     root = ET.parse(junit_filename)
     ET.dump(root)
 
-    _assert_test_case(root, 'failure', 'package-that-hopefully-not-exists 99.999' + run_id_str)
+    _assert_test_case(root, 'failure', 'package_that_hopefully_not_exists 99.999' + run_id_str)
     _assert_test_case(root, 'skipped', 'test-package 0.1.dev1' + run_id_str)
 
     pb_elems = root.findall(".//testcase[@name='progressbar 2.2{}']".format(run_id_str))
