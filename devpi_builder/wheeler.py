@@ -19,6 +19,7 @@ from wheel_inspect.classes import WheelFile
 
 class BuildError(Exception):
     def __init__(self, package, version, root_exception=None):
+        version = version or ""
         super(BuildError, self).__init__('Failed to create wheel for {} {}:\n{}\nOutput:\n{}'.format(
             package,
             version,
@@ -40,6 +41,10 @@ class Builder(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         shutil.rmtree(self.scratch_dir)
 
+    @staticmethod
+    def _standardize_package_name(name):
+        return name.replace(".", "-")
+
     def _matches_requirement(self, requirement, wheels):
         """
         List wheels matching a requirement.
@@ -52,7 +57,7 @@ class Builder(object):
         matching = []
         for wheel in wheels:
             w = wheel.parsed_filename
-            dist = Distribution(project_name=w.project, version=w.version)
+            dist = Distribution(project_name=self._standardize_package_name(w.project), version=w.version)
             if dist in req:
                 matching.append(wheel.path)
         return matching
@@ -63,7 +68,9 @@ class Builder(object):
         Find a wheel with the given name and version
         """
         candidates = [WheelFile(filename) for filename in glob.iglob(path.join(self.wheelhouse, '*.whl'))]
-        matches = self._matches_requirement('{}=={}'.format(name, version), candidates)
+        name = self._standardize_package_name(name)
+        requirement = '{}=={}'.format(name, version) if version else name
+        matches = self._matches_requirement(requirement, candidates)
         if len(matches) > 0:
             return str(matches[0])
         else:
@@ -81,7 +88,7 @@ class Builder(object):
             subprocess.check_output([
                 'pip', 'wheel',
                 '--wheel-dir=' + self.wheelhouse,
-                '{}=={}'.format(package, version)
+                '{}=={}'.format(package, version) if version else package,
             ], stderr=subprocess.STDOUT)
             return self._find_wheel(package, version)
         except subprocess.CalledProcessError as e:

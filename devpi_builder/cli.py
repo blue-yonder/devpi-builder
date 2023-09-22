@@ -114,7 +114,8 @@ class Processor(object):
 
         for package, version in packages:
             if self._should_package_be_build(package, version):
-                logger.info('Building %s %s', package, version)
+                msg = ('Building %s %s', package, version) if version else ('Building %s', package)
+                logger.info(*msg)
                 try:
                     wheel_file = self._builder(package, version)
                     self._upload_package(package, version, wheel_file)

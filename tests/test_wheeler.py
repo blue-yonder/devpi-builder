@@ -9,9 +9,19 @@ from devpi_builder import wheeler
 
 
 class TestBuilder:
-    def test_build(self):
+    @pytest.mark.parametrize(
+        'args', (
+            ('progressbar', '2.2'),
+            ('progressbar', None),
+            ('requests @ git+https://github.com/kennethreitz/requests@2.16.0', None),
+            ('requests @ git+https://github.com/kennethreitz/requests@master', None),
+            ('zope-event', '5.0'),
+            ('devpi-common', '3.6.0'),
+        )
+    )
+    def test_build(self, args):
         with wheeler.Builder() as builder:
-            wheel_file = builder('progressbar', '2.2')
+            wheel_file = builder(*args)
             assert re.match(r'.*\.whl$', wheel_file)
             assert path.exists(wheel_file)
 
