@@ -5,6 +5,20 @@ Changelog
 This lists the most important changes for each release.
 
 
+Version 6.1.0 — 2023-09-22
+==========================
+
+Added
+-----
+
+* Support using VCS URLs in requirements files.
+
+Fixed
+-----
+
+* Building wheels for packages like ``zope-event`` that normalise the project name using dots instead of underscores is no longer broken.
+
+
 Version 6.0.0 — 2023-06-09
 ==========================
 
