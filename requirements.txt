@@ -162,8 +162,6 @@ requests==2.31.0
     #   devpi-plumber
 ruamel-yaml==0.17.21
     # via devpi-server
-ruamel-yaml-clib==0.2.7
-    # via ruamel-yaml
 setuptools-scm==6.4.2
     # via -r requirements.in
 six==1.16.0
@@ -180,9 +178,7 @@ toml==0.10.2
     # via tox
 tomli==2.0.1
     # via
-    #   build
     #   check-manifest
-    #   coverage
     #   pep517
     #   pytest
     #   setuptools-scm
@@ -196,7 +192,7 @@ twitter-common-dirutil==0.3.11
     # via twitter-common-contextutil
 twitter-common-lang==0.3.11
     # via twitter-common-dirutil
-urllib3==1.26.9
+urllib3==1.26.17
     # via requests
 venusian==3.0.0
     # via pyramid
