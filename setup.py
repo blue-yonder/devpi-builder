@@ -19,7 +19,7 @@ setup(
     long_description_content_type='text/x-rst',
     license='new BSD',
     install_requires=requirements,
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     setup_requires=[
         'setuptools_scm',
     ],
@@ -31,7 +31,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Topic :: System :: Archiving :: Packaging',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
