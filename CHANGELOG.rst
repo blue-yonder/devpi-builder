@@ -5,6 +5,14 @@ Changelog
 This lists the most important changes for each release.
 
 
+UNRELEASED
+==========
+
+Removed
+-------
+
+* Python 3.6 is no longer supported. It likely still works but we will no longer run CI against it.
+
 Version 6.1.0 — 2023-09-22
 ==========================
 
