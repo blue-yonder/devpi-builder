@@ -192,7 +192,7 @@ twitter-common-lang==0.3.11
     # via twitter-common-dirutil
 typing-extensions==4.8.0
     # via setuptools-scm
-urllib3==2.0.6
+urllib3==2.0.7
     # via requests
 venusian==3.0.0
     # via pyramid
