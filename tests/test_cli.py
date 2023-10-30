@@ -26,7 +26,7 @@ INDICES = {
 }
 
 
-@pytest.yield_fixture()
+@pytest.fixture()
 def devpi():
     with TestServer(USERS, INDICES) as _devpi:
         yield _devpi

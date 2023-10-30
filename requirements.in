@@ -1,7 +1,7 @@
 -r core-requirements.txt
 
 setuptools_scm
-pytest
+pytest>=6.2  # Minimum version we know yield_fixture to be an alias for fixture
 pytest-cov
 pytest-mock
 mock
