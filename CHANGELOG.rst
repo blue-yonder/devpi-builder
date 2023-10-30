@@ -8,10 +8,16 @@ This lists the most important changes for each release.
 UNRELEASED
 ==========
 
+Added
+-----
+
+* Compatibility with junit-xml >= 2.0.
+
 Removed
 -------
 
 * Python 3.6 is no longer supported. It likely still works but we will no longer run CI against it.
+* Compatibility with junit-xml < 1.9. Junit-xml 1.9 was released more than three years ago.
 
 Version 6.1.0 — 2023-09-22
 ==========================

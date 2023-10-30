@@ -11,7 +11,7 @@ import locale
 import logging
 import os
 
-from junit_xml import TestSuite, TestCase
+from junit_xml import TestSuite, TestCase, to_xml_report_file
 from devpi_plumber.client import DevpiClient, DevpiClientError
 
 from devpi_builder import requirements, wheeler
@@ -127,7 +127,7 @@ class Processor(object):
             encoding = locale.getpreferredencoding()
             with codecs.open(self._junit_xml, 'w', encoding) as output:
                 test_suite = TestSuite('devpi-builder results', self._results)
-                TestSuite.to_file(output, [test_suite], encoding=encoding)
+                to_xml_report_file(output, [test_suite], encoding=encoding)
 
 
 def main(args=None):
