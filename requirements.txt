@@ -4,7 +4,7 @@
 #
 #    pip-compile --no-emit-index-url --strip-extras
 #
-aiohttp==3.8.5
+aiohttp==3.8.6
     # via devpi-server
 aiosignal==1.3.1
     # via aiohttp
@@ -36,7 +36,9 @@ charset-normalizer==3.3.0
 check-manifest==0.49
     # via devpi-client
 coverage==7.3.2
-    # via pytest-cov
+    # via
+    #   coverage
+    #   pytest-cov
 defusedxml==0.7.1
     # via devpi-server
 devpi-client==6.0.5
