@@ -34,9 +34,7 @@ charset-normalizer==3.3.2
 check-manifest==0.49
     # via devpi-client
 coverage==7.3.2
-    # via
-    #   coverage
-    #   pytest-cov
+    # via pytest-cov
 defusedxml==0.7.1
     # via devpi-server
 devpi-client==7.0.2
@@ -65,7 +63,7 @@ headerparser==0.4.0
     # via wheel-inspect
 hupper==1.12
     # via pyramid
-idna==3.4
+idna==3.7
     # via
     #   requests
     #   yarl
