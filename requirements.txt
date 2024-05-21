@@ -147,7 +147,7 @@ readme-renderer==42.0
     # via wheel-inspect
 repoze-lru==0.7
     # via devpi-server
-requests==2.31.0
+requests==2.32.0
     # via
     #   devpi-common
     #   devpi-plumber
