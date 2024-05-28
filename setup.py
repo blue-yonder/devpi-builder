@@ -20,9 +20,6 @@ setup(
     license='new BSD',
     install_requires=requirements,
     python_requires='>=3.8',
-    setup_requires=[
-        'setuptools_scm',
-    ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
