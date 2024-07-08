@@ -25,7 +25,7 @@ build==1.0.3
     # via
     #   check-manifest
     #   devpi-client
-certifi==2023.11.17
+certifi==2024.7.4
     # via requests
 cffi==1.16.0
     # via argon2-cffi-bindings
