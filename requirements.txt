@@ -200,7 +200,7 @@ wheel-inspect==1.7.1
     # via -r core-requirements.txt
 yarl==1.9.2
     # via aiohttp
-zipp==3.17.0
+zipp==3.19.1
     # via importlib-metadata
 zope-deprecation==5.0
     # via pyramid
