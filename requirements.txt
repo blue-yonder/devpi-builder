@@ -190,7 +190,7 @@ venusian==3.1.0
     # via pyramid
 waitress==2.1.2
     # via devpi-server
-webob==1.8.7
+webob==1.8.8
     # via pyramid
 wheel==0.41.3
     # via -r core-requirements.txt
