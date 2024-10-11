@@ -4,44 +4,40 @@
 #
 #    pip-compile --no-emit-index-url --strip-extras
 #
-aiohappyeyeballs==2.3.5
-    # via aiohttp
-aiohttp==3.10.2
-    # via devpi-server
-aiosignal==1.3.1
-    # via aiohttp
+anyio==4.6.0
+    # via httpx
 argon2-cffi==23.1.0
     # via
     #   devpi-server
     #   passlib
 argon2-cffi-bindings==21.2.0
     # via argon2-cffi
-async-timeout==4.0.3
-    # via aiohttp
-attrs==23.1.0
+attrs==24.2.0
     # via
-    #   aiohttp
     #   devpi-server
     #   wheel-inspect
-build==1.0.3
+build==1.2.2.post1
     # via
     #   check-manifest
     #   devpi-client
-certifi==2024.7.4
-    # via requests
-cffi==1.16.0
+certifi==2024.8.30
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
+cffi==1.17.1
     # via argon2-cffi-bindings
-charset-normalizer==3.3.2
+charset-normalizer==3.4.0
     # via requests
-check-manifest==0.49
+check-manifest==0.50
     # via devpi-client
-coverage==7.3.2
+coverage==7.6.2
     # via pytest-cov
 defusedxml==0.7.1
     # via devpi-server
-devpi-client==7.0.2
+devpi-client==7.1.0
     # via devpi-plumber
-devpi-common==4.0.2
+devpi-common==4.0.4
     # via
     #   devpi-client
     #   devpi-server
@@ -49,33 +45,38 @@ devpi-plumber==0.7.0
     # via
     #   -r core-requirements.txt
     #   -r requirements.in
-devpi-server==6.9.2
+devpi-server==6.13.0
     # via devpi-plumber
-docutils==0.20.1
+docutils==0.21.2
     # via readme-renderer
 entry-points-txt==0.1.0
     # via wheel-inspect
-exceptiongroup==1.1.3
-    # via pytest
-frozenlist==1.4.0
+exceptiongroup==1.2.2
     # via
-    #   aiohttp
-    #   aiosignal
+    #   anyio
+    #   pytest
+h11==0.14.0
+    # via httpcore
 headerparser==0.4.0
     # via wheel-inspect
-hupper==1.12
+httpcore==1.0.6
+    # via httpx
+httpx==0.27.2
+    # via devpi-server
+hupper==1.12.1
     # via pyramid
-idna==3.7
+idna==3.10
     # via
+    #   anyio
+    #   httpx
     #   requests
-    #   yarl
-importlib-metadata==6.8.0
+importlib-metadata==8.5.0
     # via build
 iniconfig==2.0.0
     # via
     #   devpi-client
     #   pytest
-itsdangerous==2.1.2
+itsdangerous==2.2.0
     # via devpi-server
 junit-xml==1.9
     # via -r core-requirements.txt
@@ -85,27 +86,25 @@ lazy==1.6
     #   devpi-server
 mock==5.1.0
     # via -r requirements.in
-multidict==6.0.4
-    # via
-    #   aiohttp
-    #   yarl
-nh3==0.2.14
+nh3==0.2.18
     # via readme-renderer
-packaging==23.2
+packaging==24.1
     # via
     #   build
-    #   devpi-common
+    #   packaging-legacy
     #   pip-requirements-parser
     #   pytest
     #   setuptools-scm
     #   wheel-inspect
+packaging-legacy==23.0.post0
+    # via devpi-common
 passlib==1.7.4
     # via devpi-server
-pastedeploy==3.0.1
+pastedeploy==3.1.0
     # via plaster-pastedeploy
 pip-requirements-parser==32.0.1
     # via -r core-requirements.txt
-pkginfo==1.9.6
+pkginfo==1.11.2
     # via devpi-client
 plaster==1.1.2
     # via
@@ -113,65 +112,69 @@ plaster==1.1.2
     #   pyramid
 plaster-pastedeploy==1.0.1
     # via pyramid
-platformdirs==4.0.0
+platformdirs==4.3.6
     # via
     #   devpi-client
     #   devpi-server
-pluggy==1.3.0
+pluggy==1.5.0
     # via
     #   devpi-client
     #   devpi-server
     #   pytest
 py==1.11.0
     # via devpi-server
-pycparser==2.21
+pycparser==2.22
     # via cffi
-pygments==2.17.1
+pygments==2.18.0
     # via readme-renderer
-pyparsing==3.1.1
+pyparsing==3.1.4
     # via pip-requirements-parser
-pyproject-hooks==1.0.0
+pyproject-hooks==1.2.0
     # via build
 pyramid==2.0.2
     # via devpi-server
-pytest==7.4.3
+pytest==8.3.3
     # via
     #   -r requirements.in
     #   pytest-cov
     #   pytest-mock
-pytest-cov==4.1.0
+pytest-cov==5.0.0
     # via -r requirements.in
-pytest-mock==3.12.0
+pytest-mock==3.14.0
     # via -r requirements.in
-python-dateutil==2.8.2
+python-dateutil==2.9.0.post0
     # via strictyaml
-readme-renderer==42.0
+readme-renderer==44.0
     # via wheel-inspect
 repoze-lru==0.7
     # via devpi-server
-requests==2.32.2
+requests==2.32.3
     # via
     #   devpi-common
     #   devpi-plumber
-ruamel-yaml==0.18.5
+ruamel-yaml==0.18.6
     # via devpi-server
 ruamel-yaml-clib==0.2.8
     # via ruamel-yaml
-setuptools-scm==8.0.4
+setuptools-scm==8.1.0
     # via -r requirements.in
 six==1.16.0
     # via
     #   headerparser
     #   junit-xml
     #   python-dateutil
+sniffio==1.3.1
+    # via
+    #   anyio
+    #   httpx
 strictyaml==1.7.3
     # via devpi-server
-tomli==2.0.1
+tomli==2.0.2
     # via
     #   build
     #   check-manifest
     #   coverage
-    #   pyproject-hooks
+    #   devpi-client
     #   pytest
     #   setuptools-scm
 translationstring==1.4
@@ -182,17 +185,19 @@ twitter-common-dirutil==0.3.11
     # via twitter-common-contextutil
 twitter-common-lang==0.3.11
     # via twitter-common-dirutil
-typing-extensions==4.8.0
-    # via setuptools-scm
-urllib3==2.2.2
+typing-extensions==4.12.2
+    # via
+    #   anyio
+    #   setuptools-scm
+urllib3==2.2.3
     # via requests
 venusian==3.1.0
     # via pyramid
-waitress==2.1.2
+waitress==3.0.0
     # via devpi-server
 webob==1.8.8
     # via pyramid
-wheel==0.41.3
+wheel==0.44.0
     # via -r core-requirements.txt
 wheel-filename==1.4.1
     # via
@@ -200,13 +205,11 @@ wheel-filename==1.4.1
     #   wheel-inspect
 wheel-inspect==1.7.1
     # via -r core-requirements.txt
-yarl==1.9.2
-    # via aiohttp
-zipp==3.19.1
+zipp==3.20.2
     # via importlib-metadata
 zope-deprecation==5.0
     # via pyramid
-zope-interface==6.1
+zope-interface==7.1.0
     # via pyramid
 
 # The following packages are considered to be unsafe in a requirements file:
