@@ -24,14 +24,21 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements.txt
         python -m pip install --no-deps -e .
-        python -m pip install coveralls
+        if [ "${{ matrix.python-version }}" != "3.13" ]; then  # workaround for TheKevJames/coveralls-python#523
+          python -m pip install coveralls
+        fi
         python -m pip freeze
         python -m pip --version
         python -c 'import setuptools; print(f"setuptools=={setuptools.__version__}")'
     - name: Test with pytest
       run: |
-        pytest
+        if [ "${{ matrix.python-version }}" == "3.13" ]; then
+          pytest --no-cov  # workaround for TheKevJames/coveralls-python#523
+        else
+          pytest
+        fi
     - name: Upload coverage data
+      if: matrix.python-version != '3.13'  # workaround for TheKevJames/coveralls-python#523
       run: |
         coveralls --service=github
       env:
