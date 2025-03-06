@@ -4,7 +4,7 @@
 #
 #    pip-compile --no-emit-index-url --strip-extras
 #
-anyio==4.6.0
+anyio==4.8.0
     # via httpx
 argon2-cffi==23.1.0
     # via
@@ -12,30 +12,33 @@ argon2-cffi==23.1.0
     #   passlib
 argon2-cffi-bindings==21.2.0
     # via argon2-cffi
-attrs==24.2.0
+attrs==25.1.0
     # via
     #   devpi-server
+    #   headerparser
     #   wheel-inspect
 build==1.2.2.post1
     # via
     #   check-manifest
     #   devpi-client
-certifi==2024.8.30
+certifi==2025.1.31
     # via
     #   httpcore
     #   httpx
     #   requests
 cffi==1.17.1
     # via argon2-cffi-bindings
-charset-normalizer==3.4.0
+charset-normalizer==3.4.1
     # via requests
 check-manifest==0.50
     # via devpi-client
-coverage==7.6.2
+coverage==7.6.12
     # via pytest-cov
 defusedxml==0.7.1
     # via devpi-server
-devpi-client==7.1.0
+deprecated==1.2.18
+    # via headerparser
+devpi-client==7.2.0
     # via devpi-plumber
 devpi-common==4.0.4
     # via
@@ -45,11 +48,11 @@ devpi-plumber==0.7.0
     # via
     #   -r core-requirements.txt
     #   -r requirements.in
-devpi-server==6.13.0
+devpi-server==6.14.0
     # via devpi-plumber
 docutils==0.21.2
     # via readme-renderer
-entry-points-txt==0.1.0
+entry-points-txt==0.2.1
     # via wheel-inspect
 exceptiongroup==1.2.2
     # via
@@ -57,11 +60,11 @@ exceptiongroup==1.2.2
     #   pytest
 h11==0.14.0
     # via httpcore
-headerparser==0.4.0
+headerparser==0.5.2
     # via wheel-inspect
-httpcore==1.0.6
+httpcore==1.0.7
     # via httpx
-httpx==0.27.2
+httpx==0.28.1
     # via devpi-server
 hupper==1.12.1
     # via pyramid
@@ -70,7 +73,7 @@ idna==3.10
     #   anyio
     #   httpx
     #   requests
-importlib-metadata==8.5.0
+importlib-metadata==8.6.1
     # via build
 iniconfig==2.0.0
     # via
@@ -84,11 +87,11 @@ lazy==1.6
     # via
     #   devpi-common
     #   devpi-server
-mock==5.1.0
+mock==5.2.0
     # via -r requirements.in
-nh3==0.2.18
+nh3==0.2.21
     # via readme-renderer
-packaging==24.1
+packaging==24.2
     # via
     #   build
     #   packaging-legacy
@@ -104,7 +107,7 @@ pastedeploy==3.1.0
     # via plaster-pastedeploy
 pip-requirements-parser==32.0.1
     # via -r core-requirements.txt
-pkginfo==1.11.2
+pkginfo==1.12.1.2
     # via devpi-client
 plaster==1.1.2
     # via
@@ -125,20 +128,20 @@ py==1.11.0
     # via devpi-server
 pycparser==2.22
     # via cffi
-pygments==2.18.0
+pygments==2.19.1
     # via readme-renderer
-pyparsing==3.1.4
+pyparsing==3.2.1
     # via pip-requirements-parser
 pyproject-hooks==1.2.0
     # via build
 pyramid==2.0.2
     # via devpi-server
-pytest==8.3.3
+pytest==8.3.5
     # via
     #   -r requirements.in
     #   pytest-cov
     #   pytest-mock
-pytest-cov==5.0.0
+pytest-cov==6.0.0
     # via -r requirements.in
 pytest-mock==3.14.0
     # via -r requirements.in
@@ -152,24 +155,21 @@ requests==2.32.3
     # via
     #   devpi-common
     #   devpi-plumber
-ruamel-yaml==0.18.6
+ruamel-yaml==0.18.10
     # via devpi-server
-ruamel-yaml-clib==0.2.8
+ruamel-yaml-clib==0.2.12
     # via ruamel-yaml
-setuptools-scm==8.1.0
+setuptools-scm==8.2.0
     # via -r requirements.in
-six==1.16.0
+six==1.17.0
     # via
-    #   headerparser
     #   junit-xml
     #   python-dateutil
 sniffio==1.3.1
-    # via
-    #   anyio
-    #   httpx
+    # via anyio
 strictyaml==1.7.3
     # via devpi-server
-tomli==2.0.2
+tomli==2.2.1
     # via
     #   build
     #   check-manifest
@@ -189,27 +189,29 @@ typing-extensions==4.12.2
     # via
     #   anyio
     #   setuptools-scm
-urllib3==2.2.3
+urllib3==2.3.0
     # via requests
-venusian==3.1.0
+venusian==3.1.1
     # via pyramid
-waitress==3.0.1
+waitress==3.0.2
     # via devpi-server
-webob==1.8.8
+webob==1.8.9
     # via pyramid
-wheel==0.44.0
+wheel==0.45.1
     # via -r core-requirements.txt
-wheel-filename==1.4.1
+wheel-filename==1.4.2
     # via
     #   -r core-requirements.txt
     #   wheel-inspect
-wheel-inspect==1.7.1
+wheel-inspect==1.7.2
     # via -r core-requirements.txt
-zipp==3.20.2
+wrapt==1.17.2
+    # via deprecated
+zipp==3.21.0
     # via importlib-metadata
-zope-deprecation==5.0
+zope-deprecation==5.1
     # via pyramid
-zope-interface==7.1.0
+zope-interface==7.2
     # via pyramid
 
 # The following packages are considered to be unsafe in a requirements file:
