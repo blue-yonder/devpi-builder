@@ -10,8 +10,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -23,14 +24,21 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements.txt
         python -m pip install --no-deps -e .
-        python -m pip install coveralls
+        if [ "${{ matrix.python-version }}" != "3.13" ]; then  # workaround for TheKevJames/coveralls-python#523
+          python -m pip install coveralls
+        fi
         python -m pip freeze
         python -m pip --version
         python -c 'import setuptools; print(f"setuptools=={setuptools.__version__}")'
     - name: Test with pytest
       run: |
-        pytest
+        if [ "${{ matrix.python-version }}" == "3.13" ]; then
+          pytest --no-cov  # workaround for TheKevJames/coveralls-python#523
+        else
+          pytest
+        fi
     - name: Upload coverage data
+      if: matrix.python-version != '3.13'  # workaround for TheKevJames/coveralls-python#523
       run: |
         coveralls --service=github
       env:

@@ -11,7 +11,7 @@ UNRELEASED
 Added
 -----
 
-* Support for Python 3.12
+* Support for Python 3.12 and 3.13.
 * Compatibility with junit-xml >= 2.0.
 
 Removed
