@@ -4,7 +4,7 @@
 #
 #    pip-compile --no-emit-index-url --strip-extras
 #
-anyio==4.8.0
+anyio==4.9.0
     # via httpx
 argon2-cffi==23.1.0
     # via
@@ -12,7 +12,7 @@ argon2-cffi==23.1.0
     #   passlib
 argon2-cffi-bindings==21.2.0
     # via argon2-cffi
-attrs==25.1.0
+attrs==25.3.0
     # via
     #   devpi-server
     #   headerparser
@@ -32,7 +32,7 @@ charset-normalizer==3.4.1
     # via requests
 check-manifest==0.50
     # via devpi-client
-coverage==7.6.12
+coverage==7.8.0
     # via pytest-cov
 defusedxml==0.7.1
     # via devpi-server
@@ -58,11 +58,11 @@ exceptiongroup==1.2.2
     # via
     #   anyio
     #   pytest
-h11==0.14.0
+h11==0.16.0
     # via httpcore
 headerparser==0.5.2
     # via wheel-inspect
-httpcore==1.0.7
+httpcore==1.0.9
     # via httpx
 httpx==0.28.1
     # via devpi-server
@@ -74,8 +74,10 @@ idna==3.10
     #   httpx
     #   requests
 importlib-metadata==8.6.1
-    # via build
-iniconfig==2.0.0
+    # via
+    #   build
+    #   setuptools-scm
+iniconfig==2.1.0
     # via
     #   devpi-client
     #   pytest
@@ -91,7 +93,7 @@ mock==5.2.0
     # via -r requirements.in
 nh3==0.2.21
     # via readme-renderer
-packaging==24.2
+packaging==25.0
     # via
     #   build
     #   packaging-legacy
@@ -115,7 +117,7 @@ plaster==1.1.2
     #   pyramid
 plaster-pastedeploy==1.0.1
     # via pyramid
-platformdirs==4.3.6
+platformdirs==4.3.7
     # via
     #   devpi-client
     #   devpi-server
@@ -130,7 +132,7 @@ pycparser==2.22
     # via cffi
 pygments==2.19.1
     # via readme-renderer
-pyparsing==3.2.1
+pyparsing==3.2.3
     # via pip-requirements-parser
 pyproject-hooks==1.2.0
     # via build
@@ -141,7 +143,7 @@ pytest==8.3.5
     #   -r requirements.in
     #   pytest-cov
     #   pytest-mock
-pytest-cov==6.0.0
+pytest-cov==6.1.1
     # via -r requirements.in
 pytest-mock==3.14.0
     # via -r requirements.in
@@ -159,7 +161,7 @@ ruamel-yaml==0.18.10
     # via devpi-server
 ruamel-yaml-clib==0.2.12
     # via ruamel-yaml
-setuptools-scm==8.2.0
+setuptools-scm==8.3.1
     # via -r requirements.in
 six==1.17.0
     # via
@@ -185,11 +187,11 @@ twitter-common-dirutil==0.3.11
     # via twitter-common-contextutil
 twitter-common-lang==0.3.11
     # via twitter-common-dirutil
-typing-extensions==4.12.2
+typing-extensions==4.13.2
     # via
     #   anyio
     #   setuptools-scm
-urllib3==2.3.0
+urllib3==2.4.0
     # via requests
 venusian==3.1.1
     # via pyramid
