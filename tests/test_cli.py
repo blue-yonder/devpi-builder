@@ -3,6 +3,7 @@
 import xml.etree.ElementTree as ET
 
 import pytest
+import requests
 
 from mock import patch
 from devpi_plumber.server import TestServer
@@ -187,20 +188,28 @@ def test_reports_junit_xml(devpi, tmpdir):
     _assert_junit_xml_content(junit_filename)
 
 
-def test_handles_non_ascii_build_output(devpi, tmpdir, monkeypatch):
-    monkeypatch.setenv('PIP_INDEX_URL', devpi.url + '/' + PURE_INDEX)
+def test_handles_non_ascii_build_output(tmpdir, monkeypatch):
 
-    with DevpiClient(devpi.server_url + '/' + PURE_INDEX,
-                     USER,
-                     PASSWORD) as client:
-        client.upload('tests/fixture/non-ascii_package/dist/non-ascii-package-0.1.dev1.tar.gz')
+    with TestServer(USERS, {
+        PURE_INDEX: {'bases': '/root/pypi'},
+        INDEX: {'bases': ''},
+    }) as devpi:
+        sdist_index = devpi.url + '/' + PURE_INDEX
 
-    junit_filename = str(tmpdir.join('junit.xml'))
+        monkeypatch.setenv('PIP_INDEX_URL', sdist_index)
 
-    # our main assertion is that the main does not fail
-    main(['tests/fixture/sample_non-ascii.txt', devpi.url + '/' + INDEX,
-          '--user={}'.format(USER),
-          '--password={}'.format(PASSWORD), '--junit-xml', junit_filename])
+        # trigger retrieval of setuptools from upstream as that can take forever
+        requests.get(sdist_index + '/+simple/setuptools/', timeout=300).raise_for_status()
+
+        with DevpiClient(sdist_index, USER, PASSWORD) as client:
+            client.upload('tests/fixture/non-ascii_package/dist/non-ascii-package-0.1.dev1.tar.gz')
+
+        junit_filename = str(tmpdir.join('junit.xml'))
+
+        # our main assertion is that the main does not fail
+        main(['tests/fixture/sample_non-ascii.txt', devpi.url + '/' + INDEX,
+              '--user={}'.format(USER),
+              '--password={}'.format(PASSWORD), '--junit-xml', junit_filename])
 
     # check that the build failure shows up in the build output
     assert 'No non-ascii 4 you!' in open(junit_filename).read()
