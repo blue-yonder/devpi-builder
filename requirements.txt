@@ -89,6 +89,8 @@ lazy==1.6
     # via
     #   devpi-common
     #   devpi-server
+legacy-cgi==2.6.4
+    # via -r requirements.in
 mock==5.2.0
     # via -r requirements.in
 nh3==0.2.21
