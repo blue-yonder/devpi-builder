@@ -102,6 +102,7 @@ packaging==25.0
     #   pip-requirements-parser
     #   pytest
     #   setuptools-scm
+    #   wheel
     #   wheel-inspect
 packaging-legacy==23.0.post0
     # via devpi-common
@@ -201,7 +202,7 @@ waitress==3.0.2
     # via devpi-server
 webob==1.8.9
     # via pyramid
-wheel==0.45.1
+wheel==0.46.2
     # via -r core-requirements.txt
 wheel-filename==1.4.2
     # via
