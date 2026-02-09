@@ -2,7 +2,7 @@ devpi-plumber>=0.2.14
 setuptools
 wheel
 wheel-filename
-wheel-inspect>=1.6.0
+wheel-inspect>=1.8.0
 pip>=1.5.3
 junit-xml>=1.9  # First version to support to_xml_report_file
 pip-requirements-parser>=32.0.1
