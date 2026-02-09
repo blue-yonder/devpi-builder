@@ -14,7 +14,17 @@ from packaging import tags
 from packaging.requirements import Requirement
 from packaging.utils import canonicalize_name
 
-from wheel_filename import ParseError, WheelFilename
+# Support both wheel-filename 1.x (Python 3.9 + wheel-inspect 1.7) and 2.x (Python 3.10+ + wheel-inspect 1.8)
+try:
+    from wheel_filename import ParseError as _WheelParseError
+    from wheel_filename import WheelFilename
+
+    def _parse_wheel_filename(filename):
+        return WheelFilename.parse(filename)
+except ImportError:
+    from wheel_filename import InvalidFilenameError as _WheelParseError
+    from wheel_filename import parse_wheel_filename as _parse_wheel_filename
+
 from wheel_inspect import inspect_wheel
 from wheel_inspect.classes import WheelFile
 
@@ -121,12 +131,12 @@ def is_compatible(package):
     Compatibility is based on https://www.python.org/dev/peps/pep-0425/
     """
     try:
-        w = WheelFilename.parse(package)
+        w = _parse_wheel_filename(package)
         for systag in tags.sys_tags():
             for tag in w.tag_triples():
                 if systag in tags.parse_tag(tag):
                     return True
-    except ParseError:
+    except _WheelParseError:
         return False
 
 
