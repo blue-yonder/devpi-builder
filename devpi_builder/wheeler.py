@@ -64,12 +64,13 @@ class Builder(object):
         :param wheels: List of wheels to search.
         """
         req = Requirement(requirement)
+        req_name = canonicalize_name(req.name)
 
         matching = []
         for wheel in wheels:
             w = wheel.parsed_filename
             name = canonicalize_name(self._standardize_package_name(w.project))
-            if name == req.name and req.specifier.contains(str(w.version)):
+            if name == req_name and req.specifier.contains(str(w.version)):
                 matching.append(wheel.path)
         return matching
 
