@@ -5,7 +5,7 @@ Functionality for reading specifications of required packages.
 """
 
 import pip_requirements_parser
-import pkg_resources
+from packaging.utils import canonicalize_name, canonicalize_version
 
 
 def _extract_project_version(requirement):
@@ -61,10 +61,10 @@ def matched_by_list(package, version, requirements):
     :param requirements: A list of requirements as read by read_raw()
     :return: True if the package can be used to fulfil on of the requirements in the file, False otherwise
     """
-    version = pkg_resources.safe_version('{}'.format(version))
-    package = pkg_resources.safe_name(package)
+    version = canonicalize_version('{}'.format(version))
+    package = canonicalize_name(package)
     matches = (
-        package.lower() == pkg_resources.safe_name(requirement.name) and (requirement.specifier.contains(version) if requirement.specifier else 1)
+        package == canonicalize_name(requirement.name) and (requirement.specifier.contains(version) if requirement.specifier else True)
         for requirement in requirements
     )
     return any(matches)

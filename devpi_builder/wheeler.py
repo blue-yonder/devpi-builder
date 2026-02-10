@@ -11,9 +11,20 @@ import subprocess
 import tempfile
 
 from packaging import tags
-from pkg_resources import Distribution, Requirement
+from packaging.requirements import Requirement
+from packaging.utils import canonicalize_name
 
-from wheel_filename import InvalidFilenameError, parse_wheel_filename
+# Support both wheel-filename 1.x (Python 3.9 + wheel-inspect 1.7) and 2.x (Python 3.10+ + wheel-inspect 1.8)
+try:
+    from wheel_filename import ParseError as _WheelParseError
+    from wheel_filename import WheelFilename
+
+    def _parse_wheel_filename(filename):
+        return WheelFilename.parse(filename)
+except ImportError:
+    from wheel_filename import InvalidFilenameError as _WheelParseError
+    from wheel_filename import parse_wheel_filename as _parse_wheel_filename
+
 from wheel_inspect import inspect_wheel
 from wheel_inspect.classes import WheelFile
 
@@ -52,13 +63,14 @@ class Builder(object):
         :param requirement:str : The requirement to satisfy
         :param wheels: List of wheels to search.
         """
-        req = Requirement.parse(requirement)
+        req = Requirement(requirement)
+        req_name = canonicalize_name(req.name)
 
         matching = []
         for wheel in wheels:
             w = wheel.parsed_filename
-            dist = Distribution(project_name=self._standardize_package_name(w.project), version=w.version)
-            if dist in req:
+            name = canonicalize_name(self._standardize_package_name(w.project))
+            if name == req_name and req.specifier.contains(str(w.version)):
                 matching.append(wheel.path)
         return matching
 
@@ -120,12 +132,12 @@ def is_compatible(package):
     Compatibility is based on https://www.python.org/dev/peps/pep-0425/
     """
     try:
-        w = parse_wheel_filename(package)
+        w = _parse_wheel_filename(package)
         for systag in tags.sys_tags():
             for tag in w.tag_triples():
                 if systag in tags.parse_tag(tag):
                     return True
-    except InvalidFilenameError:
+    except _WheelParseError:
         return False
 
 
