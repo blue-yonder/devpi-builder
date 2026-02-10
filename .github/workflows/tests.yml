@@ -22,6 +22,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        # devpi-plumber runs devpi-init, which still uses pkg_resources; use setuptools <82 in CI only
+        # so integration tests pass
+        python -m pip install 'setuptools<82'
         python -m pip install -r requirements.txt
         python -m pip install --no-deps -e .
         if [ "${{ matrix.python-version }}" != "3.13" ]; then  # workaround for TheKevJames/coveralls-python#523
