@@ -5,7 +5,7 @@ Changelog
 This lists the most important changes for each release.
 
 
-Version 7.0.0 - 2026-01-16
+Version 7.0.0 - 2026-02-16
 ==========================
 
 Added
