@@ -1,7 +1,7 @@
 devpi-plumber>=0.2.14
-setuptools
+setuptools<82  # setuptools 82 drops pkg_resources
 wheel
-wheel-filename
+wheel-filename<2  # wheel-filename 2 breaks imports of InvalidFilenameError, parse_wheel_filename
 wheel-inspect>=1.6.0
 pip>=1.5.3
 junit-xml>=1.9  # First version to support to_xml_report_file
