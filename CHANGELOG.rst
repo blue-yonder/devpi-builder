@@ -5,14 +5,19 @@ Changelog
 This lists the most important changes for each release.
 
 
-UNRELEASED
-==========
+Version 7.0.0 - 2026-01-16
+==========================
 
 Added
 -----
 
 * Support for Python 3.12 and 3.13.
 * Compatibility with junit-xml >= 2.0.
+
+Fixed
+-----
+
+* Ensure Setuptools and ``wheel-filename`` are installed in compatible versions.
 
 Removed
 -------
