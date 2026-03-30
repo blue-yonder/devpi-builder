@@ -133,7 +133,7 @@ py==1.11.0
     # via devpi-server
 pycparser==2.22
     # via cffi
-pygments==2.19.1
+pygments==2.20.0
     # via readme-renderer
 pyparsing==3.2.3
     # via pip-requirements-parser
