@@ -68,7 +68,7 @@ httpx==0.28.1
     # via devpi-server
 hupper==1.12.1
     # via pyramid
-idna==3.10
+idna==3.15
     # via
     #   anyio
     #   httpx
