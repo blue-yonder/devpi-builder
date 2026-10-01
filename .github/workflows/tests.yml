@@ -22,22 +22,17 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        # requirements.txt omits setuptools (pip-compile); setuptools<82 needed for pkg_resources (devpi-server)
-        python -m pip install 'setuptools<82'
-        python -m pip install -r requirements.txt
-        python -m pip install --no-deps -e .
+        python -m pip install tox
         if [ "${{ matrix.python-version }}" != "3.13" ]; then  # workaround for TheKevJames/coveralls-python#523
           python -m pip install coveralls
         fi
         python -m pip freeze
-        python -m pip --version
-        python -c 'import setuptools; print(f"setuptools=={setuptools.__version__}")'
     - name: Test with pytest
       run: |
         if [ "${{ matrix.python-version }}" == "3.13" ]; then
-          pytest --no-cov  # workaround for TheKevJames/coveralls-python#523
+          tox -e ${{ matrix.python-version }}  # workaround for TheKevJames/coveralls-python#523
         else
-          pytest
+          tox -e ${{ matrix.python-version }} -- --cov
         fi
     - name: Upload coverage data
       if: matrix.python-version != '3.13'  # workaround for TheKevJames/coveralls-python#523
