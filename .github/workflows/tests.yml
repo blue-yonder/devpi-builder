@@ -22,20 +22,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install tox
-        if [ "${{ matrix.python-version }}" != "3.13" ]; then  # workaround for TheKevJames/coveralls-python#523
-          python -m pip install coveralls
-        fi
+        python -m pip install tox coveralls
         python -m pip freeze
     - name: Test with pytest
       run: |
-        if [ "${{ matrix.python-version }}" == "3.13" ]; then
-          tox -e ${{ matrix.python-version }}  # workaround for TheKevJames/coveralls-python#523
-        else
-          tox -e ${{ matrix.python-version }} -- --cov
-        fi
+        tox -e ${{ matrix.python-version }} -- --cov
     - name: Upload coverage data
-      if: matrix.python-version != '3.13'  # workaround for TheKevJames/coveralls-python#523
       run: |
         coveralls --service=github
       env:
