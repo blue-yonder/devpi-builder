@@ -10,6 +10,8 @@ build
 README.html
 CHANGELOG.html
 .cache
+.pytest_cache
+.tox
 coverage_html_report
 .coverage*
 !.coveragerc

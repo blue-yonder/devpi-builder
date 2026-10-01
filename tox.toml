@@ -1,0 +1,14 @@
+min_version = "4.0"
+env_list = ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+[env_run_base]
+description = "run tests on {base_python}"
+deps = ["-r requirements.txt", "--no-deps"]
+commands = [["pytest", { replace = "posargs", default = ["--no-cov"], extend = true }]]
+
+[env.compile]
+description = "compile dependencies"
+skip_install = true
+deps = ["pip-tools"]
+commands = [["pip-compile", "--no-emit-index-url", "--strip-extras", "--unsafe-package", "pip", { replace = "posargs", extend = true }]]
+base_python = "3.9"
