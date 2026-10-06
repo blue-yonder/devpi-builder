@@ -1,5 +1,5 @@
 devpi-plumber>=0.2.14
-setuptools<82  # setuptools 82 drops pkg_resources
+setuptools<84  # setuptools 82 drops pkg_resources
 wheel
 wheel-filename<2  # wheel-filename 2 breaks imports of InvalidFilenameError, parse_wheel_filename
 wheel-inspect>=1.6.0
