@@ -4,6 +4,20 @@ Changelog
 
 This lists the most important changes for each release.
 
+Unreleased
+==========
+
+Changed
+-------
+
+* Remove the upper version limits for Setuptools and ``wheel-filename``.
+* Require ``wheel-filename`` 2.0 or newer.
+
+Removed
+-------
+
+* Remove the remaining use of ``pkg_resources``.
+
 
 Version 7.0.0 - 2026-02-16
 ==========================
