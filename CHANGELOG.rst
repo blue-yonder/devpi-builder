@@ -11,6 +11,7 @@ Removed
 -------
 
 * Python 3.10 is no longer supported.
+* Remove deprecated universal wheel configuration from test fixtures.
 
 Changed
 -------
