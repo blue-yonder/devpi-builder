@@ -11,6 +11,7 @@ Removed
 -------
 
 * Python 3.10 is no longer supported.
+* Remove deprecated universal wheel configuration from test fixtures.
 
 Changed
 -------
@@ -18,6 +19,7 @@ Changed
 * Refresh the locked test dependencies for Python 3.11+.
 * Remove the upper version limits for Setuptools and ``wheel-filename``.
 * Require ``wheel-filename`` 2.0 or newer.
+* Write JUnit XML reports with built-in ``open`` instead of deprecated ``codecs.open``.
 
 Removed
 -------

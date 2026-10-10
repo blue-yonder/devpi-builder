@@ -9,7 +9,7 @@ from mock import patch
 from devpi_plumber.server import TestServer
 from devpi_plumber.client import DevpiClient, DevpiClientError
 
-from devpi_builder.cli import main
+from devpi_builder.cli import Processor, main
 from devpi_builder import wheeler
 
 
@@ -186,6 +186,14 @@ def test_reports_junit_xml(devpi, tmpdir):
           '--password={}'.format(PASSWORD), '--junit-xml', junit_filename])
 
     _assert_junit_xml_content(junit_filename)
+
+
+def test_writes_empty_junit_xml_without_devpi(tmpdir):
+    junit_filename = str(tmpdir.join('junit.xml'))
+
+    Processor(None, None, None, junit_xml=junit_filename).build_packages([])
+
+    assert ET.parse(junit_filename).getroot().tag == 'testsuites'
 
 
 def test_handles_non_ascii_build_output(tmpdir, monkeypatch):

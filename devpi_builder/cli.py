@@ -5,7 +5,6 @@ Command line interface for brandon
 """
 
 import argparse
-import codecs
 import getpass
 import locale
 import logging
@@ -125,7 +124,7 @@ class Processor(object):
 
         if self._junit_xml:
             encoding = locale.getpreferredencoding()
-            with codecs.open(self._junit_xml, 'w', encoding) as output:
+            with open(self._junit_xml, 'w', encoding=encoding) as output:
                 test_suite = TestSuite('devpi-builder results', self._results)
                 to_xml_report_file(output, [test_suite], encoding=encoding)
 
