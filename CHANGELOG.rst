@@ -7,6 +7,11 @@ This lists the most important changes for each release.
 Unreleased
 ==========
 
+Added
+-----
+
+* Verify compatibility with Python 3.15.
+
 Removed
 -------
 
@@ -17,7 +22,6 @@ Changed
 -------
 
 * Refresh the locked test dependencies for Python 3.11+.
-* Verify compatibility with Python 3.15.
 * Remove the upper version limits for Setuptools and ``wheel-filename``.
 * Require ``wheel-filename`` 2.0 or newer.
 * Write JUnit XML reports with built-in ``open`` instead of deprecated ``codecs.open``.
