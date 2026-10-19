@@ -7,6 +7,11 @@ This lists the most important changes for each release.
 Unreleased
 ==========
 
+Added
+-----
+
+* Verify compatibility with Python 3.15.
+
 Removed
 -------
 
