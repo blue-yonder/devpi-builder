@@ -4,32 +4,32 @@ Changelog
 
 This lists the most important changes for each release.
 
-Unreleased
-==========
+Version 7.1.0 - 2026-10-22
+==========================
 
 Added
 -----
 
-* Verify compatibility with Python 3.15.
+* Verified compatibility with Python 3.15.
+* Compatibility with newer version of setuptools and ``wheel-filename``.
 
 Removed
 -------
 
-* Python 3.10 is no longer supported.
-* Remove deprecated universal wheel configuration from test fixtures.
+* Compatibility with Python 3.10 is no longer verified.
+* Removed deprecated universal wheel configuration from test fixtures.
 
 Changed
 -------
 
-* Refresh the locked test dependencies for Python 3.11+.
-* Remove the upper version limits for Setuptools and ``wheel-filename``.
-* Require ``wheel-filename`` 2.0 or newer.
-* Write JUnit XML reports with built-in ``open`` instead of deprecated ``codecs.open``.
+* Refreshed the locked test dependencies for Python 3.11+.
+* Requires ``wheel-filename`` 2.0 or newer.
+* JUnit XML reports are written with built-in ``open`` instead of deprecated ``codecs.open``.
 
 Removed
 -------
 
-* Remove the remaining use of ``pkg_resources``.
+* Removed the remaining use of ``pkg_resources``.
 
 
 Version 7.0.0 - 2026-02-16
