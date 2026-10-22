@@ -12,6 +12,7 @@ CHANGELOG.html
 .cache
 .pytest_cache
 .tox
+.venv
 coverage_html_report
 .coverage*
 !.coveragerc
