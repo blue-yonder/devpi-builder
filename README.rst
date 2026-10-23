@@ -93,6 +93,12 @@ License
 
 `New BSD`_
 
+Development
+===========
+
+Run ``tox`` to execute the test environments and verify the package build and
+metadata. The packaging check treats Python warnings as errors.
+
 
 .. _devpi: http://doc.devpi.net/latest/
 .. _New BSD: https://github.com/blue-yonder/devpi-builder/blob/master/COPYING
