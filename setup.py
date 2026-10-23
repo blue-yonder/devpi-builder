@@ -9,7 +9,6 @@ with open('core-requirements.txt') as f:
 
 setup(
     name='devpi-builder',
-    use_scm_version=True,
     packages=find_packages(exclude=['tests']),
     author='Matthias Bach',
     author_email='matthias.bach@blue-yonder.com',
@@ -17,7 +16,7 @@ setup(
     description='Devpi-builder takes a requirements.txt and incrementally fills a devpi index with wheels of the listed python packages.',
     long_description='%s\n\n%s' % (readme, changelog),
     long_description_content_type='text/x-rst',
-    license='new BSD',
+    license='BSD-3-Clause',
     install_requires=requirements,
     python_requires='>=3.11',
     classifiers=[
@@ -25,7 +24,6 @@ setup(
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
-        'License :: OSI Approved :: BSD License',
         'Topic :: System :: Archiving :: Packaging',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.11',

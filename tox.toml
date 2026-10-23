@@ -1,5 +1,5 @@
 min_version = "4.0"
-env_list = ["3.11", "3.12", "3.13", "3.14", "3.15"]
+env_list = ["3.11", "3.12", "3.13", "3.14", "3.15", "packaging"]
 
 [env_run_base]
 description = "run tests on {base_python}"
@@ -11,4 +11,12 @@ description = "compile dependencies"
 skip_install = true
 deps = ["pip-tools"]
 commands = [["pip-compile", "--no-emit-index-url", "--strip-extras", "--unsafe-package", "pip", { replace = "posargs", extend = true }]]
+base_python = "3.11"
+
+[env.packaging]
+description = "build and check package distributions"
+skip_install = true
+deps = ["build", "twine"]
+set_env = { PYTHONWARNINGS = "error" }
+commands = [["python", "-m", "build"], ["twine", "check", "dist/*"]]
 base_python = "3.11"
