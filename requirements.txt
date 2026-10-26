@@ -21,7 +21,7 @@ build==1.6.1
     # via
     #   check-manifest
     #   devpi-client
-certifi==2026.7.22
+certifi==2026.10.19
     # via
     #   httpcore
     #   httpx
@@ -212,4 +212,5 @@ zope-interface==8.7
     # via pyramid
 
 # The following packages are considered to be unsafe in a requirements file:
-# pip
+pip==26.2.2
+    # via -r core-requirements.txt
