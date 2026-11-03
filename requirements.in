@@ -1,4 +1,4 @@
--r core-requirements.txt
+-r core-requirements.in
 
 setuptools_scm
 pytest>=6.2  # Minimum version we know yield_fixture to be an alias for fixture
