@@ -46,7 +46,7 @@ devpi-common==4.1.1
     #   devpi-server
 devpi-plumber==0.7.0
     # via
-    #   -r core-requirements.txt
+    #   -r core-requirements.in
     #   -r requirements.in
 devpi-server==6.20.3
     # via devpi-plumber
@@ -76,7 +76,7 @@ iniconfig==2.3.1
 itsdangerous==2.2.0
     # via devpi-server
 junit-xml==1.9
-    # via -r core-requirements.txt
+    # via -r core-requirements.in
 lazy==2.0
     # via
     #   devpi-common
@@ -104,7 +104,7 @@ passlib==1.7.4
 pastedeploy==3.1.0
     # via plaster-pastedeploy
 pip-requirements-parser==32.0.1
-    # via -r core-requirements.txt
+    # via -r core-requirements.in
 pkginfo==1.13.1
     # via devpi-client
 plaster==1.1.2
@@ -162,7 +162,7 @@ ruamel-yaml==0.19.1
     # via devpi-server
 setuptools==81.0.0
     # via
-    #   -r core-requirements.txt
+    #   -r core-requirements.in
     #   check-manifest
     #   devpi-server
     #   pyramid
@@ -197,13 +197,13 @@ waitress==3.0.2
 webob==1.8.11
     # via pyramid
 wheel==0.48.0
-    # via -r core-requirements.txt
+    # via -r core-requirements.in
 wheel-filename==2.1.0
     # via
-    #   -r core-requirements.txt
+    #   -r core-requirements.in
     #   wheel-inspect
 wheel-inspect==1.8.0
-    # via -r core-requirements.txt
+    # via -r core-requirements.in
 wrapt==2.5.1
     # via deprecated
 zope-deprecation==6.0
@@ -213,4 +213,4 @@ zope-interface==8.7
 
 # The following packages are considered to be unsafe in a requirements file:
 pip==26.2.2
-    # via -r core-requirements.txt
+    # via -r core-requirements.in
